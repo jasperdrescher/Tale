@@ -4,11 +4,11 @@
 
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
+#include "AbilitySystemComponent.h"
 #include "TaleAbilityComponent.generated.h"
 
-
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
-class TALE_API UTaleAbilityComponent : public UActorComponent
+class TALE_API UTaleAbilityComponent : public UAbilitySystemComponent
 {
 	GENERATED_BODY()
 
