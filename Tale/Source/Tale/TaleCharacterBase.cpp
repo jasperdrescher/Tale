@@ -31,3 +31,34 @@ UAbilitySystemComponent* ATaleCharacterBase::GetAbilitySystemComponent() const
 	return AbilityComponent;
 }
 
+UTaleAttributeSet* ATaleCharacterBase::GetAttributeSet() const
+{
+	return AttributeSet;
+}
+
+void ATaleCharacterBase::GiveDefaultAbilities()
+{
+	check(AbilityComponent);
+
+	for (TSubclassOf<UGameplayAbility> AbilityClass : DefaultAbilities)
+	{
+		const FGameplayAbilitySpec AbilitySpec(AbilityClass, 1);
+		AbilityComponent->GiveAbility(AbilitySpec);
+	}
+}
+
+void ATaleCharacterBase::InitDefaultAttributes() const
+{
+	if (!AbilityComponent || !DefaultAttributeEffect)
+		return;
+
+	FGameplayEffectContextHandle EffectContext = AbilityComponent->MakeEffectContext();
+	EffectContext.AddSourceObject(this);
+
+	const FGameplayEffectSpecHandle SpecHandle = AbilityComponent->MakeOutgoingSpec(DefaultAttributeEffect, 1.f, EffectContext);
+
+	if (SpecHandle.IsValid())
+	{
+		AbilityComponent->ApplyGameplayEffectSpecToSelf(*SpecHandle.Data.Get());
+	}
+}

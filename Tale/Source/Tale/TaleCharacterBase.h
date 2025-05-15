@@ -7,7 +7,10 @@
 #include "AbilitySystemInterface.h"
 #include "TaleCharacterBase.generated.h"
 
+class UGameplayAbility;
+class UGameplayEffect;
 class UTaleAbilityComponent;
+class UTaleAttributeSet;
 
 UCLASS()
 class TALE_API ATaleCharacterBase : public ACharacter, public IAbilitySystemInterface
@@ -17,6 +20,8 @@ class TALE_API ATaleCharacterBase : public ACharacter, public IAbilitySystemInte
 public:
 	// Sets default values for this character's properties
 	ATaleCharacterBase();
+
+	virtual UTaleAttributeSet* GetAttributeSet() const;
 
 public:	
 	// Called every frame
@@ -28,6 +33,18 @@ public:
 	virtual UAbilitySystemComponent* GetAbilitySystemComponent() const override;
 
 protected:
+	void GiveDefaultAbilities();
+	void InitDefaultAttributes() const;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Ability")
+	TArray<TSubclassOf<UGameplayAbility>> DefaultAbilities;
+
 	UPROPERTY()
 	TObjectPtr<UTaleAbilityComponent> AbilityComponent;
+
+	UPROPERTY()
+	TObjectPtr<UTaleAttributeSet> AttributeSet;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Ability")
+	TSubclassOf<UGameplayEffect> DefaultAttributeEffect;
 };

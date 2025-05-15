@@ -13,5 +13,13 @@ UCLASS()
 class TALE_API ATalePlayerCharacter : public ATaleCharacterBase
 {
 	GENERATED_BODY()
-	
+
+public:
+	ATalePlayerCharacter();
+
+	virtual void PossessedBy(AController* NewController) override;
+
+private:
+	void InitAbilitySystemComponent();
+	void InitHUD() const;
 };
