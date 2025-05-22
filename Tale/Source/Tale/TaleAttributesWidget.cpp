@@ -12,22 +12,22 @@ void UTaleAttributesWidget::BindToAttributes()
 	TalePlayerCharacter->GetAbilitySystemComponent();
 
 	UAbilitySystemComponent* AbilitySystemComponent = TalePlayerCharacter->GetAbilitySystemComponent();
-	const UTaleAttributeSet* FabAS = TalePlayerCharacter->GetAttributeSet();
+	const UTaleAttributeSet* AttributeSet = TalePlayerCharacter->GetAttributeSet();
 
 	// Initial Attributes
-	HealthPercent = NUMERIC_VALUE(FabAS, Health) / NUMERIC_VALUE(FabAS, MaxHealth);
-	StaminaPercent = NUMERIC_VALUE(FabAS, Stamina) / NUMERIC_VALUE(FabAS, MaxStamina);
+	HealthPercent = NUMERIC_VALUE(AttributeSet, Health) / NUMERIC_VALUE(AttributeSet, MaxHealth);
+	StaminaPercent = NUMERIC_VALUE(AttributeSet, Stamina) / NUMERIC_VALUE(AttributeSet, MaxStamina);
 
 	// Attribute Changes
-	AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(FabAS->GetHealthAttribute()).AddLambda(
-		[this, FabAS](const FOnAttributeChangeData& Data)
+	AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(AttributeSet->GetHealthAttribute()).AddLambda(
+		[this, AttributeSet](const FOnAttributeChangeData& Data)
 		{
-			HealthPercent = Data.NewValue / NUMERIC_VALUE(FabAS, MaxHealth);
+			HealthPercent = Data.NewValue / NUMERIC_VALUE(AttributeSet, MaxHealth);
 		});
 
-	AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(FabAS->GetStaminaAttribute()).AddLambda(
-		[this, FabAS](const FOnAttributeChangeData& Data)
+	AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(AttributeSet->GetStaminaAttribute()).AddLambda(
+		[this, AttributeSet](const FOnAttributeChangeData& Data)
 		{
-			StaminaPercent = Data.NewValue / NUMERIC_VALUE(FabAS, MaxStamina);;
+			StaminaPercent = Data.NewValue / NUMERIC_VALUE(AttributeSet, MaxStamina);;
 		});
 }
