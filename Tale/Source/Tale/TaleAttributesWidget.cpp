@@ -3,16 +3,16 @@
 
 #include "TaleAttributesWidget.h"
 #include "TaleAttributeSet.h"
-#include "TalePlayerCharacter.h"
+#include "TalePlayerState.h"
 
 void UTaleAttributesWidget::BindToAttributes()
 {
-	APlayerController* PlayerController = GetWorld()->GetFirstPlayerController();
-	ATalePlayerCharacter* TalePlayerCharacter = Cast<ATalePlayerCharacter>(PlayerController->GetCharacter());
-	TalePlayerCharacter->GetAbilitySystemComponent();
+	const ATalePlayerState* TalePlayerState = Cast<ATalePlayerState>(GetOwningPlayerState());
+	if (!TalePlayerState)
+		return;
 
-	UAbilitySystemComponent* AbilitySystemComponent = TalePlayerCharacter->GetAbilitySystemComponent();
-	const UTaleAttributeSet* AttributeSet = TalePlayerCharacter->GetAttributeSet();
+	UAbilitySystemComponent* AbilitySystemComponent = TalePlayerState->GetAbilitySystemComponent();
+	const UTaleAttributeSet* AttributeSet = TalePlayerState->GetAttributeSet();
 
 	// Initial Attributes
 	HealthPercent = NUMERIC_VALUE(AttributeSet, Health) / NUMERIC_VALUE(AttributeSet, MaxHealth);

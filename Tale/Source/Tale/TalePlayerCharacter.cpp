@@ -3,12 +3,12 @@
 #include "TalePlayerCharacter.h"
 #include "TaleAbilityComponent.h"
 #include "TaleAttributeSet.h"
+#include "TalePlayerState.h"
 #include "TaleHUD.h"
 
 ATalePlayerCharacter::ATalePlayerCharacter()
 {
-	AbilityComponent = CreateDefaultSubobject<UTaleAbilityComponent>("AbilitySystemComponent");
-	AttributeSet = CreateDefaultSubobject<UTaleAttributeSet>("AttributeSet");
+	PrimaryActorTick.bCanEverTick = true;
 }
 
 void ATalePlayerCharacter::PossessedBy(AController* NewController)
@@ -23,8 +23,11 @@ void ATalePlayerCharacter::PossessedBy(AController* NewController)
 
 void ATalePlayerCharacter::InitAbilitySystemComponent()
 {
-	AbilityComponent->InitAbilityActorInfo(this, this);
-	AttributeSet = GetAttributeSet();
+	ATalePlayerState* TalePlayerState = GetPlayerState<ATalePlayerState>();
+	check(TalePlayerState);
+	AbilityComponent = CastChecked<UTaleAbilityComponent>(TalePlayerState->GetAbilitySystemComponent());
+	AbilityComponent->InitAbilityActorInfo(TalePlayerState, this);
+	AttributeSet = TalePlayerState->GetAttributeSet();
 }
 
 void ATalePlayerCharacter::InitHUD() const
