@@ -6,6 +6,8 @@
 #include "TaleCharacterBase.h"
 #include "TalePlayerCharacter.generated.h"
 
+class UTalePlayerInventoryComponent;
+
 /**
  * 
  */
