@@ -39,6 +39,18 @@ public:
 	ATTRIBUTE_ACCESSORS(UTaleAttributeSet, MaxHealth);
 
 	UPROPERTY(BlueprintReadOnly, Category = "Ability | Gameplay Attribute")
+	FGameplayAttributeData Armor;
+	ATTRIBUTE_ACCESSORS(UTaleAttributeSet, Armor);
+
+	UPROPERTY(BlueprintReadOnly, Category = "Ability | Gameplay Attribute")
+	FGameplayAttributeData MaxArmor;
+	ATTRIBUTE_ACCESSORS(UTaleAttributeSet, MaxArmor);
+
+	UPROPERTY(BlueprintReadOnly, Category = "Ability | Gameplay Attribute")
+	FGameplayAttributeData Damage;
+	ATTRIBUTE_ACCESSORS(UTaleAttributeSet, Damage);
+
+	UPROPERTY(BlueprintReadOnly, Category = "Ability | Gameplay Attribute")
 	FGameplayAttributeData Stamina;
 	ATTRIBUTE_ACCESSORS(UTaleAttributeSet, Stamina);
 
