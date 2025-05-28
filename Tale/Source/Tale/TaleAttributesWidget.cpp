@@ -13,6 +13,9 @@ void UTaleAttributesWidget::BindToAttributes()
 		return;
 
 	UAbilitySystemComponent* CharacterASC = TalePlayerState->GetAbilitySystemComponent();
+	if (!CharacterASC)
+		return;
+
 	const UTaleCharacterBaseAttributeSet* CharacterBaseAttributeSet = TalePlayerState->GetCharacterBaseAttributeSet();
 
 	// Initial Attributes
