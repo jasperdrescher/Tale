@@ -1,8 +1,8 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "TalePlayerCharacter.h"
-#include "TaleAbilityComponent.h"
-#include "TaleAttributeSet.h"
+#include "TaleCharacterASC.h"
+#include "TaleCharacterBaseAttributeSet.h"
 #include "TalePlayerState.h"
 #include "TaleHUD.h"
 
@@ -25,9 +25,9 @@ void ATalePlayerCharacter::InitAbilitySystemComponent()
 {
 	ATalePlayerState* TalePlayerState = GetPlayerState<ATalePlayerState>();
 	check(TalePlayerState);
-	AbilityComponent = CastChecked<UTaleAbilityComponent>(TalePlayerState->GetAbilitySystemComponent());
-	AbilityComponent->InitAbilityActorInfo(TalePlayerState, this);
-	AttributeSet = TalePlayerState->GetAttributeSet();
+	CharacterASC = CastChecked<UTaleCharacterASC>(TalePlayerState->GetAbilitySystemComponent());
+	CharacterASC->InitAbilityActorInfo(TalePlayerState, this);
+	CharacterBaseAttributeSet = TalePlayerState->GetCharacterBaseAttributeSet();
 }
 
 void ATalePlayerCharacter::InitHUD() const

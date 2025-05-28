@@ -2,21 +2,21 @@
 
 
 #include "TalePlayerState.h"
-#include "TaleAbilityComponent.h"
-#include "TaleAttributeSet.h"
+#include "TaleCharacterASC.h"
+#include "TaleCharacterBaseAttributeSet.h"
 
 ATalePlayerState::ATalePlayerState()
 {
-	AbilitySystemComponent = CreateDefaultSubobject<UTaleAbilityComponent>("AbilitySystemComponent");
-	AttributeSet = CreateDefaultSubobject<UTaleAttributeSet>("AttributeSet");
+	CharacterASC = CreateDefaultSubobject<UTaleCharacterASC>("CharacterASC");
+	CharacterBaseAttributeSet = CreateDefaultSubobject<UTaleCharacterBaseAttributeSet>("CharacterBaseAttributeSet");
 }
 
 UAbilitySystemComponent* ATalePlayerState::GetAbilitySystemComponent() const
 {
-	return AbilitySystemComponent;
+	return CharacterASC;
 }
 
-UTaleAttributeSet* ATalePlayerState::GetAttributeSet() const
+UTaleCharacterBaseAttributeSet* ATalePlayerState::GetCharacterBaseAttributeSet() const
 {
-	return AttributeSet;
+	return CharacterBaseAttributeSet;
 }

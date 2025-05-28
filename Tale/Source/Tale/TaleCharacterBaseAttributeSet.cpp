@@ -1,15 +1,16 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
-#include "TaleAttributeSet.h"
+
+#include "TaleCharacterBaseAttributeSet.h"
 #include "AbilitySystemComponent.h"
 #include "GameplayEffectExtension.h"
 
-UTaleAttributeSet::UTaleAttributeSet()
+UTaleCharacterBaseAttributeSet::UTaleCharacterBaseAttributeSet()
 {
 	InitHealth(80.f);
 }
 
-void UTaleAttributeSet::PreAttributeChange(const FGameplayAttribute& Attribute, float& NewValue)
+void UTaleCharacterBaseAttributeSet::PreAttributeChange(const FGameplayAttribute& Attribute, float& NewValue)
 {
 	Super::PreAttributeChange(Attribute, NewValue);
 
@@ -19,7 +20,7 @@ void UTaleAttributeSet::PreAttributeChange(const FGameplayAttribute& Attribute, 
 	}
 }
 
-void UTaleAttributeSet::PostGameplayEffectExecute(const FGameplayEffectModCallbackData& Data)
+void UTaleCharacterBaseAttributeSet::PostGameplayEffectExecute(const FGameplayEffectModCallbackData& Data)
 {
 	Super::PostGameplayEffectExecute(Data);
 

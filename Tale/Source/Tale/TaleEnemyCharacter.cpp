@@ -2,22 +2,22 @@
 
 
 #include "TaleEnemyCharacter.h"
-#include "TaleAbilityComponent.h"
-#include "TaleAttributeSet.h"
+#include "TaleCharacterASC.h"
+#include "TaleCharacterBaseAttributeSet.h"
 
 ATaleEnemyCharacter::ATaleEnemyCharacter()
 {
 	PrimaryActorTick.bCanEverTick = true;
 
-	AbilityComponent = CreateDefaultSubobject<UTaleAbilityComponent>("AbilitySystemComponent");
-	AttributeSet = CreateDefaultSubobject<UTaleAttributeSet>("AttributeSet");
+	CharacterASC = CreateDefaultSubobject<UTaleCharacterASC>("CharacterASC");
+	CharacterBaseAttributeSet = CreateDefaultSubobject<UTaleCharacterBaseAttributeSet>("CharacterBaseAttributeSet");
 }
 
 void ATaleEnemyCharacter::BeginPlay()
 {
 	Super::BeginPlay();
 
-	AbilityComponent->InitAbilityActorInfo(this, this);
+	CharacterASC->InitAbilityActorInfo(this, this);
 	GiveDefaultAbilities();
 	InitDefaultAttributes();
 }

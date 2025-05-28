@@ -7,8 +7,8 @@
 #include "AbilitySystemInterface.h"
 #include "TalePlayerState.generated.h"
 
-class UTaleAbilityComponent;
-class UTaleAttributeSet;
+class UTaleCharacterASC;
+class UTaleCharacterBaseAttributeSet;
 
 /**
  * 
@@ -23,12 +23,12 @@ public:
 
 	virtual UAbilitySystemComponent* GetAbilitySystemComponent() const override;
 
-	virtual UTaleAttributeSet* GetAttributeSet() const;
+	virtual UTaleCharacterBaseAttributeSet* GetCharacterBaseAttributeSet() const;
 
 protected:
 	UPROPERTY()
-	TObjectPtr<UTaleAbilityComponent> AbilitySystemComponent;
+	TObjectPtr<UTaleCharacterASC> CharacterASC;
 
 	UPROPERTY()
-	TObjectPtr<UTaleAttributeSet> AttributeSet;
+	TObjectPtr<UTaleCharacterBaseAttributeSet> CharacterBaseAttributeSet;
 };

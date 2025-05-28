@@ -2,7 +2,8 @@
 
 
 #include "TaleAttributesWidget.h"
-#include "TaleAttributeSet.h"
+#include "TaleCharacterASC.h"
+#include "TaleCharacterBaseAttributeSet.h"
 #include "TalePlayerState.h"
 
 void UTaleAttributesWidget::BindToAttributes()
@@ -11,23 +12,23 @@ void UTaleAttributesWidget::BindToAttributes()
 	if (!TalePlayerState)
 		return;
 
-	UAbilitySystemComponent* AbilitySystemComponent = TalePlayerState->GetAbilitySystemComponent();
-	const UTaleAttributeSet* AttributeSet = TalePlayerState->GetAttributeSet();
+	UAbilitySystemComponent* CharacterASC = TalePlayerState->GetAbilitySystemComponent();
+	const UTaleCharacterBaseAttributeSet* CharacterBaseAttributeSet = TalePlayerState->GetCharacterBaseAttributeSet();
 
 	// Initial Attributes
-	HealthPercent = NUMERIC_VALUE(AttributeSet, Health) / NUMERIC_VALUE(AttributeSet, MaxHealth);
-	StaminaPercent = NUMERIC_VALUE(AttributeSet, Stamina) / NUMERIC_VALUE(AttributeSet, MaxStamina);
+	HealthPercent = NUMERIC_VALUE(CharacterBaseAttributeSet, Health) / NUMERIC_VALUE(CharacterBaseAttributeSet, MaxHealth);
+	StaminaPercent = NUMERIC_VALUE(CharacterBaseAttributeSet, Stamina) / NUMERIC_VALUE(CharacterBaseAttributeSet, MaxStamina);
 
 	// Attribute Changes
-	AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(AttributeSet->GetHealthAttribute()).AddLambda(
-		[this, AttributeSet](const FOnAttributeChangeData& Data)
+	CharacterASC->GetGameplayAttributeValueChangeDelegate(CharacterBaseAttributeSet->GetHealthAttribute()).AddLambda(
+		[this, CharacterBaseAttributeSet](const FOnAttributeChangeData& Data)
 		{
-			HealthPercent = Data.NewValue / NUMERIC_VALUE(AttributeSet, MaxHealth);
+			HealthPercent = Data.NewValue / NUMERIC_VALUE(CharacterBaseAttributeSet, MaxHealth);
 		});
 
-	AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(AttributeSet->GetStaminaAttribute()).AddLambda(
-		[this, AttributeSet](const FOnAttributeChangeData& Data)
+	CharacterASC->GetGameplayAttributeValueChangeDelegate(CharacterBaseAttributeSet->GetStaminaAttribute()).AddLambda(
+		[this, CharacterBaseAttributeSet](const FOnAttributeChangeData& Data)
 		{
-			StaminaPercent = Data.NewValue / NUMERIC_VALUE(AttributeSet, MaxStamina);;
+			StaminaPercent = Data.NewValue / NUMERIC_VALUE(CharacterBaseAttributeSet, MaxStamina);;
 		});
 }

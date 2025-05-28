@@ -9,8 +9,8 @@
 
 class UGameplayAbility;
 class UGameplayEffect;
-class UTaleAbilityComponent;
-class UTaleAttributeSet;
+class UTaleCharacterASC;
+class UTaleCharacterBaseAttributeSet;
 
 UCLASS()
 class TALE_API ATaleCharacterBase : public ACharacter, public IAbilitySystemInterface
@@ -21,7 +21,7 @@ public:
 	// Sets default values for this character's properties
 	ATaleCharacterBase();
 
-	virtual UTaleAttributeSet* GetAttributeSet() const;
+	virtual UTaleCharacterBaseAttributeSet* GetCharacterBaseAttributeSet() const;
 
 public:	
 	// Called every frame
@@ -40,10 +40,10 @@ protected:
 	TArray<TSubclassOf<UGameplayAbility>> DefaultAbilities;
 
 	UPROPERTY()
-	TObjectPtr<UTaleAbilityComponent> AbilityComponent;
+	TObjectPtr<UTaleCharacterASC> CharacterASC;
 
 	UPROPERTY()
-	TObjectPtr<UTaleAttributeSet> AttributeSet;
+	TObjectPtr<UTaleCharacterBaseAttributeSet> CharacterBaseAttributeSet;
 
 	UPROPERTY(EditDefaultsOnly, Category = "Ability")
 	TSubclassOf<UGameplayEffect> DefaultAttributeEffect;

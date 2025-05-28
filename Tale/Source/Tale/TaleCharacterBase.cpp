@@ -2,7 +2,7 @@
 
 
 #include "TaleCharacterBase.h"
-#include "TaleAbilityComponent.h"
+#include "TaleCharacterASC.h"
 
 // Sets default values
 ATaleCharacterBase::ATaleCharacterBase()
@@ -27,37 +27,37 @@ void ATaleCharacterBase::SetupPlayerInputComponent(UInputComponent* PlayerInputC
 
 UAbilitySystemComponent* ATaleCharacterBase::GetAbilitySystemComponent() const
 {
-	return AbilityComponent;
+	return CharacterASC;
 }
 
-UTaleAttributeSet* ATaleCharacterBase::GetAttributeSet() const
+UTaleCharacterBaseAttributeSet* ATaleCharacterBase::GetCharacterBaseAttributeSet() const
 {
-	return AttributeSet;
+	return CharacterBaseAttributeSet;
 }
 
 void ATaleCharacterBase::GiveDefaultAbilities()
 {
-	check(AbilityComponent);
+	check(CharacterASC);
 
 	for (TSubclassOf<UGameplayAbility> AbilityClass : DefaultAbilities)
 	{
 		const FGameplayAbilitySpec AbilitySpec(AbilityClass, 1);
-		AbilityComponent->GiveAbility(AbilitySpec);
+		CharacterASC->GiveAbility(AbilitySpec);
 	}
 }
 
 void ATaleCharacterBase::InitDefaultAttributes() const
 {
-	if (!AbilityComponent || !DefaultAttributeEffect)
+	if (!CharacterASC || !DefaultAttributeEffect)
 		return;
 
-	FGameplayEffectContextHandle EffectContext = AbilityComponent->MakeEffectContext();
+	FGameplayEffectContextHandle EffectContext = CharacterASC->MakeEffectContext();
 	EffectContext.AddSourceObject(this);
 
-	const FGameplayEffectSpecHandle SpecHandle = AbilityComponent->MakeOutgoingSpec(DefaultAttributeEffect, 1.f, EffectContext);
+	const FGameplayEffectSpecHandle SpecHandle = CharacterASC->MakeOutgoingSpec(DefaultAttributeEffect, 1.f, EffectContext);
 
 	if (SpecHandle.IsValid())
 	{
-		AbilityComponent->ApplyGameplayEffectSpecToSelf(*SpecHandle.Data.Get());
+		CharacterASC->ApplyGameplayEffectSpecToSelf(*SpecHandle.Data.Get());
 	}
 }
