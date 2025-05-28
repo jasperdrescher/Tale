@@ -19,6 +19,8 @@ public:
 
 	virtual void PossessedBy(AController* NewController) override;
 
+	UTalePowerUpAttributeSet* GetPowerUpAttributeSet() const;
+
 private:
 	void InitAbilitySystemComponent();
 	void InitHUD() const;

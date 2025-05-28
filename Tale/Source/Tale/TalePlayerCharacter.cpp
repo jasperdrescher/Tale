@@ -3,6 +3,7 @@
 #include "TalePlayerCharacter.h"
 #include "TaleCharacterASC.h"
 #include "TaleCharacterBaseAttributeSet.h"
+#include "TalePowerUpAttributeSet.h"
 #include "TalePlayerState.h"
 #include "TaleHUD.h"
 
@@ -39,4 +40,10 @@ void ATalePlayerCharacter::InitHUD() const
 			TaleHUD->Init();
 		}
 	}
+}
+
+UTalePowerUpAttributeSet* ATalePlayerCharacter::GetPowerUpAttributeSet() const
+{
+	const ATalePlayerState* TalePlayerState = GetPlayerState<ATalePlayerState>();
+	return CastChecked<UTalePowerUpAttributeSet>(TalePlayerState->GetPowerUpAttributeSet());
 }

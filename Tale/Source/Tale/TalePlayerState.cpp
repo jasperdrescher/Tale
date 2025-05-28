@@ -4,11 +4,13 @@
 #include "TalePlayerState.h"
 #include "TaleCharacterASC.h"
 #include "TaleCharacterBaseAttributeSet.h"
+#include "TalePowerUpAttributeSet.h"
 
 ATalePlayerState::ATalePlayerState()
 {
 	CharacterASC = CreateDefaultSubobject<UTaleCharacterASC>("CharacterASC");
 	CharacterBaseAttributeSet = CreateDefaultSubobject<UTaleCharacterBaseAttributeSet>("CharacterBaseAttributeSet");
+	PowerUpAttributeSet = CreateDefaultSubobject<UTalePowerUpAttributeSet>("PowerUpAttributeSet");
 }
 
 UAbilitySystemComponent* ATalePlayerState::GetAbilitySystemComponent() const
@@ -19,4 +21,9 @@ UAbilitySystemComponent* ATalePlayerState::GetAbilitySystemComponent() const
 UTaleCharacterBaseAttributeSet* ATalePlayerState::GetCharacterBaseAttributeSet() const
 {
 	return CharacterBaseAttributeSet;
+}
+
+UTalePowerUpAttributeSet* ATalePlayerState::GetPowerUpAttributeSet() const
+{
+	return PowerUpAttributeSet;
 }

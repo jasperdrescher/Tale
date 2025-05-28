@@ -11,6 +11,7 @@ class UGameplayAbility;
 class UGameplayEffect;
 class UTaleCharacterASC;
 class UTaleCharacterBaseAttributeSet;
+class UTalePowerUpAttributeSet;
 
 UCLASS()
 class TALE_API ATaleCharacterBase : public ACharacter, public IAbilitySystemInterface

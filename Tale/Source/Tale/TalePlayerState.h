@@ -9,6 +9,7 @@
 
 class UTaleCharacterASC;
 class UTaleCharacterBaseAttributeSet;
+class UTalePowerUpAttributeSet;
 
 /**
  * 
@@ -23,7 +24,8 @@ public:
 
 	virtual UAbilitySystemComponent* GetAbilitySystemComponent() const override;
 
-	virtual UTaleCharacterBaseAttributeSet* GetCharacterBaseAttributeSet() const;
+	UTaleCharacterBaseAttributeSet* GetCharacterBaseAttributeSet() const;
+	UTalePowerUpAttributeSet* GetPowerUpAttributeSet() const;
 
 protected:
 	UPROPERTY()
@@ -31,4 +33,7 @@ protected:
 
 	UPROPERTY()
 	TObjectPtr<UTaleCharacterBaseAttributeSet> CharacterBaseAttributeSet;
+
+	UPROPERTY()
+	TObjectPtr<UTalePowerUpAttributeSet> PowerUpAttributeSet;
 };
