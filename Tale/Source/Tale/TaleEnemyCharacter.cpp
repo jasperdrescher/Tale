@@ -4,6 +4,7 @@
 #include "TaleEnemyCharacter.h"
 #include "TaleCharacterASC.h"
 #include "TaleCharacterBaseAttributeSet.h"
+#include "TaleEnemyAttributesWidget.h"
 
 ATaleEnemyCharacter::ATaleEnemyCharacter()
 {
@@ -11,6 +12,9 @@ ATaleEnemyCharacter::ATaleEnemyCharacter()
 
 	CharacterASC = CreateDefaultSubobject<UTaleCharacterASC>("CharacterASC");
 	CharacterBaseAttributeSet = CreateDefaultSubobject<UTaleCharacterBaseAttributeSet>("CharacterBaseAttributeSet");
+
+    EnemyAttributesWidgetComponent = CreateDefaultSubobject<UWidgetComponent>(TEXT("EnemyAttributesWidgetComponent"));
+    EnemyAttributesWidgetComponent->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepRelativeTransform);
 }
 
 void ATaleEnemyCharacter::BeginPlay()
@@ -20,4 +24,10 @@ void ATaleEnemyCharacter::BeginPlay()
 	CharacterASC->InitAbilityActorInfo(this, this);
 	GiveDefaultAbilities();
 	InitDefaultAttributes();
+
+	if (UTaleEnemyAttributesWidget* EnemyAttributesWidget = Cast<UTaleEnemyAttributesWidget>(EnemyAttributesWidgetComponent->GetWidget()))
+	{
+		EnemyAttributesWidget->EnemyCharacter = this;
+		EnemyAttributesWidget->BindToAttributes();
+	}
 }
