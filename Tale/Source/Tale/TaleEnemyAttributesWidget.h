@@ -18,6 +18,8 @@ class TALE_API UTaleEnemyAttributesWidget : public UUserWidget
 	GENERATED_BODY()
 
 public:
+	UTaleEnemyAttributesWidget(const FObjectInitializer& ObjectInitializer);
+
 	UFUNCTION(BlueprintCallable, Category = "Ability")
 	void BindToAttributes();
 

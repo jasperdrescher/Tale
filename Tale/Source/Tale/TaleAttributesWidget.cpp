@@ -6,6 +6,13 @@
 #include "TaleCharacterBaseAttributeSet.h"
 #include "TalePlayerState.h"
 
+UTaleAttributesWidget::UTaleAttributesWidget(const FObjectInitializer& ObjectInitializer)
+	: UUserWidget(ObjectInitializer)
+	, HealthPercent(0.0f)
+	, StaminaPercent(0.0f)
+{
+}
+
 void UTaleAttributesWidget::BindToAttributes()
 {
 	const ATalePlayerState* TalePlayerState = Cast<ATalePlayerState>(GetOwningPlayerState());

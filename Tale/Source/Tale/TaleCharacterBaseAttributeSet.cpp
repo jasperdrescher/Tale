@@ -6,6 +6,15 @@
 #include "GameplayEffectExtension.h"
 
 UTaleCharacterBaseAttributeSet::UTaleCharacterBaseAttributeSet()
+	: Health(0.0f)
+	, MaxHealth(0.0f)
+	, Armor(0.0f)
+	, MaxArmor(0.0f)
+	, Stamina(0.0f)
+	, MaxStamina(0.0f)
+	, Strength(0.0f)
+	, MaxStrength(0.0f)
+	, Damage(0.0f)
 {
 }
 

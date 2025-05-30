@@ -16,6 +16,8 @@ class TALE_API UTaleAttributesWidget : public UUserWidget
 	GENERATED_BODY()
 	
 public:
+	UTaleAttributesWidget(const FObjectInitializer& ObjectInitializer);
+
 	void BindToAttributes();
 
 protected:

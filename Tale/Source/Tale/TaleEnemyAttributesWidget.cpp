@@ -6,6 +6,13 @@
 #include "TaleCharacterBaseAttributeSet.h"
 #include "TaleEnemyCharacter.h"
 
+UTaleEnemyAttributesWidget::UTaleEnemyAttributesWidget(const FObjectInitializer& ObjectInitializer)
+	: UUserWidget(ObjectInitializer)
+	, HealthPercent(0.0f)
+	, StaminaPercent(0.0f)
+{
+}
+
 void UTaleEnemyAttributesWidget::BindToAttributes()
 {
 	UAbilitySystemComponent* CharacterASC = EnemyCharacter->GetAbilitySystemComponent();
