@@ -19,6 +19,7 @@ The current controls are:
 
 ## Applied Features
 - [Animations and Animation Montages](https://dev.epicgames.com/documentation/en-us/unreal-engine/animation-montage-in-unreal-engine)
+- [Enhanced Input](https://dev.epicgames.com/documentation/en-us/unreal-engine/enhanced-input-in-unreal-engine)
 - [Sound Cues, Sound Waves and Ambient Sound](https://dev.epicgames.com/documentation/en-us/unreal-engine/audio-in-unreal-engine-5)
 - [Gameplay Ability System](https://dev.epicgames.com/documentation/en-us/unreal-engine/gameplay-ability-system-for-unreal-engine)
 - [Niagara VFX](https://dev.epicgames.com/documentation/en-us/unreal-engine/overview-of-niagara-effects-for-unreal-engine)
