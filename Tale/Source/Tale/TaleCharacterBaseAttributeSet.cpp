@@ -7,27 +7,11 @@
 
 UTaleCharacterBaseAttributeSet::UTaleCharacterBaseAttributeSet()
 {
-	InitHealth(80.f);
 }
 
 void UTaleCharacterBaseAttributeSet::PreAttributeChange(const FGameplayAttribute& Attribute, float& NewValue)
 {
 	Super::PreAttributeChange(Attribute, NewValue);
-
-	if (Attribute == GetHealthAttribute())
-	{
-		NewValue = FMath::Clamp(NewValue, 0.f, GetMaxHealth());
-	}
-
-	if (Attribute == GetStaminaAttribute())
-	{
-		NewValue = FMath::Clamp(NewValue, 0.f, GetMaxStamina());
-	}
-
-	if (Attribute == GetStrengthAttribute())
-	{
-		NewValue = FMath::Clamp(NewValue, 0.f, GetMaxStrength());
-	}
 }
 
 void UTaleCharacterBaseAttributeSet::PostGameplayEffectExecute(const FGameplayEffectModCallbackData& Data)
@@ -37,5 +21,20 @@ void UTaleCharacterBaseAttributeSet::PostGameplayEffectExecute(const FGameplayEf
 	if (Data.EvaluatedData.Attribute == GetHealthAttribute())
 	{
 		SetHealth(FMath::Clamp(GetHealth(), 0.f, GetMaxHealth()));
+	}
+
+	if (Data.EvaluatedData.Attribute == GetStaminaAttribute())
+	{
+		SetStamina(FMath::Clamp(GetStamina(), 0.f, GetMaxStamina()));
+	}
+
+	if (Data.EvaluatedData.Attribute == GetStrengthAttribute())
+	{
+		SetStrength(FMath::Clamp(GetStrength(), 0.f, GetMaxStrength()));
+	}
+
+	if (Data.EvaluatedData.Attribute == GetArmorAttribute())
+	{
+		SetArmor(FMath::Clamp(GetArmor(), 0.f, GetMaxArmor()));
 	}
 }

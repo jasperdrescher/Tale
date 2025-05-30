@@ -17,8 +17,8 @@ void ATalePlayerCharacter::PossessedBy(AController* NewController)
 	Super::PossessedBy(NewController);
 
 	InitAbilitySystemComponent();
-	GiveDefaultAbilities();
 	InitDefaultAttributes();
+	GiveDefaultAbilities();
 	InitHUD();
 }
 

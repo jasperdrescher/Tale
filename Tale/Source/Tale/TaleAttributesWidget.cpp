@@ -21,7 +21,7 @@ void UTaleAttributesWidget::BindToAttributes()
 	// Initial Attributes
 	HealthPercent = NUMERIC_VALUE(CharacterBaseAttributeSet, Health) / NUMERIC_VALUE(CharacterBaseAttributeSet, MaxHealth);
 	StaminaPercent = NUMERIC_VALUE(CharacterBaseAttributeSet, Stamina) / NUMERIC_VALUE(CharacterBaseAttributeSet, MaxStamina);
-
+	 
 	// Attribute Changes
 	CharacterASC->GetGameplayAttributeValueChangeDelegate(CharacterBaseAttributeSet->GetHealthAttribute()).AddLambda(
 		[this, CharacterBaseAttributeSet](const FOnAttributeChangeData& Data)

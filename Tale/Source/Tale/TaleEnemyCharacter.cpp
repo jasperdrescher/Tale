@@ -22,8 +22,8 @@ void ATaleEnemyCharacter::BeginPlay()
 	Super::BeginPlay();
 
 	CharacterASC->InitAbilityActorInfo(this, this);
-	GiveDefaultAbilities();
 	InitDefaultAttributes();
+	GiveDefaultAbilities();
 
 	if (UTaleEnemyAttributesWidget* EnemyAttributesWidget = Cast<UTaleEnemyAttributesWidget>(EnemyAttributesWidgetComponent->GetWidget()))
 	{
