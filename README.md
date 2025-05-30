@@ -1,4 +1,4 @@
-# Tale
+# Tale <img src="Tale/Tale.png" align="right" width="256">
 A tall tale.
 <br />
 <img src="/Screenshot.png" width="512">
