@@ -27,6 +27,7 @@ The current controls are:
 
 ## Screenshots
 <img src="/Screenshot.png" width="512">
-April 22, 2025
-<br /><br />
+April 22, 2025 <br />
+<br />
+
 This project uses free art assets from [Fab.com](https://www.fab.com/channels/unreal-engine) for non-commercial use.
