@@ -15,6 +15,7 @@ The current controls are:
 - Right Mouse Button to defend
 - E to interact with items
 - I to open the player inventory
+- R to heal
 - Escape to quit
 
 ## Applied Features
