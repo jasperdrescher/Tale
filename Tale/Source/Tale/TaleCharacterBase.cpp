@@ -46,18 +46,19 @@ void ATaleCharacterBase::GiveDefaultAbilities()
 	}
 }
 
-void ATaleCharacterBase::InitDefaultAttributes() const
+void ATaleCharacterBase::GiveDefaultEffects()
 {
-	if (!CharacterASC || !DefaultAttributeEffect)
-		return;
+	check(CharacterASC);
 
 	FGameplayEffectContextHandle EffectContext = CharacterASC->MakeEffectContext();
 	EffectContext.AddSourceObject(this);
 
-	const FGameplayEffectSpecHandle SpecHandle = CharacterASC->MakeOutgoingSpec(DefaultAttributeEffect, 1.f, EffectContext);
-
-	if (SpecHandle.IsValid())
+	for (TSubclassOf<UGameplayEffect> GameplayEffect : DefaultEffects)
 	{
-		CharacterASC->ApplyGameplayEffectSpecToSelf(*SpecHandle.Data.Get());
+		const FGameplayEffectSpecHandle SpecHandle = CharacterASC->MakeOutgoingSpec(GameplayEffect, 1.f, EffectContext);
+		if (SpecHandle.IsValid())
+		{
+			CharacterASC->ApplyGameplayEffectSpecToSelf(*SpecHandle.Data.Get());
+		}
 	}
 }

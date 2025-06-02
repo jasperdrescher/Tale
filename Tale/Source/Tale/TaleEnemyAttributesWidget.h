@@ -7,7 +7,8 @@
 #include "UObject/Object.h"
 #include "TaleEnemyAttributesWidget.generated.h"
 
-class ATaleEnemyCharacter;
+class UAbilitySystemComponent;
+class UTaleCharacterBaseAttributeSet;
 
 /**
  * 
@@ -21,10 +22,7 @@ public:
 	UTaleEnemyAttributesWidget(const FObjectInitializer& ObjectInitializer);
 
 	UFUNCTION(BlueprintCallable, Category = "Ability")
-	void BindToAttributes();
-
-	UPROPERTY(EditDefaultsOnly, Category = "Ability")
-	TObjectPtr<ATaleEnemyCharacter> EnemyCharacter;
+	void BindToAttributes(UAbilitySystemComponent* CharacterASC, const UTaleCharacterBaseAttributeSet* CharacterBaseAttributeSet);
 
 protected:
 	UPROPERTY(BlueprintReadOnly)

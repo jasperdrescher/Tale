@@ -35,17 +35,17 @@ public:
 
 protected:
 	void GiveDefaultAbilities();
-	void InitDefaultAttributes() const;
+	void GiveDefaultEffects();
 
 	UPROPERTY(EditDefaultsOnly, Category = "Ability")
 	TArray<TSubclassOf<UGameplayAbility>> DefaultAbilities;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Ability")
+	TArray<TSubclassOf<UGameplayEffect>> DefaultEffects;
 
 	UPROPERTY()
 	TObjectPtr<UTaleCharacterASC> CharacterASC;
 
 	UPROPERTY()
 	TObjectPtr<UTaleCharacterBaseAttributeSet> CharacterBaseAttributeSet;
-
-	UPROPERTY(EditDefaultsOnly, Category = "Ability")
-	TSubclassOf<UGameplayEffect> DefaultAttributeEffect;
 };

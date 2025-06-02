@@ -5,10 +5,7 @@
 #include "CoreMinimal.h"
 #include "TaleCharacterBase.h"
 #include "Components/WidgetComponent.h"
-#include "Blueprint/UserWidget.h"
 #include "TaleEnemyCharacter.generated.h"
-
-class UTaleEnemyAttributesWidget;
 
 /**
  * 
@@ -22,7 +19,7 @@ public:
 	ATaleEnemyCharacter();
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "UI")
-	UWidgetComponent* EnemyAttributesWidgetComponent;
+	TObjectPtr<UWidgetComponent> EnemyAttributesWidgetComponent;
 
 protected:
 	// Called when the game starts

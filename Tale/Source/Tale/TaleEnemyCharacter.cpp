@@ -22,12 +22,11 @@ void ATaleEnemyCharacter::BeginPlay()
 	Super::BeginPlay();
 
 	CharacterASC->InitAbilityActorInfo(this, this);
-	InitDefaultAttributes();
 	GiveDefaultAbilities();
+	GiveDefaultEffects();
 
 	if (UTaleEnemyAttributesWidget* EnemyAttributesWidget = Cast<UTaleEnemyAttributesWidget>(EnemyAttributesWidgetComponent->GetWidget()))
 	{
-		EnemyAttributesWidget->EnemyCharacter = this;
-		EnemyAttributesWidget->BindToAttributes();
+		EnemyAttributesWidget->BindToAttributes(CharacterASC, CharacterBaseAttributeSet);
 	}
 }

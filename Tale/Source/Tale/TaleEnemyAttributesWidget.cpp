@@ -13,14 +13,8 @@ UTaleEnemyAttributesWidget::UTaleEnemyAttributesWidget(const FObjectInitializer&
 {
 }
 
-void UTaleEnemyAttributesWidget::BindToAttributes()
+void UTaleEnemyAttributesWidget::BindToAttributes(UAbilitySystemComponent* CharacterASC, const UTaleCharacterBaseAttributeSet* CharacterBaseAttributeSet)
 {
-	UAbilitySystemComponent* CharacterASC = EnemyCharacter->GetAbilitySystemComponent();
-	if (!CharacterASC)
-		return;
-
-	const UTaleCharacterBaseAttributeSet* CharacterBaseAttributeSet = EnemyCharacter->GetCharacterBaseAttributeSet();
-
 	// Initial Attributes
 	HealthPercent = NUMERIC_VALUE(CharacterBaseAttributeSet, Health) / NUMERIC_VALUE(CharacterBaseAttributeSet, MaxHealth);
 	StaminaPercent = NUMERIC_VALUE(CharacterBaseAttributeSet, Stamina) / NUMERIC_VALUE(CharacterBaseAttributeSet, MaxStamina);
