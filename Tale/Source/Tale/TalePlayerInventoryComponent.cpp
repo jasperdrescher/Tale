@@ -1,5 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
-
+// Copyright (c) 2025 Jasper Drescher. All rights reserved.
 
 #include "TalePlayerInventoryComponent.h"
 
@@ -11,13 +10,11 @@ UTalePlayerInventoryComponent::UTalePlayerInventoryComponent()
 	PrimaryComponentTick.bCanEverTick = true;
 }
 
-
 // Called when the game starts
 void UTalePlayerInventoryComponent::BeginPlay()
 {
 	Super::BeginPlay();
 }
-
 
 // Called every frame
 void UTalePlayerInventoryComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
