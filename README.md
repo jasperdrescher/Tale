@@ -1,12 +1,9 @@
 # Tale
+[![ja](https://img.shields.io/badge/lang-ja-red.svg)](https://github.com/jasperdrescher/Tale/blob/main/README.ja.md)
 <img src="Tale/Tale.png" align="right" width="256">
 Tall Tale, or Tale, is a singleplayer action-adventure game developed using Unreal Engine 5 for learning purposes.
 The goal is to apply features from various aspects of UE5 to build a fully playable game.
 To keep the goal within reach, there will be 1 level with 4 hostile NPCs and 1 playable character. <br />
-<br />
-『Tall Tale』または『Tale』は、学習目的でUnreal Engine 5を使用して開発されたシングルプレイヤー向けアクションアドベンチャーゲームです。
-このゲームの目標は、UE5の多彩な機能を活かし、完全にプレイ可能なゲームを制作することです。
-目標を達成可能に保つため、1つのレベルに4体の敵対的なNPCと1人のプレイアブルキャラクターが配置されます。<br />
 <br />
 
 The current key bindings are:
