@@ -13,6 +13,8 @@ The current controls are:
 - WASD to walk
 - Left Mouse Button to attack
 - Right Mouse Button to defend
+- 1 to equip a weapon
+- 2 to equip a shield
 - E to interact with items
 - I to open the player inventory
 - R to heal
