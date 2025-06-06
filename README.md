@@ -9,16 +9,16 @@ To keep the goal within reach, there will be 1 level with 4 hostile NPCs and 1 p
 目標を達成可能に保つため、1つのレベルに4体の敵対的なNPCと1人のプレイアブルキャラクターが配置されます。<br />
 <br />
 
-The current controls are:
-- WASD to walk
-- Left Mouse Button to attack
-- Right Mouse Button to defend
-- 1 to equip a weapon
-- 2 to equip a shield
-- E to interact with items
-- I to open the player inventory
-- R to heal
-- Escape to quit
+The current key bindings are:
+- `WASD` to walk
+- `Left Mouse Button (LMB)` to attack
+- `Right Mouse Button (RMB)` to defend
+- `1` to equip a sword
+- `2` to equip a shield
+- `E` to interact with objects and pick up items
+- `I` to open the player inventory
+- `R` to heal
+- `Escape` to quit
 
 ## Applied Features
 - [Animations and Animation Montages](https://dev.epicgames.com/documentation/en-us/unreal-engine/animation-montage-in-unreal-engine)
