@@ -31,4 +31,4 @@ The current controls are:
 April 22, 2025
 
 ## Credits
-This project uses free art assets from [Fab.com](https://www.fab.com/channels/unreal-engine) for non-commercial use.
+This project uses free art assets from [Fab.com](https://www.fab.com/channels/unreal-engine) and sound effects from https://pixabay.com/sound-effects/ for non-commercial use.
