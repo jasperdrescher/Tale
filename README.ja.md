@@ -1,5 +1,5 @@
-# Tale
 [![en](https://img.shields.io/badge/lang-en-blue.svg)](https://github.com/jasperdrescher/Tale/blob/main/README.md)
+# Tale
 <img src="Tale/Tale.png" align="right" width="256">
 『Tall Tale』または『Tale』は、学習目的でUnreal Engine 5を使用して開発されたシングルプレイヤー向けアクションアドベンチャーゲームです。
 このゲームの目標は、UE5の多彩な機能を活かし、完全にプレイ可能なゲームを制作することです。

@@ -1,5 +1,5 @@
-# Tale
 [![ja](https://img.shields.io/badge/lang-ja-red.svg)](https://github.com/jasperdrescher/Tale/blob/main/README.ja.md)
+# Tale
 <img src="Tale/Tale.png" align="right" width="256">
 Tall Tale, or Tale, is a singleplayer action-adventure game developed using Unreal Engine 5 for learning purposes.
 The goal is to apply features from various aspects of UE5 to build a fully playable game.
