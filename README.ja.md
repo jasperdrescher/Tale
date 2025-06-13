@@ -6,17 +6,6 @@
 目標を達成可能に保つため、1つのレベルに4体の敵対的なNPCと1人のプレイアブルキャラクターが配置されます。<br />
 <br />
 
-現在のキーバインドは次のとおりです:
-- `WASD` で移動
-- `左マウスボタン (LMB)` で攻撃
-- `右マウスボタン (RMB)` で防御
-- `1` で剣を装備
-- `2` で盾を装備
-- `E` でオブジェクトとインタラクトし、アイテムを拾う
-- `I` でプレイヤーのインベントリを開く
-- `R` で回復
-- `Escape` で終了
-
 ## 適用機能
 - [アニメーション モンタージュ](https://dev.epicgames.com/documentation/ja/unreal-engine/animation-montage-in-unreal-engine)
 - [Enhanced Input](https://dev.epicgames.com/documentation/ja/unreal-engine/enhanced-input-in-unreal-engine)
