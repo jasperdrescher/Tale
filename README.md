@@ -1,10 +1,15 @@
 [![ja](https://img.shields.io/badge/lang-ja-red.svg)](https://github.com/jasperdrescher/Tale/blob/main/README.ja.md)
 # Tale
 <img src="Tale/Tale.png" align="right" width="256">
-Tall Tale, or Tale, is a singleplayer action-adventure game developed using Unreal Engine 5 for learning purposes.
-The goal is to apply features from various aspects of UE5 to build a fully playable game.
-To keep the goal within reach, there will be 1 level with 4 hostile NPCs and 1 playable character. <br />
-<br />
+Tall Tale, or Tale, is a singleplayer action-adventure game developed using Unreal Engine 5.
+The game is set in a medieval-inspired fantasy world with a variety of monsters. 
+<br /><br />
+
+The goal is to apply features from various aspects of UE5 to build a fully playable game and learn about the game engine.
+To keep the goal within reach, there will be 1 level with 4 hostile NPCs and 1 playable character.
+<br /><br />
+
+Most of the development is done as training at [Synapse Studio](https://synapse.crdg.jp/).
 
 ## Applied Features
 - [Animations and Animation Montages](https://dev.epicgames.com/documentation/en-us/unreal-engine/animation-montage-in-unreal-engine)
