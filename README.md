@@ -6,17 +6,6 @@ The goal is to apply features from various aspects of UE5 to build a fully playa
 To keep the goal within reach, there will be 1 level with 4 hostile NPCs and 1 playable character. <br />
 <br />
 
-The current key bindings are:
-- `WASD` to walk
-- `Left Mouse Button (LMB)` to attack
-- `Right Mouse Button (RMB)` to defend
-- `1` to equip a sword
-- `2` to equip a shield
-- `E` to interact with objects and pick up items
-- `I` to open the player inventory
-- `R` to heal
-- `Escape` to quit
-
 ## Applied Features
 - [Animations and Animation Montages](https://dev.epicgames.com/documentation/en-us/unreal-engine/animation-montage-in-unreal-engine)
 - [Enhanced Input](https://dev.epicgames.com/documentation/en-us/unreal-engine/enhanced-input-in-unreal-engine)
