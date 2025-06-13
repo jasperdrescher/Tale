@@ -1,10 +1,13 @@
 [![en](https://img.shields.io/badge/lang-en-blue.svg)](https://github.com/jasperdrescher/Tale/blob/main/README.md)
 # Tale
 <img src="Tale/Tale.png" align="right" width="256">
-『Tall Tale』または『Tale』は、学習目的でUnreal Engine 5を使用して開発されたシングルプレイヤー向けアクションアドベンチャーゲームです。
-このゲームの目標は、UE5の多彩な機能を活かし、完全にプレイ可能なゲームを制作することです。
-目標を達成可能に保つため、1つのレベルに4体の敵対的なNPCと1人のプレイアブルキャラクターが配置されます。<br />
-<br />
+「Tall Tale」または「Tale」は、Unreal Engine 5を使用して開発されたシングルプレイヤー向けアクションアドベンチャーゲームです。このゲームは、中世をモチーフにしたファンタジー世界を舞台に、多様なモンスターが登場します。
+<br \><br \>
+
+このプロジェクトの目的は、UE5のさまざまな機能を応用して完全プレイ可能なゲームを作成し、ゲームエンジンについて学ぶことです。目標を達成するため、1つのレベルに4体の敵対的なNPCと1人のプレイアブルキャラクターを配置します。
+<br \><br \>
+
+開発の大部分は、[Synapse Studio](https://synapse.crdg.jp/)でのトレーニングとして行われています。
 
 ## 適用機能
 - [アニメーション モンタージュ](https://dev.epicgames.com/documentation/ja/unreal-engine/animation-montage-in-unreal-engine)
