@@ -8,4 +8,7 @@ void ATaleHUD::Init()
 	AttributesWidget = CreateWidget<UTaleAttributesWidget>(GetOwningPlayerController(), AttributesWidgetClass);
 	AttributesWidget->BindToAttributes();
 	AttributesWidget->AddToViewport();
+
+	ControlsWidget = CreateWidget<UUserWidget>(GetOwningPlayerController(), ControlsWidgetClass);
+	ControlsWidget->AddToViewport();
 }

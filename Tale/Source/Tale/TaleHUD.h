@@ -23,7 +23,13 @@ protected:
 	UPROPERTY(EditDefaultsOnly)
 	TSubclassOf<UTaleAttributesWidget> AttributesWidgetClass;
 
+	UPROPERTY(EditDefaultsOnly)
+	TSubclassOf<UUserWidget> ControlsWidgetClass;
+
 private:
 	UPROPERTY()
 	TObjectPtr<UTaleAttributesWidget> AttributesWidget;
+
+	UPROPERTY()
+	TObjectPtr<UUserWidget> ControlsWidget;
 };

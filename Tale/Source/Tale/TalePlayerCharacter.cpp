@@ -19,7 +19,6 @@ void ATalePlayerCharacter::PossessedBy(AController* NewController)
 	InitAbilitySystemComponent();
 	GiveDefaultAbilities();
 	GiveDefaultEffects();
-	InitHUD();
 }
 
 void ATalePlayerCharacter::InitAbilitySystemComponent()
@@ -46,4 +45,9 @@ UTalePowerUpAttributeSet* ATalePlayerCharacter::GetPowerUpAttributeSet() const
 {
 	const ATalePlayerState* TalePlayerState = GetPlayerState<ATalePlayerState>();
 	return CastChecked<UTalePowerUpAttributeSet>(TalePlayerState->GetPowerUpAttributeSet());
+}
+
+void ATalePlayerCharacter::StartAdventure()
+{
+	InitHUD();
 }

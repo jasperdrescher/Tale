@@ -21,6 +21,9 @@ public:
 
 	UTalePowerUpAttributeSet* GetPowerUpAttributeSet() const;
 
+	UFUNCTION(BlueprintCallable)
+	void StartAdventure();
+
 private:
 	void InitAbilitySystemComponent();
 	void InitHUD() const;
