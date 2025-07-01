@@ -392,6 +392,14 @@
 		{
 			"Name": "Cascade",
 			"Enabled": false
+		},
+		{
+			"Name": "GitSourceControl",
+			"Enabled": false
+		},
+		{
+			"Name": "ChangelistReview",
+			"Enabled": false
 		}
 	]
 }
