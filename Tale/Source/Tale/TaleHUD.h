@@ -19,6 +19,9 @@ class TALE_API ATaleHUD : public AHUD
 public:
 	void Init();
 
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
+	void SetRespawnCountdown(float RespawnTimeRemaining);
+
 protected:
 	UPROPERTY(EditDefaultsOnly)
 	TSubclassOf<UTaleAttributesWidget> AttributesWidgetClass;

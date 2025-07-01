@@ -2,3 +2,13 @@
 
 #include "TalePlayerController.h"
 
+#include "TaleHUD.h"
+
+void ATalePlayerController::SetRespawnCountdown(float RespawnTimeRemaining)
+{
+	ATaleHUD* HUD = Cast<ATaleHUD>(GetHUD());
+	if (HUD)
+	{
+		HUD->SetRespawnCountdown(RespawnTimeRemaining);
+	}
+}

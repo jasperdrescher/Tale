@@ -14,4 +14,6 @@ class TALE_API ATalePlayerController : public APlayerController
 {
 	GENERATED_BODY()
 	
+public:
+	void SetRespawnCountdown(float RespawnTimeRemaining);
 };
