@@ -3,6 +3,8 @@
 #include "TaleEnemyCharacter.h"
 #include "TaleCharacterASC.h"
 #include "TaleCharacterBaseAttributeSet.h"
+#include "Kismet/GameplayStatics.h"
+#include "Camera/PlayerCameraManager.h"
 #include "TaleEnemyAttributesWidget.h"
 
 ATaleEnemyCharacter::ATaleEnemyCharacter()
@@ -29,4 +31,19 @@ void ATaleEnemyCharacter::BeginPlay()
 	{
 		EnemyAttributesWidget->BindToAttributes(CharacterASC, CharacterBaseAttributeSet);
 	}
+}
+
+void ATaleEnemyCharacter::Tick(float DeltaTime)
+{
+	const APlayerCameraManager* PlayerCameraManager = UGameplayStatics::GetPlayerCameraManager(GetWorld(), 0);
+	if (!PlayerCameraManager)
+		return;
+
+	if (!EnemyAttributesWidgetComponent)
+		return;
+
+	const FVector CameraLocation = PlayerCameraManager->GetCameraLocation();
+	const FVector WidgetLocation = EnemyAttributesWidgetComponent->GetComponentLocation();
+	const FRotator LookAtRotation = (CameraLocation - WidgetLocation).Rotation();
+	EnemyAttributesWidgetComponent->SetWorldRotation(LookAtRotation);
 }
