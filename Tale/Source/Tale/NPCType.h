@@ -3,11 +3,9 @@
 #pragma once
 
 #include "CoreMinimal.h"
+
 #include "NPCType.generated.h"
 
-/**
- * 
- */
 UENUM(BlueprintType)
 enum class ENPCType : uint8
 {

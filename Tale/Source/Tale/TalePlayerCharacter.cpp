@@ -1,11 +1,12 @@
 // Copyright (c) 2025 Jasper Drescher. All rights reserved.
 
 #include "TalePlayerCharacter.h"
+
 #include "TaleCharacterASC.h"
 #include "TaleCharacterBaseAttributeSet.h"
-#include "TalePowerUpAttributeSet.h"
-#include "TalePlayerState.h"
 #include "TaleHUD.h"
+#include "TalePlayerState.h"
+#include "TalePowerUpAttributeSet.h"
 
 ATalePlayerCharacter::ATalePlayerCharacter()
 {

@@ -2,18 +2,16 @@
 
 #pragma once
 
+#include "AbilitySystemInterface.h"
 #include "CoreMinimal.h"
 #include "GameFramework/PlayerState.h"
-#include "AbilitySystemInterface.h"
+
 #include "TalePlayerState.generated.h"
 
 class UTaleCharacterASC;
 class UTaleCharacterBaseAttributeSet;
 class UTalePowerUpAttributeSet;
 
-/**
- * 
- */
 UCLASS()
 class TALE_API ATalePlayerState : public APlayerState, public IAbilitySystemInterface
 {

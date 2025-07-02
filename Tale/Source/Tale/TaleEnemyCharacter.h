@@ -2,14 +2,12 @@
 
 #pragma once
 
+#include "Components/WidgetComponent.h"
 #include "CoreMinimal.h"
 #include "TaleCharacterBase.h"
-#include "Components/WidgetComponent.h"
+
 #include "TaleEnemyCharacter.generated.h"
 
-/**
- * 
- */
 UCLASS()
 class TALE_API ATaleEnemyCharacter : public ATaleCharacterBase
 {

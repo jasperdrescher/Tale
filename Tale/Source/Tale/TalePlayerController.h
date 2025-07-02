@@ -4,11 +4,9 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/PlayerController.h"
+
 #include "TalePlayerController.generated.h"
 
-/**
- * 
- */
 UCLASS()
 class TALE_API ATalePlayerController : public APlayerController
 {

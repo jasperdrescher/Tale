@@ -5,11 +5,9 @@
 #include "CoreMinimal.h"
 #include "Engine/DataTable.h"
 #include "NPCType.h"
+
 #include "NPCDataRow.generated.h"
 
-/**
- * 
- */
 USTRUCT(BlueprintType)
 struct TALE_API FNPCDataRow : public FTableRowBase
 {

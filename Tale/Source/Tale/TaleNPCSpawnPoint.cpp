@@ -1,6 +1,7 @@
 // Copyright (c) 2025 Jasper Drescher. All rights reserved.
 
 #include "TaleNPCSpawnPoint.h"
+
 #include "NPCDataRow.h"
 
 ATaleNPCSpawnPoint::ATaleNPCSpawnPoint()

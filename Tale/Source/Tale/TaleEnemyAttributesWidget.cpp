@@ -1,6 +1,7 @@
 // Copyright (c) 2025 Jasper Drescher. All rights reserved.
 
 #include "TaleEnemyAttributesWidget.h"
+
 #include "TaleCharacterASC.h"
 #include "TaleCharacterBaseAttributeSet.h"
 #include "TaleEnemyCharacter.h"

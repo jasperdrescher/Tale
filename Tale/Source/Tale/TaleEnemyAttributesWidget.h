@@ -2,17 +2,15 @@
 
 #pragma once
 
-#include "CoreMinimal.h"
 #include "Blueprint/UserWidget.h"
+#include "CoreMinimal.h"
 #include "UObject/Object.h"
+
 #include "TaleEnemyAttributesWidget.generated.h"
 
 class UAbilitySystemComponent;
 class UTaleCharacterBaseAttributeSet;
 
-/**
- * 
- */
 UCLASS()
 class TALE_API UTaleEnemyAttributesWidget : public UUserWidget
 {

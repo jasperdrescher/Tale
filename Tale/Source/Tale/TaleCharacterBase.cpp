@@ -1,6 +1,7 @@
 // Copyright (c) 2025 Jasper Drescher. All rights reserved.
 
 #include "TaleCharacterBase.h"
+
 #include "TaleCharacterASC.h"
 
 // Sets default values

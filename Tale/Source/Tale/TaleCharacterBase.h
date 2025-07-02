@@ -2,9 +2,10 @@
 
 #pragma once
 
+#include "AbilitySystemInterface.h"
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
-#include "AbilitySystemInterface.h"
+
 #include "TaleCharacterBase.generated.h"
 
 class UGameplayAbility;

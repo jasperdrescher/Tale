@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 #include "NPCType.h"
+
 #include "TaleNPCSpawnPoint.generated.h"
 
 UCLASS(Blueprintable, BlueprintType)

@@ -2,9 +2,10 @@
 
 #pragma once
 
-#include "CoreMinimal.h"
 #include "AbilitySystemComponent.h"
 #include "AttributeSet.h"
+#include "CoreMinimal.h"
+
 #include "TaleCharacterBaseAttributeSet.generated.h"
 
 #define ATTRIBUTE_ACCESSORS(ClassName, PropertyName) \
@@ -16,9 +17,6 @@ GAMEPLAYATTRIBUTE_VALUE_INITTER(PropertyName)
 #define NUMERIC_VALUE(AttributeSetName, PropertyName) \
 	AttributeSetName->Get##PropertyName##Attribute().GetNumericValue(AttributeSetName)
 
-/**
- * 
- */
 UCLASS()
 class TALE_API UTaleCharacterBaseAttributeSet : public UAttributeSet
 {

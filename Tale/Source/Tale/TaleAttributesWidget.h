@@ -2,14 +2,12 @@
 
 #pragma once
 
-#include "CoreMinimal.h"
 #include "Blueprint/UserWidget.h"
+#include "CoreMinimal.h"
 #include "UObject/Object.h"
+
 #include "TaleAttributesWidget.generated.h"
 
-/**
- * 
- */
 UCLASS()
 class TALE_API UTaleAttributesWidget : public UUserWidget
 {

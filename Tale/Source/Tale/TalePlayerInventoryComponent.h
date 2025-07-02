@@ -4,8 +4,8 @@
 
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
-#include "TalePlayerInventoryComponent.generated.h"
 
+#include "TalePlayerInventoryComponent.generated.h"
 
 UCLASS(Blueprintable, BlueprintType, ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class TALE_API UTalePlayerInventoryComponent : public UActorComponent

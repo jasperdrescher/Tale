@@ -4,13 +4,11 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/HUD.h"
+
 #include "TaleHUD.generated.h"
 
 class UTaleAttributesWidget;
 
-/**
- * 
- */
 UCLASS()
 class TALE_API ATaleHUD : public AHUD
 {

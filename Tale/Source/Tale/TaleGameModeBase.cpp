@@ -15,7 +15,6 @@ ATaleGameModeBase::ATaleGameModeBase()
 	PrimaryActorTick.bCanEverTick = true;
 }
 
-
 void ATaleGameModeBase::PlayerDied(AController* Controller)
 {
 	FActorSpawnParameters SpawnParameters;

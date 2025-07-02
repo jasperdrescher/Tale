@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "TaleGameModeBase.h"
+
 #include "TaleGymGameMode.generated.h"
 
 UCLASS()

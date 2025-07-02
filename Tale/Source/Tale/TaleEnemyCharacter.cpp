@@ -1,10 +1,11 @@
 // Copyright (c) 2025 Jasper Drescher. All rights reserved.
 
 #include "TaleEnemyCharacter.h"
+
+#include "Camera/PlayerCameraManager.h"
+#include "Kismet/GameplayStatics.h"
 #include "TaleCharacterASC.h"
 #include "TaleCharacterBaseAttributeSet.h"
-#include "Kismet/GameplayStatics.h"
-#include "Camera/PlayerCameraManager.h"
 #include "TaleEnemyAttributesWidget.h"
 
 ATaleEnemyCharacter::ATaleEnemyCharacter()
