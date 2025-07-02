@@ -4,10 +4,10 @@
 
 #include "CoreMinimal.h"
 
-#include "NPCType.generated.h"
+#include "TaleNPCType.generated.h"
 
 UENUM(BlueprintType)
-enum class ENPCType : uint8
+enum class ETaleNPCType : uint8
 {
 	Slime UMETA(DisplayName = "Slime"),
 	Mushroom UMETA(DisplayName = "Mushroom"),

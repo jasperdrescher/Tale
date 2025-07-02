@@ -2,7 +2,7 @@
 
 #include "TaleNPCSpawnPoint.h"
 
-#include "NPCDataRow.h"
+#include "TaleNPCDataRow.h"
 
 ATaleNPCSpawnPoint::ATaleNPCSpawnPoint()
 {
@@ -14,7 +14,7 @@ void ATaleNPCSpawnPoint::FindDataTable()
     if (DataTable)
     {
         const FString Context = TEXT("NPCBlueprint");
-        FNPCDataRow* Row = DataTable->FindRow<FNPCDataRow>(FName(UEnum::GetDisplayValueAsText(NPCType).ToString()), Context);
+        FTaleNPCDataRow* Row = DataTable->FindRow<FTaleNPCDataRow>(FName(UEnum::GetDisplayValueAsText(NPCType).ToString()), Context);
         if (Row)
         {
             UE_LOG(LogTemp, Log, TEXT("Found NPC: %s"), *UEnum::GetValueAsString(Row->NPCType));

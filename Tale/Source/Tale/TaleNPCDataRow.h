@@ -4,18 +4,18 @@
 
 #include "CoreMinimal.h"
 #include "Engine/DataTable.h"
-#include "NPCType.h"
+#include "TaleNPCType.h"
 
-#include "NPCDataRow.generated.h"
+#include "TaleNPCDataRow.generated.h"
 
 USTRUCT(BlueprintType)
-struct TALE_API FNPCDataRow : public FTableRowBase
+struct TALE_API FTaleNPCDataRow : public FTableRowBase
 {
 	GENERATED_BODY()
 	
 public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	ENPCType NPCType;
+	ETaleNPCType NPCType;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	TSubclassOf<AActor> NPCBlueprint;

@@ -4,7 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
-#include "NPCType.h"
+#include "TaleNPCType.h"
 
 #include "TaleNPCSpawnPoint.generated.h"
 
@@ -24,7 +24,7 @@ protected:
 	UDataTable* DataTable;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
-	ENPCType NPCType;
+	ETaleNPCType NPCType;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	TSubclassOf<AActor> NPCBlueprint;
