@@ -4,14 +4,16 @@
 
 #include "CoreMinimal.h"
 #include "TaleGameModeBase.h"
-
-#include "TaleMainGameMode.generated.h"
+#include "TaleGymGameMode.generated.h"
 
 UCLASS()
-class TALE_API ATaleMainGameMode : public ATaleGameModeBase
+class TALE_API ATaleGymGameMode : public ATaleGameModeBase
 {
 	GENERATED_BODY()
-
+	
 public:
-	ATaleMainGameMode();
+	ATaleGymGameMode();
+
+protected:
+	virtual void BeginPlay() override;
 };
