@@ -21,5 +21,8 @@
 <img src="/Screenshot.png" width="512">
 2025年4月22日
 
+## C++ コードスタイルガイド
+このリポジトリ内のC++コードは、Epicの公式[C++コーディング標準](https://dev.epicgames.com/documentation/ja-jp/unreal-engine/epic-cplusplus-coding-standard-for-unreal-engine)に従っています。
+
 ## クレジット
 このプロジェクトでは、[Fab](https://www.fab.com/channels/unreal-engine)から提供される無料のアート資産と、[Pixabay](https://pixabay.com/sound-effects/)から提供されるサウンドエフェクトを、非商用目的で使用しています。
