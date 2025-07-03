@@ -23,5 +23,8 @@ Most of the development is done as training at [Synapse Studio](https://synapse.
 <img src="/Screenshot.png" width="512">
 April 22, 2025
 
+## C++ Code Style Guide
+C++ code in this repository uses Epic's official [C++ Coding Standard](https://dev.epicgames.com/documentation/en-us/unreal-engine/epic-cplusplus-coding-standard-for-unreal-engine).
+
 ## Credits
 This project uses free art assets from [Fab](https://www.fab.com/channels/unreal-engine) and sound effects from [Pixabay](https://pixabay.com/sound-effects/) for non-commercial use.
