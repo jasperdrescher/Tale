@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Blueprint/UserWidget.h"
+#include "TaleItemData.h"
 
 #include "TalePlayerInventoryWidget.generated.h"
 
@@ -13,6 +14,6 @@ class TALE_API UTalePlayerInventoryWidget : public UUserWidget
 	GENERATED_BODY()
 	
 public:
-	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category = "Inventory")
-	void ReloadInventory(class UTalePlayerInventoryComponent* PlayerInventoryComponent);
+	UFUNCTION(BlueprintImplementableEvent, Category = "Inventory")
+	void ReloadInventory(const TArray<FTaleItemData>& ItemData);
 };

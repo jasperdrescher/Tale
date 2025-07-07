@@ -8,6 +8,7 @@
 #include "Components/SphereComponent.h"
 #include "EngineUtils.h"
 #include "Kismet/GameplayStatics.h"
+#include "Sound/SoundBase.h"
 
 UTalePlayerInventoryComponent::UTalePlayerInventoryComponent()
 	: bHasShield(false)
@@ -54,7 +55,7 @@ void UTalePlayerInventoryComponent::BeginPlay()
 
 	PlayerInventoryWidget = CreateWidget<UTalePlayerInventoryWidget>(GetWorld()->GetFirstPlayerController(), PlayerInventoryWidgetClass);
 
-	ReloadInventory();
+	PlayerInventoryWidget->ReloadInventory(Items);
 }
 
 void UTalePlayerInventoryComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
@@ -154,7 +155,7 @@ void UTalePlayerInventoryComponent::TryPickUpItem()
 				itemData.Quantity++;
 				bWasFound = true;
 
-				// TODO: Play Sound
+				UGameplayStatics::PlaySound2D(GetWorld(), PickupSoundEffect, 1.0f);
 
 				ItemPickup->PickUp();
 			}
@@ -165,19 +166,19 @@ void UTalePlayerInventoryComponent::TryPickUpItem()
 	{
 		Items.Add(ItemPickup->ItemData);
 
-		// TODO: Play Sound
+		UGameplayStatics::PlaySound2D(GetWorld(), PickupSoundEffect, 1.0f);
 
 		ItemPickup->PickUp();
 	}
 
-	ReloadInventory();
+	PlayerInventoryWidget->ReloadInventory(Items);
 }
 
 void UTalePlayerInventoryComponent::RemoveItem(const FTaleItemData& ItemData)
 {
 	Items.Remove(ItemData);
 
-	ReloadInventory();
+	PlayerInventoryWidget->ReloadInventory(Items);
 }
 
 FItemSearchResult UTalePlayerInventoryComponent::GetHealthPotion()

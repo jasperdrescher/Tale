@@ -40,9 +40,6 @@ public:
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
-	UFUNCTION(BlueprintImplementableEvent)
-	void ReloadInventory();
-
 	UFUNCTION(BlueprintCallable)
 	void TryEquipSword();
 
@@ -64,11 +61,14 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Inventory")
 	TArray<FTaleItemData> Items;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Inventory")
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Inventory")
 	bool bHasShield;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Inventory")
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Inventory")
 	bool bHasSword;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Audio")
+	class USoundBase* PickupSoundEffect;
 
 	class ATalePlayerCharacter* PlayerCharacter;
 	class UStaticMeshComponent* SwordMeshComponent;
