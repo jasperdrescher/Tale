@@ -12,5 +12,5 @@ enum class ETaleItemType : uint8
 	None UMETA(DisplayName = "None"),
 	Sword UMETA(DisplayName = "Sword"),
 	Shield UMETA(DisplayName = "Shield"),
-	HealthPotion UMETA(DisplayName = "Health Potion"),
+	HealthPotion UMETA(DisplayName = "HealthPotion"),
 };
