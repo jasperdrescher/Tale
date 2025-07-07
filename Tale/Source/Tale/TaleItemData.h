@@ -17,13 +17,18 @@ struct FTaleItemData : public FTableRowBase
 
 	FTaleItemData();
 
+	bool operator==(const FTaleItemData& Other) const
+	{
+		return (Name.ToString() == Other.Name.ToString());
+	}
+
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Item")
 	FText Name;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Item")
 	bool bIsStackable;
 
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Item")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Item")
 	int Quantity;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Item")

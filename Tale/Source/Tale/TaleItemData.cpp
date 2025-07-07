@@ -5,8 +5,8 @@
 FTaleItemData::FTaleItemData()
 	: bIsStackable(false)
 	, Quantity(1)
+	, Thumbnail(nullptr)
 	, Type(ETaleItemType::None)
 	, Mesh(nullptr)
-	, Thumbnail(nullptr)
 {
 }

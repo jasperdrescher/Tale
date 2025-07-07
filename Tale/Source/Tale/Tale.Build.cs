@@ -15,7 +15,8 @@ public class Tale : ModuleRules
 			"InputCore",
 			"GameplayAbilities",
 			"GameplayTags",
-			"GameplayTasks"
-		});
+			"GameplayTasks",
+            "Niagara"
+        });
 	}
 }

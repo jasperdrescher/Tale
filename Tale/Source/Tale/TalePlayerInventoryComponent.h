@@ -4,8 +4,24 @@
 
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
+#include "TalePlayerInventoryWidget.h"
+#include "TaleItemData.h"
+#include "Blueprint/UserWidget.h"
+#include "UObject/Object.h"
 
 #include "TalePlayerInventoryComponent.generated.h"
+
+USTRUCT(BlueprintType)
+struct FItemSearchResult
+{
+	GENERATED_BODY()
+
+	UPROPERTY(BlueprintReadOnly)
+	bool bFound;
+
+	UPROPERTY(BlueprintReadOnly)
+	FTaleItemData Item;
+};
 
 UCLASS(Blueprintable, BlueprintType, ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class TALE_API UTalePlayerInventoryComponent : public UActorComponent
@@ -23,4 +39,43 @@ protected:
 public:	
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
+
+	UFUNCTION(BlueprintImplementableEvent)
+	void ReloadInventory();
+
+	UFUNCTION(BlueprintCallable)
+	void TryEquipSword();
+
+	UFUNCTION(BlueprintCallable)
+	void TryEquipShield();
+
+	UFUNCTION(BlueprintCallable)
+	void TryPickUpItem();
+
+	UFUNCTION(BlueprintCallable)
+	void RemoveItem(const FTaleItemData& ItemData);
+
+	UFUNCTION(BlueprintCallable)
+	FItemSearchResult GetHealthPotion();
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Inventory")
+	TSubclassOf<UTalePlayerInventoryWidget> PlayerInventoryWidgetClass;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Inventory")
+	TArray<FTaleItemData> Items;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Inventory")
+	bool bHasShield;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Inventory")
+	bool bHasSword;
+
+	class ATalePlayerCharacter* PlayerCharacter;
+	class UStaticMeshComponent* SwordMeshComponent;
+	class UStaticMeshComponent* ShieldMeshComponent;
+	class USphereComponent* WeaponSphereComponent;
+
+protected:
+	UPROPERTY(BlueprintReadOnly)
+	TObjectPtr<UTalePlayerInventoryWidget> PlayerInventoryWidget;
 };

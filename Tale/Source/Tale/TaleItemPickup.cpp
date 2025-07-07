@@ -2,25 +2,98 @@
 
 #include "TaleItemPickup.h"
 
-// Sets default values
-ATaleItemPickup::ATaleItemPickup()
-{
- 	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
-	PrimaryActorTick.bCanEverTick = true;
+#include "TaleItemData.h"
 
+#include "Components/BillboardComponent.h"
+#include "Components/BoxComponent.h"
+#include "Components/MaterialBillboardComponent.h"
+#include "NiagaraComponent.h"
+#include "NiagaraFunctionLibrary.h"
+#include "NiagaraSystemInstance.h"
+
+ATaleItemPickup::ATaleItemPickup()
+	: SceneRootComponent(nullptr)
+	, MeshComponent(nullptr)
+	, ItemType(ETaleItemType::None)
+	, DataTable(nullptr)
+{
+	PrimaryActorTick.bCanEverTick = false;
+
+	SceneRootComponent = CreateDefaultSubobject<USceneComponent>(TEXT("SceneRoot"));
+	RootComponent = SceneRootComponent;
+
+	MeshComponent = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("MeshComponent"));
+	MeshComponent->SetupAttachment(RootComponent);
+
+	TriggerBoxComponent = CreateDefaultSubobject<UBoxComponent>(FName("TriggerBoxComponent"));
+	TriggerBoxComponent->SetupAttachment(RootComponent);
+	TriggerBoxComponent->SetBoxExtent(FVector(64.f, 64.f, 64.f));
+	static FName CollisionProfileName(TEXT("OverlapAllDynamic"));
+	TriggerBoxComponent->SetCollisionProfileName(CollisionProfileName);
+
+	BillBoardComponent = CreateDefaultSubobject<UBillboardComponent>(FName("BillBoardComponent"));
+	BillBoardComponent->SetupAttachment(RootComponent);
+	UTexture2D* EditorIconTexture = Cast<UTexture2D>(StaticLoadObject(UTexture2D::StaticClass(), nullptr, TEXT("/Engine/EditorResources/S_Actor.S_Actor")));
+	if (EditorIconTexture)
+		BillBoardComponent->SetSprite(EditorIconTexture);
 }
 
-// Called when the game starts or when spawned
 void ATaleItemPickup::BeginPlay()
 {
 	Super::BeginPlay();
-	
 }
 
-// Called every frame
+void ATaleItemPickup::OnConstruction(const FTransform& Transform)
+{
+	Super::OnConstruction(Transform);
+
+	if (!NiagaraComponent && SparklesNiagaraSystem)
+	{
+		NiagaraComponent = NewObject<UNiagaraComponent>(this, UNiagaraComponent::StaticClass(), TEXT("NiagaraComponent"));
+		NiagaraComponent->SetupAttachment(RootComponent);
+		NiagaraComponent->RegisterComponent();
+		NiagaraComponent->SetAsset(SparklesNiagaraSystem);
+		NiagaraComponent->Activate(true);
+	}
+
+	FindDataTable();
+
+	switch (ItemData.Type)
+	{
+		case ETaleItemType::Sword:
+			MeshComponent->SetStaticMesh(ItemData.Mesh);
+			break;
+		case ETaleItemType::Shield:
+			MeshComponent->SetStaticMesh(ItemData.Mesh);
+			break;
+		case ETaleItemType::HealthPotion:
+			MeshComponent->SetStaticMesh(ItemData.Mesh);
+			break;
+		case ETaleItemType::None:
+			break;
+	}
+}
+
 void ATaleItemPickup::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-
 }
 
+void ATaleItemPickup::PickUp()
+{
+	Destroy();
+}
+
+void ATaleItemPickup::FindDataTable()
+{
+	if (DataTable)
+	{
+		const FString Context = TEXT("Type");
+		FTaleItemData* Row = DataTable->FindRow<FTaleItemData>(FName(UEnum::GetDisplayValueAsText(ItemType).ToString()), Context);
+		if (Row)
+		{
+			UE_LOG(LogTemp, Log, TEXT("Found Item: %s"), *UEnum::GetValueAsString(Row->Type));
+			ItemData = *Row;
+		}
+	}
+}
