@@ -70,10 +70,8 @@ public:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Audio")
 	class USoundBase* PickupSoundEffect;
 
+private:
 	class ATalePlayerCharacter* PlayerCharacter;
-	class UStaticMeshComponent* SwordMeshComponent;
-	class UStaticMeshComponent* ShieldMeshComponent;
-	class USphereComponent* WeaponSphereComponent;
 
 protected:
 	UPROPERTY(BlueprintReadOnly)

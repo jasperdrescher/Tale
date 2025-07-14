@@ -5,7 +5,6 @@
 #include "TaleItemPickup.h"
 #include "TalePlayerCharacter.h"
 
-#include "Components/SphereComponent.h"
 #include "EngineUtils.h"
 #include "Kismet/GameplayStatics.h"
 #include "Sound/SoundBase.h"
@@ -14,9 +13,6 @@ UTalePlayerInventoryComponent::UTalePlayerInventoryComponent()
 	: bHasShield(false)
 	, bHasSword(false)
 	, PlayerCharacter(nullptr)
-	, SwordMeshComponent(nullptr)
-	, ShieldMeshComponent(nullptr)
-	, WeaponSphereComponent(nullptr)
 {
 	PrimaryComponentTick.bCanEverTick = false;
 
@@ -28,33 +24,14 @@ void UTalePlayerInventoryComponent::BeginPlay()
 {
 	Super::BeginPlay();
 
-	ACharacter* Character = UGameplayStatics::GetPlayerCharacter(GetWorld(), 0);
-	PlayerCharacter = Cast<ATalePlayerCharacter>(Character);
+	PlayerCharacter = Cast<ATalePlayerCharacter>(GetOwner());
 	if (!PlayerCharacter)
 	{
 		UE_LOG(LogTemp, Error, TEXT("Failed to find TalePlayerCharacter!"));
 		return;
 	}
 
-	TArray<UActorComponent*> FoundWeaponComponents = PlayerCharacter->GetComponentsByTag(UStaticMeshComponent::StaticClass(), FName("Weapon_R"));
-	if (!FoundWeaponComponents.IsEmpty())
-	{
-		UE_LOG(LogTemp, Error, TEXT("Failed to find Weapon_R Component!"));
-
-		SwordMeshComponent = Cast<UStaticMeshComponent>(FoundWeaponComponents[0]);
-		WeaponSphereComponent = PlayerCharacter->GetComponentByClass<USphereComponent>();
-	}
-
-	TArray<UActorComponent*> FoundShieldComponents = PlayerCharacter->GetComponentsByTag(UStaticMeshComponent::StaticClass(), FName("Weapon_L"));
-	if (!FoundShieldComponents.IsEmpty())
-	{
-		UE_LOG(LogTemp, Error, TEXT("Failed to find Weapon_L Component!"));
-
-		ShieldMeshComponent = Cast<UStaticMeshComponent>(FoundShieldComponents[0]);
-	}
-
 	PlayerInventoryWidget = CreateWidget<UTalePlayerInventoryWidget>(GetWorld()->GetFirstPlayerController(), PlayerInventoryWidgetClass);
-
 	PlayerInventoryWidget->ReloadInventory(Items);
 }
 
@@ -68,7 +45,7 @@ void UTalePlayerInventoryComponent::TryEquipSword()
 	if (!bHasSword)
 		return;
 
-	if (!SwordMeshComponent)
+	if (!PlayerCharacter->GetSwordMeshComponent())
 		return;
 
 	for (const FTaleItemData& itemData : Items)
@@ -78,9 +55,8 @@ void UTalePlayerInventoryComponent::TryEquipSword()
 			if (!itemData.Mesh)
 				continue;
 
-			if (SwordMeshComponent->SetStaticMesh(itemData.Mesh))
+			if (PlayerCharacter->GetSwordMeshComponent()->SetStaticMesh(itemData.Mesh))
 			{
-				WeaponSphereComponent->SetRelativeLocation(FVector(-1.69f, 1.17f, 110.69f));
 				break;
 			}
 		}
@@ -92,7 +68,7 @@ void UTalePlayerInventoryComponent::TryEquipShield()
 	if (!bHasShield)
 		return;
 
-	if (!ShieldMeshComponent)
+	if (!PlayerCharacter->GetShieldMeshComponent())
 		return;
 
 	for (const FTaleItemData& itemData : Items)
@@ -102,7 +78,7 @@ void UTalePlayerInventoryComponent::TryEquipShield()
 			if (!itemData.Mesh)
 				continue;
 
-			if (ShieldMeshComponent->SetStaticMesh(itemData.Mesh))
+			if (PlayerCharacter->GetShieldMeshComponent()->SetStaticMesh(itemData.Mesh))
 			{
 				break;
 			}
