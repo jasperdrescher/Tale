@@ -7,6 +7,9 @@
 
 #include "TalePlayerCharacter.generated.h"
 
+class UStaticMeshComponent;
+class USphereComponent;
+
 UCLASS()
 class TALE_API ATalePlayerCharacter : public ATaleCharacterBase
 {
@@ -35,15 +38,15 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void DisableSwordHitBox();
 
-	class UStaticMeshComponent* GetSwordMeshComponent() const;
-	class UStaticMeshComponent* GetShieldMeshComponent() const;
+	UStaticMeshComponent* GetSwordMeshComponent() const;
+	UStaticMeshComponent* GetShieldMeshComponent() const;
 
 protected:
 	UPROPERTY(VisibleAnywhere, Category = "Combat")
-	class USphereComponent* MeleeHitbox;
+	USphereComponent* MeleeHitbox = nullptr;
 
 	UPROPERTY(VisibleAnywhere, Category = "Combat")
-	class USphereComponent* SwordHitbox;
+	USphereComponent* SwordHitbox = nullptr;
 
 private:
 	void InitAbilitySystemComponent();
@@ -51,6 +54,6 @@ private:
 	void OnMeleeHitBoxOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
 	void OnSwordHitBoxOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
 
-	class UStaticMeshComponent* SwordMeshComponent;
-	class UStaticMeshComponent* ShieldMeshComponent;
+	UStaticMeshComponent* SwordMeshComponent = nullptr;
+	UStaticMeshComponent* ShieldMeshComponent = nullptr;
 };

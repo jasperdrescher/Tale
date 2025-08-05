@@ -11,10 +11,6 @@
 #include "Components/SphereComponent.h"
 
 ATalePlayerCharacter::ATalePlayerCharacter()
-	: SwordMeshComponent(nullptr)
-	, ShieldMeshComponent(nullptr)
-	, MeleeHitbox(nullptr)
-	, SwordHitbox(nullptr)
 {
 	PrimaryActorTick.bCanEverTick = true;
 
