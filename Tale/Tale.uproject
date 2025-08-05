@@ -400,6 +400,19 @@
 		{
 			"Name": "ChangelistReview",
 			"Enabled": false
+		},
+		{
+			"Name": "XGEController",
+			"Enabled": false
+		},
+		{
+			"Name": "UbaController",
+			"Enabled": false,
+			"SupportedTargetPlatforms": [
+				"Win64",
+				"Mac",
+				"Linux"
+			]
 		}
 	]
 }
