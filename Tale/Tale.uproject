@@ -413,6 +413,14 @@
 				"Mac",
 				"Linux"
 			]
+		},
+		{
+			"Name": "Bridge",
+			"Enabled": false
+		},
+		{
+			"Name": "Metasound",
+			"Enabled": false
 		}
 	]
 }
