@@ -7,16 +7,23 @@ public class Tale : ModuleRules
 	public Tale(ReadOnlyTargetRules Target) : base(Target)
 	{
 		PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
+		IWYUSupport = IWYUSupport.Full;
+        OptimizeCode = CodeOptimization.InShippingBuildsOnly;
+        bUseUnity = true;
 
-		PublicDependencyModuleNames.AddRange(new string[] {
+        PublicDependencyModuleNames.AddRange(new string[] {
 			"Core",
 			"CoreUObject",
 			"Engine",
 			"InputCore",
-			"GameplayAbilities",
-			"GameplayTags",
-			"GameplayTasks",
-            "Niagara"
         });
-	}
+
+        PrivateDependencyModuleNames.AddRange(new string[]
+        {
+            "GameplayTasks",
+            "GameplayTags",
+            "GameplayAbilities",
+            "Niagara",
+        });
+    }
 }
