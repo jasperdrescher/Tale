@@ -15,7 +15,7 @@ struct TALE_API FTaleNPCDataRow : public FTableRowBase
 	
 public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	ETaleNPCType NPCType;
+	ETaleNPCType NPCType = ETaleNPCType::Slime;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	TSubclassOf<AActor> NPCBlueprint;

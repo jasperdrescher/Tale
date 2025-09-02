@@ -10,9 +10,6 @@
 #include "Sound/SoundBase.h"
 
 UTalePlayerInventoryComponent::UTalePlayerInventoryComponent()
-	: bHasShield(false)
-	, bHasSword(false)
-	, PlayerCharacter(nullptr)
 {
 	PrimaryComponentTick.bCanEverTick = false;
 
@@ -157,10 +154,10 @@ void UTalePlayerInventoryComponent::RemoveItem(const FTaleItemData& ItemData)
 	PlayerInventoryWidget->ReloadInventory(Items);
 }
 
-FItemSearchResult UTalePlayerInventoryComponent::GetHealthPotion()
+FItemSearchResult UTalePlayerInventoryComponent::GetHealthPotion() const
 {
 	FItemSearchResult SearchResult;
-	for (FTaleItemData& itemData : Items)
+	for (const FTaleItemData& itemData : Items)
 	{
 		if (itemData.Type == ETaleItemType::HealthPotion)
 		{

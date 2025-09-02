@@ -17,7 +17,7 @@ struct FItemSearchResult
 	GENERATED_BODY()
 
 	UPROPERTY(BlueprintReadOnly)
-	bool bFound;
+	bool bFound = false;
 
 	UPROPERTY(BlueprintReadOnly)
 	FTaleItemData Item;
@@ -53,7 +53,7 @@ public:
 	void RemoveItem(const FTaleItemData& ItemData);
 
 	UFUNCTION(BlueprintCallable)
-	FItemSearchResult GetHealthPotion();
+	FItemSearchResult GetHealthPotion() const;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Inventory")
 	TSubclassOf<UTalePlayerInventoryWidget> PlayerInventoryWidgetClass;
@@ -62,16 +62,16 @@ public:
 	TArray<FTaleItemData> Items;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Inventory")
-	bool bHasShield;
+	bool bHasShield = false;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Inventory")
-	bool bHasSword;
+	bool bHasSword = false;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Audio")
-	class USoundBase* PickupSoundEffect;
+	class USoundBase* PickupSoundEffect = nullptr;
 
 private:
-	class ATalePlayerCharacter* PlayerCharacter;
+	class ATalePlayerCharacter* PlayerCharacter = nullptr;
 
 protected:
 	UPROPERTY(BlueprintReadOnly)
