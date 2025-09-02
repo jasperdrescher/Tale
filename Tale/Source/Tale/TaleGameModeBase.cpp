@@ -41,6 +41,8 @@ void ATaleGameModeBase::PlayerDied(AController* Controller)
 
 void ATaleGameModeBase::BeginPlay()
 {
+	Super::BeginPlay();
+
 	if (PerformanceWidgetClass)
 	{
 		PerformanceWidget = CreateWidget<UTalePerformanceWidget>(GetWorld(), PerformanceWidgetClass);

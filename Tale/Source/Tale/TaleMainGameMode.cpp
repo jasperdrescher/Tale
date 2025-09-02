@@ -6,3 +6,9 @@ ATaleMainGameMode::ATaleMainGameMode()
 	: ATaleGameModeBase()
 {
 }
+
+void ATaleMainGameMode::BeginPlay()
+{
+	Super::BeginPlay();
+
+}

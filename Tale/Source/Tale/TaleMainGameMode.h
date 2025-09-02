@@ -14,4 +14,7 @@ class TALE_API ATaleMainGameMode : public ATaleGameModeBase
 
 public:
 	ATaleMainGameMode();
+
+protected:
+	virtual void BeginPlay() override;
 };
