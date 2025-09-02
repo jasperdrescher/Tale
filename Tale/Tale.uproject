@@ -434,5 +434,8 @@
 			"Name": "OodleNetwork",
 			"Enabled": false
 		}
+	],
+	"TargetPlatforms": [
+		"Windows"
 	]
 }
