@@ -51,7 +51,11 @@ protected:
 private:
 	void InitAbilitySystemComponent();
 	void InitHUD() const;
+
+	UFUNCTION()
 	void OnMeleeHitBoxOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
+
+	UFUNCTION()
 	void OnSwordHitBoxOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
 
 	UStaticMeshComponent* SwordMeshComponent = nullptr;

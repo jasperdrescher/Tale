@@ -4,10 +4,12 @@
 
 #include "TalePlayerCharacter.h"
 #include "TalePlayerController.h"
+#include "TalePerformanceWidget.h"
 
-#include <GameFramework/SpectatorPawn.h>
-#include <Kismet/GameplayStatics.h>
-#include <UObject/Class.h>
+#include "Blueprint/UserWidget.h"
+#include "GameFramework/SpectatorPawn.h"
+#include "Kismet/GameplayStatics.h"
+#include "UObject/Class.h"
 
 ATaleGameModeBase::ATaleGameModeBase()
 	: RespawnDelaySeconds(1.0f)
@@ -30,15 +32,30 @@ void ATaleGameModeBase::PlayerDied(AController* Controller)
 	RespawnDelegate = FTimerDelegate::CreateUObject(this, &ATaleGameModeBase::RespawnPlayer, Controller);
 	GetWorldTimerManager().SetTimer(RespawnTimerHandle, RespawnDelegate, RespawnDelaySeconds, false);
 
-	ATalePlayerController* PC = Cast<ATalePlayerController>(Controller);
-	if (PC)
+	ATalePlayerController* PlayerController = Cast<ATalePlayerController>(Controller);
+	if (PlayerController)
 	{
-		PC->SetRespawnCountdown(RespawnDelaySeconds);
+		PlayerController->SetRespawnCountdown(RespawnDelaySeconds);
 	}
 }
 
 void ATaleGameModeBase::BeginPlay()
 {
+	if (PerformanceWidgetClass)
+	{
+		PerformanceWidget = CreateWidget<UTalePerformanceWidget>(GetWorld(), PerformanceWidgetClass);
+		if (PerformanceWidget)
+		{
+			if (!PerformanceWidget->AddToPlayerScreen())
+			{
+				if (GEngine)
+				{
+					GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("Failed to add PerformanceWidget"));
+				}
+			}
+		}
+	}
+
 	TArray<AActor*> FoundNPCSpawnPoints;
 	UGameplayStatics::GetAllActorsOfClass(GetWorld(), ATaleNPCSpawnPoint::StaticClass(), FoundNPCSpawnPoints);
 	for (AActor* Actor : FoundNPCSpawnPoints)

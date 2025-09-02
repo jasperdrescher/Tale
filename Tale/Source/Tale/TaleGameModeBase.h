@@ -2,11 +2,14 @@
 
 #pragma once
 
-#include "CoreMinimal.h"
-#include "GameFramework/GameModeBase.h"
 #include "TaleNPCSpawnPoint.h"
 
+#include "CoreMinimal.h"
+#include "GameFramework/GameModeBase.h"
+
 #include "TaleGameModeBase.generated.h"
+
+class UTalePerformanceWidget;
 
 UCLASS()
 class TALE_API ATaleGameModeBase : public AGameModeBase
@@ -16,13 +19,16 @@ class TALE_API ATaleGameModeBase : public AGameModeBase
 public:
 	ATaleGameModeBase();
 
+	void RespawnPlayer(AController* Controller);
+
 	UFUNCTION(BlueprintCallable)
 	void PlayerDied(AController* Controller);
 
 protected:
 	virtual void BeginPlay() override;
 
-	void RespawnPlayer(AController* Controller);
+	UPROPERTY(EditDefaultsOnly)
+	TSubclassOf<UTalePerformanceWidget> PerformanceWidgetClass;
 
 	UPROPERTY(EditDefaultsOnly, Category = "Spawning")
 	TSubclassOf<class ATalePlayerCharacter> PlayerClass;
@@ -32,4 +38,8 @@ protected:
 
 	UPROPERTY(EditDefaultsOnly, Category = "Spawning")
 	float RespawnDelaySeconds;
+
+private:
+	UPROPERTY()
+	TObjectPtr<UTalePerformanceWidget> PerformanceWidget;
 };
