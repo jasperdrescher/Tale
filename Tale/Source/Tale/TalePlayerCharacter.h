@@ -49,18 +49,30 @@ protected:
 	TObjectPtr<USphereComponent> SwordHitbox;
 
 	UPROPERTY(VisibleAnywhere, Category = "Combat")
+	TObjectPtr<USphereComponent> ShieldHitbox;
+
+	UPROPERTY(VisibleAnywhere, Category = "Combat")
 	TObjectPtr<UStaticMeshComponent> SwordMeshComponent;
 
 	UPROPERTY(VisibleAnywhere, Category = "Combat")
 	TObjectPtr<UStaticMeshComponent> ShieldMeshComponent;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Combat")
+	FName WeaponRSocketName = "Weapon_R";
+
+	UPROPERTY(EditDefaultsOnly, Category = "Combat")
+	FName WeaponLSocketName = "Weapon_L";
 
 private:
 	void InitAbilitySystemComponent();
 	void InitHUD() const;
 
 	UFUNCTION()
-	void OnMeleeHitBoxOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
+	void OnMeleeHitboxOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
 
 	UFUNCTION()
-	void OnSwordHitBoxOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
+	void OnSwordHitboxOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
+
+	UFUNCTION()
+	void OnShieldHitboxOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
 };
