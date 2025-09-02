@@ -14,35 +14,30 @@ ATalePlayerCharacter::ATalePlayerCharacter()
 {
 	PrimaryActorTick.bCanEverTick = true;
 
+	SwordMeshComponent = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("SwordMeshComponent"));
+	SwordMeshComponent->SetupAttachment(GetMesh(), TEXT("Weapon_R"));
+
+	ShieldMeshComponent = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("ShieldMeshComponent"));
+	ShieldMeshComponent->SetupAttachment(GetMesh(), TEXT("Weapon_L"));
+
 	MeleeHitbox = CreateDefaultSubobject<USphereComponent>(TEXT("MeleeHitbox"));
-	MeleeHitbox->SetupAttachment(GetMesh());
+	MeleeHitbox->SetupAttachment(GetMesh(), TEXT("Weapon_R"));
 	MeleeHitbox->SetCollisionProfileName("OverlapAllDynamic");
-	MeleeHitbox->SetGenerateOverlapEvents(false);
+	MeleeHitbox->SetGenerateOverlapEvents(true);
+	MeleeHitbox->CanCharacterStepUpOn = ECanBeCharacterBase::ECB_No;
+	MeleeHitbox->OnComponentBeginOverlap.AddDynamic(this, &ATalePlayerCharacter::OnMeleeHitBoxOverlap);
 
 	SwordHitbox = CreateDefaultSubobject<USphereComponent>(TEXT("SwordHitbox"));
-	SwordHitbox->SetupAttachment(GetMesh());
+	SwordHitbox->SetupAttachment(GetMesh(), TEXT("Weapon_L"));
 	SwordHitbox->SetCollisionProfileName("OverlapAllDynamic");
-	SwordHitbox->SetGenerateOverlapEvents(false);
+	SwordHitbox->SetGenerateOverlapEvents(true);
+	SwordHitbox->CanCharacterStepUpOn = ECanBeCharacterBase::ECB_No;
+	SwordHitbox->OnComponentBeginOverlap.AddDynamic(this, &ATalePlayerCharacter::OnSwordHitBoxOverlap);
 }
 
 void ATalePlayerCharacter::BeginPlay()
 {
-	MeleeHitbox->OnComponentBeginOverlap.AddDynamic(this, &ATalePlayerCharacter::OnMeleeHitBoxOverlap);
-	SwordHitbox->OnComponentBeginOverlap.AddDynamic(this, &ATalePlayerCharacter::OnSwordHitBoxOverlap);
-
-	TArray<UActorComponent*> FoundWeaponComponents = GetComponentsByTag(UStaticMeshComponent::StaticClass(), FName("Weapon_R"));
-	if (!FoundWeaponComponents.IsEmpty())
-	{
-		SwordMeshComponent = Cast<UStaticMeshComponent>(FoundWeaponComponents[0]);
-		MeleeHitbox->AttachToComponent(SwordMeshComponent, FAttachmentTransformRules::SnapToTargetNotIncludingScale);
-		SwordHitbox->AttachToComponent(SwordMeshComponent, FAttachmentTransformRules::SnapToTargetNotIncludingScale);
-	}
-
-	TArray<UActorComponent*> FoundShieldComponents = GetComponentsByTag(UStaticMeshComponent::StaticClass(), FName("Weapon_L"));
-	if (!FoundShieldComponents.IsEmpty())
-	{
-		ShieldMeshComponent = Cast<UStaticMeshComponent>(FoundShieldComponents[0]);
-	}
+	Super::BeginPlay();
 }
 
 void ATalePlayerCharacter::PossessedBy(AController* NewController)
@@ -128,11 +123,15 @@ void ATalePlayerCharacter::OnMeleeHitBoxOverlap(
 		FGameplayEventData EventData;
 		EventData.Instigator = this;
 		EventData.Target = OtherActor;
-		UAbilitySystemComponent* ASC = GetAbilitySystemComponent();
-		ASC->HandleGameplayEvent(
-			FGameplayTag::RequestGameplayTag("Event.Player.Melee.DamageTrigger"),
-			&EventData
-		);
+		UAbilitySystemComponent* AbilitySystemComponent = GetAbilitySystemComponent();
+		if (AbilitySystemComponent)
+		{
+			const FGameplayTag GameplayTag = FGameplayTag::RequestGameplayTag("Event.Player.Melee.DamageTrigger", true);
+			if (GameplayTag.IsValid())
+			{
+				AbilitySystemComponent->HandleGameplayEvent(GameplayTag, &EventData);
+			}
+		}
 	}
 }
 
@@ -149,10 +148,14 @@ void ATalePlayerCharacter::OnSwordHitBoxOverlap(
 		FGameplayEventData EventData;
 		EventData.Instigator = this;
 		EventData.Target = OtherActor;
-		UAbilitySystemComponent* ASC = GetAbilitySystemComponent();
-		ASC->HandleGameplayEvent(
-			FGameplayTag::RequestGameplayTag("Event.Player.Sword.DamageTrigger"),
-			&EventData
-		);
+		UAbilitySystemComponent* AbilitySystemComponent = GetAbilitySystemComponent();
+		if (AbilitySystemComponent)
+		{
+			const FGameplayTag GameplayTag = FGameplayTag::RequestGameplayTag("Event.Player.Sword.DamageTrigger", true);
+			if (GameplayTag.IsValid())
+			{
+				AbilitySystemComponent->HandleGameplayEvent(GameplayTag, &EventData);
+			}
+		}
 	}
 }
