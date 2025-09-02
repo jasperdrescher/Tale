@@ -16,9 +16,12 @@ ATalePlayerCharacter::ATalePlayerCharacter()
 
 	SwordMeshComponent = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("SwordMeshComponent"));
 	SwordMeshComponent->SetupAttachment(GetMesh(), WeaponRSocketName);
+	SwordMeshComponent->SetRelativeRotation(SwordMeshRotation);
 
 	ShieldMeshComponent = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("ShieldMeshComponent"));
 	ShieldMeshComponent->SetupAttachment(GetMesh(), WeaponLSocketName);
+	ShieldMeshComponent->SetRelativeLocation(ShieldMeshLocation);
+	ShieldMeshComponent->SetRelativeRotation(ShieldMeshRotation);
 
 	MeleeHitbox = CreateDefaultSubobject<USphereComponent>(TEXT("MeleeHitbox"));
 	MeleeHitbox->SetupAttachment(GetMesh(), WeaponRSocketName);
@@ -125,19 +128,22 @@ void ATalePlayerCharacter::OnMeleeHitboxOverlap(
 	bool bFromSweep,
 	const FHitResult& SweepResult)
 {
-	if (OtherActor != this)
+	if (OtherActor == this)
+		return;
+
+	if (!OtherActor->ActorHasTag(FName("Enemy")))
+		return;
+
+	FGameplayEventData EventData;
+	EventData.Instigator = this;
+	EventData.Target = OtherActor;
+	UAbilitySystemComponent* AbilitySystemComponent = GetAbilitySystemComponent();
+	if (AbilitySystemComponent)
 	{
-		FGameplayEventData EventData;
-		EventData.Instigator = this;
-		EventData.Target = OtherActor;
-		UAbilitySystemComponent* AbilitySystemComponent = GetAbilitySystemComponent();
-		if (AbilitySystemComponent)
+		const FGameplayTag GameplayTag = FGameplayTag::RequestGameplayTag("Event.Player.Melee.DamageTrigger", true);
+		if (GameplayTag.IsValid())
 		{
-			const FGameplayTag GameplayTag = FGameplayTag::RequestGameplayTag("Event.Player.Melee.DamageTrigger", true);
-			if (GameplayTag.IsValid())
-			{
-				AbilitySystemComponent->HandleGameplayEvent(GameplayTag, &EventData);
-			}
+			AbilitySystemComponent->HandleGameplayEvent(GameplayTag, &EventData);
 		}
 	}
 }
@@ -150,38 +156,44 @@ void ATalePlayerCharacter::OnSwordHitboxOverlap(
 	bool bFromSweep,
 	const FHitResult& SweepResult)
 {
-	if (OtherActor != this)
+	if (OtherActor == this)
+		return;
+
+	if (!OtherActor->ActorHasTag(FName("Enemy")))
+		return;
+
+	FGameplayEventData EventData;
+	EventData.Instigator = this;
+	EventData.Target = OtherActor;
+	UAbilitySystemComponent* AbilitySystemComponent = GetAbilitySystemComponent();
+	if (AbilitySystemComponent)
 	{
-		FGameplayEventData EventData;
-		EventData.Instigator = this;
-		EventData.Target = OtherActor;
-		UAbilitySystemComponent* AbilitySystemComponent = GetAbilitySystemComponent();
-		if (AbilitySystemComponent)
+		const FGameplayTag GameplayTag = FGameplayTag::RequestGameplayTag("Event.Player.Sword.DamageTrigger", true);
+		if (GameplayTag.IsValid())
 		{
-			const FGameplayTag GameplayTag = FGameplayTag::RequestGameplayTag("Event.Player.Sword.DamageTrigger", true);
-			if (GameplayTag.IsValid())
-			{
-				AbilitySystemComponent->HandleGameplayEvent(GameplayTag, &EventData);
-			}
+			AbilitySystemComponent->HandleGameplayEvent(GameplayTag, &EventData);
 		}
 	}
 }
 
 void ATalePlayerCharacter::OnShieldHitboxOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
-	if (OtherActor != this)
+	if (OtherActor == this)
+		return;
+
+	if (!OtherActor->ActorHasTag(FName("Enemy")))
+		return;
+
+	FGameplayEventData EventData;
+	EventData.Instigator = this;
+	EventData.Target = OtherActor;
+	UAbilitySystemComponent* AbilitySystemComponent = GetAbilitySystemComponent();
+	if (AbilitySystemComponent)
 	{
-		FGameplayEventData EventData;
-		EventData.Instigator = this;
-		EventData.Target = OtherActor;
-		UAbilitySystemComponent* AbilitySystemComponent = GetAbilitySystemComponent();
-		if (AbilitySystemComponent)
+		const FGameplayTag GameplayTag = FGameplayTag::RequestGameplayTag("Event.Player.Shield.Hitbox", true);
+		if (GameplayTag.IsValid())
 		{
-			const FGameplayTag GameplayTag = FGameplayTag::RequestGameplayTag("Event.Player.Shield.Hitbox", true);
-			if (GameplayTag.IsValid())
-			{
-				AbilitySystemComponent->HandleGameplayEvent(GameplayTag, &EventData);
-			}
+			AbilitySystemComponent->HandleGameplayEvent(GameplayTag, &EventData);
 		}
 	}
 }

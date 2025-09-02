@@ -18,6 +18,8 @@ ATaleEnemyCharacter::ATaleEnemyCharacter()
     EnemyAttributesWidgetComponent = CreateDefaultSubobject<UWidgetComponent>(TEXT("EnemyAttributesWidgetComponent"));
     EnemyAttributesWidgetComponent->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepRelativeTransform);
 	EnemyAttributesWidgetComponent->SetBlendMode(EWidgetBlendMode::Transparent);
+
+	Tags.Add(FName("Enemy"));
 }
 
 void ATaleEnemyCharacter::BeginPlay()

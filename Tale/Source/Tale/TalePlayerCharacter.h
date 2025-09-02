@@ -63,6 +63,15 @@ protected:
 	UPROPERTY(EditDefaultsOnly, Category = "Combat")
 	FName WeaponLSocketName = "Weapon_L";
 
+	UPROPERTY(EditDefaultsOnly, Category = "Combat")
+	FRotator SwordMeshRotation = FRotator(0.0f, 0.0f, -90.0f);
+
+	UPROPERTY(EditDefaultsOnly, Category = "Combat")
+	FRotator ShieldMeshRotation = FRotator(00.0f, 90.0f, 0.0f);
+
+	UPROPERTY(EditDefaultsOnly, Category = "Combat")
+	FVector ShieldMeshLocation = FVector(14.0f, 0.0f, 0.0f);
+
 private:
 	void InitAbilitySystemComponent();
 	void InitHUD() const;
