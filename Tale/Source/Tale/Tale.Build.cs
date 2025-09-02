@@ -16,7 +16,8 @@ public class Tale : ModuleRules
 			"CoreUObject",
 			"Engine",
 			"InputCore",
-        });
+			"RHI",
+		});
 
         PrivateDependencyModuleNames.AddRange(new string[]
         {
