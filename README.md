@@ -1,6 +1,6 @@
 [![ja](https://img.shields.io/badge/lang-ja-red.svg)](https://github.com/jasperdrescher/Tale/blob/main/README.ja.md)
 # Tale
-<img src="Tale/Tale.png" align="right" width="256">
+<img src="Resources/Art/Editor/Tale.png" align="right" width="256">
 Tall Tale, or Tale, is a singleplayer action-adventure game developed using Unreal Engine 5.
 The game is set in a medieval-inspired fantasy world with a variety of monsters. 
 <br /><br />
@@ -20,7 +20,7 @@ Most of the development is done as training at [Synapse Studio](https://synapse.
 - [UI Widgets](https://dev.epicgames.com/documentation/en-us/unreal-engine/widget-blueprints-in-umg-for-unreal-engine)
 
 ## Screenshots
-<img src="/Screenshot.png" width="512">
+<img src="Resources/GitHub/Screenshot.png" width="512">
 April 22, 2025
 
 ## C++ Code Style Guide

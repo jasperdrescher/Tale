@@ -1,6 +1,6 @@
 [![en](https://img.shields.io/badge/lang-en-blue.svg)](https://github.com/jasperdrescher/Tale/blob/main/README.md)
 # Tale
-<img src="Tale/Tale.png" align="right" width="256">
+<img src="Resources/Art/Editor/Tale.png" align="right" width="256">
 「Tall Tale」または「Tale」は、Unreal Engine 5を使用して開発されたシングルプレイヤー向けアクションアドベンチャーゲームです。このゲームは、中世をモチーフにしたファンタジー世界を舞台に、多様なモンスターが登場します。
 <br /><br />
 
@@ -18,7 +18,7 @@
 - [ウィジェット ブループリント](https://dev.epicgames.com/documentation/ja/unreal-engine/widget-blueprints-in-umg-for-unreal-engine)
 
 ## スクリーンショット
-<img src="/Screenshot.png" width="512">
+<img src="Resources/GitHub/Screenshot.png" width="512">
 2025年4月22日
 
 ## C++ コードスタイルガイド
