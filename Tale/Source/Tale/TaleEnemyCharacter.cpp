@@ -10,6 +10,8 @@
 #include "Camera/PlayerCameraManager.h"
 #include "Components/SphereComponent.h"
 #include "Kismet/GameplayStatics.h"
+#include "Perception/AIPerceptionComponent.h"
+#include "Perception/AISenseConfig_Sight.h"
 
 ATaleEnemyCharacter::ATaleEnemyCharacter()
 {
@@ -30,6 +32,22 @@ ATaleEnemyCharacter::ATaleEnemyCharacter()
 	MeleeHitbox->SetSphereRadius(MeleeHitboxRadius);
 	MeleeHitbox->CanCharacterStepUpOn = ECanBeCharacterBase::ECB_No;
 	MeleeHitbox->OnComponentBeginOverlap.AddDynamic(this, &ATaleEnemyCharacter::OnMeleeHitboxOverlap);
+
+	AIPerceptionComponent = CreateDefaultSubobject<UAIPerceptionComponent>(TEXT("AIPerceptionComponent"));
+	SightConfig = CreateDefaultSubobject<UAISenseConfig_Sight>(TEXT("SightConfig"));
+
+	SightConfig->SightRadius = 400.0f;
+	SightConfig->LoseSightRadius = 500.0f;
+	SightConfig->PeripheralVisionAngleDegrees = 90.0f;
+	SightConfig->SetMaxAge(5.0f);
+	SightConfig->DetectionByAffiliation.bDetectEnemies = true;
+	SightConfig->DetectionByAffiliation.bDetectFriendlies = true;
+	SightConfig->DetectionByAffiliation.bDetectNeutrals = true;
+
+	AIPerceptionComponent->ConfigureSense(*SightConfig);
+	AIPerceptionComponent->SetDominantSense(SightConfig->GetSenseImplementation());
+
+	AIPerceptionComponent->OnTargetPerceptionUpdated.AddDynamic(this, &ATaleEnemyCharacter::OnTargetPerceptionUpdated);
 
 	Tags.Add(FName("Enemy"));
 }
@@ -101,4 +119,24 @@ void ATaleEnemyCharacter::OnMeleeHitboxOverlap(
 	const FGameplayTag GameplayTag = FGameplayTag::RequestGameplayTag(MeleeHitGameplayTagName, true);
 
 	UAbilitySystemBlueprintLibrary::SendGameplayEventToActor(this, GameplayTag, EventData);
+}
+
+void ATaleEnemyCharacter::OnTargetPerceptionUpdated(AActor* Actor, FAIStimulus Stimulus)
+{
+	if (Stimulus.WasSuccessfullySensed())
+	{
+		if (Actor->ActorHasTag("Player"))
+		{
+			bHasSensedPlayer = true;
+			OnStartedSensingPlayer();
+		}
+	}
+	else
+	{
+		if (Actor->ActorHasTag("Player"))
+		{
+			bHasSensedPlayer = false;
+			OnStoppedSensingPlayer();
+		}
+	}
 }

@@ -6,9 +6,16 @@
 #include "CoreMinimal.h"
 #include "TaleCharacterBase.h"
 
+#include "Perception/AIPerceptionTypes.h"
+
 #include "TaleEnemyCharacter.generated.h"
 
+class AActor;
 class USphereComponent;
+class UPawnSensingComponent;
+class UPrimitiveComponent;
+class UAIPerceptionComponent;
+class UAISenseConfig_Sight;
 
 UCLASS()
 class TALE_API ATaleEnemyCharacter : public ATaleCharacterBase
@@ -43,7 +50,22 @@ protected:
 	UPROPERTY(EditDefaultsOnly, Category = "Combat")
 	float MeleeHitboxRadius = 100.0f;
 
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "AI")
+	UAIPerceptionComponent* AIPerceptionComponent;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "AI")
+	UAISenseConfig_Sight* SightConfig;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "AI")
+	bool bHasSensedPlayer = false;
+
+	virtual void OnStartedSensingPlayer() {}
+	virtual void OnStoppedSensingPlayer() {}
+
 private:
 	UFUNCTION()
 	void OnMeleeHitboxOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
+
+	UFUNCTION()
+	void OnTargetPerceptionUpdated(AActor* Actor, FAIStimulus Stimulus);
 };
