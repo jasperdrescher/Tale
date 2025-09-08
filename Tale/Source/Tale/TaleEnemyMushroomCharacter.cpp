@@ -42,8 +42,11 @@ void ATaleEnemyMushroomCharacter::OnStartedSensingPlayer()
 {
 	GetWorld()->GetTimerManager().ClearTimer(StoppedSensingTimerHandle);
 
-	bIsAwake = true;
-	WakeUp();
+	if (!bIsAwake)
+	{
+		bIsAwake = true;
+		WakeUp();
+	}
 }
 
 void ATaleEnemyMushroomCharacter::OnStoppedSensingPlayer()
