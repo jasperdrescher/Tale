@@ -8,6 +8,8 @@
 
 #include "TaleEnemyCharacter.generated.h"
 
+class USphereComponent;
+
 UCLASS()
 class TALE_API ATaleEnemyCharacter : public ATaleCharacterBase
 {
@@ -16,13 +18,32 @@ class TALE_API ATaleEnemyCharacter : public ATaleCharacterBase
 public:	
 	ATaleEnemyCharacter();
 
+	UFUNCTION(BlueprintCallable)
+	void EnableMeleeHitBox();
+
+	UFUNCTION(BlueprintCallable)
+	void DisableMeleeHitBox();
+
+protected:
+	virtual void BeginPlay() override;
+	virtual void Tick(float DeltaTime) override;
+
+	UPROPERTY(VisibleAnywhere, Category = "Combat")
+	TObjectPtr<USphereComponent> MeleeHitbox;
+
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "UI")
 	TObjectPtr<UWidgetComponent> EnemyAttributesWidgetComponent;
 
-protected:
-	// Called when the game starts
-	virtual void BeginPlay() override;
+	UPROPERTY(EditDefaultsOnly, Category = "Combat")
+	FName MeleeHitGameplayTagName = "Gameplay.Event.Montage.Enemy.Attack";
 
-	// Called every frame
-	virtual void Tick(float DeltaTime) override;
+	UPROPERTY(EditDefaultsOnly, Category = "Combat")
+	FVector MeleeHitboxOffset = FVector(50.0f, 0.0f, 20.0f);
+
+	UPROPERTY(EditDefaultsOnly, Category = "Combat")
+	float MeleeHitboxRadius = 100.0f;
+
+private:
+	UFUNCTION()
+	void OnMeleeHitboxOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
 };

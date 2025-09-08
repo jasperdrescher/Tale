@@ -50,6 +50,8 @@ ATalePlayerCharacter::ATalePlayerCharacter()
 	ShieldHitbox->SetGenerateOverlapEvents(false);
 	ShieldHitbox->CanCharacterStepUpOn = ECanBeCharacterBase::ECB_No;
 	ShieldHitbox->OnComponentBeginOverlap.AddDynamic(this, &ATalePlayerCharacter::OnShieldHitboxOverlap);
+
+	Tags.Add(FName("Player"));
 }
 
 void ATalePlayerCharacter::BeginPlay()
