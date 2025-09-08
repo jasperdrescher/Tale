@@ -3,11 +3,11 @@
 #include "TalePlayerCharacter.h"
 
 #include "TaleCharacterASC.h"
-#include "TaleCharacterBaseAttributeSet.h"
 #include "TaleHUD.h"
 #include "TalePlayerState.h"
 #include "TalePowerUpAttributeSet.h"
 
+#include "AbilitySystemBlueprintLibrary.h"
 #include "Components/SphereComponent.h"
 
 ATalePlayerCharacter::ATalePlayerCharacter()
@@ -17,30 +17,37 @@ ATalePlayerCharacter::ATalePlayerCharacter()
 	SwordMeshComponent = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("SwordMeshComponent"));
 	SwordMeshComponent->SetupAttachment(GetMesh(), WeaponRSocketName);
 	SwordMeshComponent->SetRelativeRotation(SwordMeshRotation);
+	SwordMeshComponent->SetCollisionProfileName("OverlapAllDynamic");
+	SwordMeshComponent->SetGenerateOverlapEvents(false);
+	SwordMeshComponent->CanCharacterStepUpOn = ECanBeCharacterBase::ECB_No;
 
 	ShieldMeshComponent = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("ShieldMeshComponent"));
 	ShieldMeshComponent->SetupAttachment(GetMesh(), WeaponLSocketName);
 	ShieldMeshComponent->SetRelativeLocation(ShieldMeshLocation);
 	ShieldMeshComponent->SetRelativeRotation(ShieldMeshRotation);
+	ShieldMeshComponent->SetCollisionProfileName("OverlapAllDynamic");
+	ShieldMeshComponent->SetGenerateOverlapEvents(false);
+	ShieldMeshComponent->CanCharacterStepUpOn = ECanBeCharacterBase::ECB_No;
 
 	MeleeHitbox = CreateDefaultSubobject<USphereComponent>(TEXT("MeleeHitbox"));
 	MeleeHitbox->SetupAttachment(GetMesh(), WeaponRSocketName);
 	MeleeHitbox->SetCollisionProfileName("OverlapAllDynamic");
-	MeleeHitbox->SetGenerateOverlapEvents(true);
+	MeleeHitbox->SetGenerateOverlapEvents(false);
 	MeleeHitbox->CanCharacterStepUpOn = ECanBeCharacterBase::ECB_No;
 	MeleeHitbox->OnComponentBeginOverlap.AddDynamic(this, &ATalePlayerCharacter::OnMeleeHitboxOverlap);
 
 	SwordHitbox = CreateDefaultSubobject<USphereComponent>(TEXT("SwordHitbox"));
 	SwordHitbox->SetupAttachment(GetMesh(), WeaponRSocketName);
 	SwordHitbox->SetCollisionProfileName("OverlapAllDynamic");
-	SwordHitbox->SetGenerateOverlapEvents(true);
+	SwordHitbox->SetGenerateOverlapEvents(false);
+	SwordHitbox->SetSphereRadius(SwordHitboxRadius);
 	SwordHitbox->CanCharacterStepUpOn = ECanBeCharacterBase::ECB_No;
 	SwordHitbox->OnComponentBeginOverlap.AddDynamic(this, &ATalePlayerCharacter::OnSwordHitboxOverlap);
 
 	ShieldHitbox = CreateDefaultSubobject<USphereComponent>(TEXT("ShieldHitbox"));
 	ShieldHitbox->SetupAttachment(GetMesh(), WeaponLSocketName);
 	ShieldHitbox->SetCollisionProfileName("OverlapAllDynamic");
-	ShieldHitbox->SetGenerateOverlapEvents(true);
+	ShieldHitbox->SetGenerateOverlapEvents(false);
 	ShieldHitbox->CanCharacterStepUpOn = ECanBeCharacterBase::ECB_No;
 	ShieldHitbox->OnComponentBeginOverlap.AddDynamic(this, &ATalePlayerCharacter::OnShieldHitboxOverlap);
 }
@@ -48,6 +55,22 @@ ATalePlayerCharacter::ATalePlayerCharacter()
 void ATalePlayerCharacter::BeginPlay()
 {
 	Super::BeginPlay();
+
+	FText GameplayTagError;
+	if (!FGameplayTag::IsValidGameplayTagString(SwordHitGameplayTagName.ToString(), &GameplayTagError))
+	{
+		UE_LOG(LogTemp, Error, TEXT("Invalid Gameplay Tag: %s"), *GameplayTagError.ToString());
+	}
+
+	if (!FGameplayTag::IsValidGameplayTagString(MeleeHitGameplayTagName.ToString(), &GameplayTagError))
+	{
+		UE_LOG(LogTemp, Error, TEXT("Invalid Gameplay Tag: %s"), *GameplayTagError.ToString());
+	}
+
+	if (!FGameplayTag::IsValidGameplayTagString(ShieldHitGameplayTagName.ToString(), &GameplayTagError))
+	{
+		UE_LOG(LogTemp, Error, TEXT("Invalid Gameplay Tag: %s"), *GameplayTagError.ToString());
+	}
 }
 
 void ATalePlayerCharacter::PossessedBy(AController* NewController)
@@ -134,18 +157,18 @@ void ATalePlayerCharacter::OnMeleeHitboxOverlap(
 	if (!OtherActor->ActorHasTag(FName("Enemy")))
 		return;
 
+	FGameplayAbilityTargetData_ActorArray* TargetDataActorArray = new FGameplayAbilityTargetData_ActorArray();
+	TargetDataActorArray->TargetActorArray.Add(OtherActor);
+	FGameplayAbilityTargetDataHandle TargetDataHandle(TargetDataActorArray);
+
 	FGameplayEventData EventData;
 	EventData.Instigator = this;
 	EventData.Target = OtherActor;
-	UAbilitySystemComponent* AbilitySystemComponent = GetAbilitySystemComponent();
-	if (AbilitySystemComponent)
-	{
-		const FGameplayTag GameplayTag = FGameplayTag::RequestGameplayTag("Event.Player.Melee.DamageTrigger", true);
-		if (GameplayTag.IsValid())
-		{
-			AbilitySystemComponent->HandleGameplayEvent(GameplayTag, &EventData);
-		}
-	}
+	EventData.TargetData = TargetDataHandle;
+
+	const FGameplayTag GameplayTag = FGameplayTag::RequestGameplayTag(MeleeHitGameplayTagName, true);
+
+	UAbilitySystemBlueprintLibrary::SendGameplayEventToActor(this, GameplayTag, EventData);
 }
 
 void ATalePlayerCharacter::OnSwordHitboxOverlap(
@@ -162,18 +185,18 @@ void ATalePlayerCharacter::OnSwordHitboxOverlap(
 	if (!OtherActor->ActorHasTag(FName("Enemy")))
 		return;
 
+	FGameplayAbilityTargetData_ActorArray* TargetDataActorArray = new FGameplayAbilityTargetData_ActorArray();
+	TargetDataActorArray->TargetActorArray.Add(OtherActor);
+	FGameplayAbilityTargetDataHandle TargetDataHandle(TargetDataActorArray);
+
 	FGameplayEventData EventData;
 	EventData.Instigator = this;
 	EventData.Target = OtherActor;
-	UAbilitySystemComponent* AbilitySystemComponent = GetAbilitySystemComponent();
-	if (AbilitySystemComponent)
-	{
-		const FGameplayTag GameplayTag = FGameplayTag::RequestGameplayTag("Event.Player.Sword.DamageTrigger", true);
-		if (GameplayTag.IsValid())
-		{
-			AbilitySystemComponent->HandleGameplayEvent(GameplayTag, &EventData);
-		}
-	}
+	EventData.TargetData = TargetDataHandle;
+
+	const FGameplayTag GameplayTag = FGameplayTag::RequestGameplayTag(SwordHitGameplayTagName, true);
+
+	UAbilitySystemBlueprintLibrary::SendGameplayEventToActor(this, GameplayTag, EventData);
 }
 
 void ATalePlayerCharacter::OnShieldHitboxOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
@@ -184,16 +207,16 @@ void ATalePlayerCharacter::OnShieldHitboxOverlap(UPrimitiveComponent* Overlapped
 	if (!OtherActor->ActorHasTag(FName("Enemy")))
 		return;
 
+	FGameplayAbilityTargetData_ActorArray* TargetDataActorArray = new FGameplayAbilityTargetData_ActorArray();
+	TargetDataActorArray->TargetActorArray.Add(OtherActor);
+	FGameplayAbilityTargetDataHandle TargetDataHandle(TargetDataActorArray);
+
 	FGameplayEventData EventData;
 	EventData.Instigator = this;
 	EventData.Target = OtherActor;
-	UAbilitySystemComponent* AbilitySystemComponent = GetAbilitySystemComponent();
-	if (AbilitySystemComponent)
-	{
-		const FGameplayTag GameplayTag = FGameplayTag::RequestGameplayTag("Event.Player.Shield.Hitbox", true);
-		if (GameplayTag.IsValid())
-		{
-			AbilitySystemComponent->HandleGameplayEvent(GameplayTag, &EventData);
-		}
-	}
+	EventData.TargetData = TargetDataHandle;
+
+	const FGameplayTag GameplayTag = FGameplayTag::RequestGameplayTag(ShieldHitGameplayTagName, true);
+
+	UAbilitySystemBlueprintLibrary::SendGameplayEventToActor(this, GameplayTag, EventData);
 }

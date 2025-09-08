@@ -72,6 +72,18 @@ protected:
 	UPROPERTY(EditDefaultsOnly, Category = "Combat")
 	FVector ShieldMeshLocation = FVector(14.0f, 0.0f, 0.0f);
 
+	UPROPERTY(EditDefaultsOnly, Category = "Combat")
+	float SwordHitboxRadius = 64.0f;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Combat")
+	FName SwordHitGameplayTagName = "Gameplay.Event.Montage.Player.SwordAttack";
+
+	UPROPERTY(EditDefaultsOnly, Category = "Combat")
+	FName MeleeHitGameplayTagName = "Gameplay.Event.Montage.Player.MeleeAttack";
+
+	UPROPERTY(EditDefaultsOnly, Category = "Combat")
+	FName ShieldHitGameplayTagName = "Gameplay.Event.Montage.Player.ShieldHit";
+
 private:
 	void InitAbilitySystemComponent();
 	void InitHUD() const;
