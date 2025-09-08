@@ -60,6 +60,8 @@ void ATaleEnemyCharacter::BeginPlay()
 
 void ATaleEnemyCharacter::Tick(float DeltaTime)
 {
+	Super::Tick(DeltaTime);
+
 	const APlayerCameraManager* PlayerCameraManager = UGameplayStatics::GetPlayerCameraManager(GetWorld(), 0);
 	if (!PlayerCameraManager)
 		return;
