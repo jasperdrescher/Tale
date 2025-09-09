@@ -41,6 +41,12 @@ protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "UI")
 	TObjectPtr<UWidgetComponent> EnemyAttributesWidgetComponent;
 
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "UI")
+	FVector AttributesWidgetOffset = FVector(0.0f, 0.0, 200.0f);
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "UI")
+	FVector2D AttributesWidgetSize = FVector2D(400.0f, 400.0f)
+
 	UPROPERTY(EditDefaultsOnly, Category = "Combat")
 	FName MeleeHitGameplayTagName = "Gameplay.Event.Montage.Enemy.Attack";
 

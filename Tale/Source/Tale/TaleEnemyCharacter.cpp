@@ -7,9 +7,7 @@
 #include "TaleEnemyAttributesWidget.h"
 
 #include "AbilitySystemBlueprintLibrary.h"
-#include "Camera/PlayerCameraManager.h"
 #include "Components/SphereComponent.h"
-#include "Kismet/GameplayStatics.h"
 #include "Perception/AIPerceptionComponent.h"
 #include "Perception/AISenseConfig_Sight.h"
 
@@ -21,8 +19,13 @@ ATaleEnemyCharacter::ATaleEnemyCharacter()
 	CharacterBaseAttributeSet = CreateDefaultSubobject<UTaleCharacterBaseAttributeSet>("CharacterBaseAttributeSet");
 
     EnemyAttributesWidgetComponent = CreateDefaultSubobject<UWidgetComponent>(TEXT("EnemyAttributesWidgetComponent"));
-    EnemyAttributesWidgetComponent->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepRelativeTransform);
+    EnemyAttributesWidgetComponent->SetupAttachment(RootComponent);
+	EnemyAttributesWidgetComponent->AddRelativeLocation(AttributesWidgetOffset);
 	EnemyAttributesWidgetComponent->SetBlendMode(EWidgetBlendMode::Transparent);
+	EnemyAttributesWidgetComponent->SetWidgetSpace(EWidgetSpace::Screen);
+	EnemyAttributesWidgetComponent->SetDrawSize(AttributesWidgetSize);
+	EnemyAttributesWidgetComponent->SetDrawAtDesiredSize(true);
+	EnemyAttributesWidgetComponent->SetPivot(FVector2D(0.5f, 0.5f));
 
 	MeleeHitbox = CreateDefaultSubobject<USphereComponent>(TEXT("MeleeHitbox"));
 	MeleeHitbox->SetupAttachment(RootComponent);
@@ -79,18 +82,6 @@ void ATaleEnemyCharacter::BeginPlay()
 void ATaleEnemyCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-
-	const APlayerCameraManager* PlayerCameraManager = UGameplayStatics::GetPlayerCameraManager(GetWorld(), 0);
-	if (!PlayerCameraManager)
-		return;
-
-	if (!EnemyAttributesWidgetComponent)
-		return;
-
-	const FVector CameraLocation = PlayerCameraManager->GetCameraLocation();
-	const FVector WidgetLocation = EnemyAttributesWidgetComponent->GetComponentLocation();
-	const FRotator LookAtRotation = (CameraLocation - WidgetLocation).Rotation();
-	EnemyAttributesWidgetComponent->SetWorldRotation(LookAtRotation);
 }
 
 void ATaleEnemyCharacter::OnMeleeHitboxOverlap(
