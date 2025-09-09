@@ -7,7 +7,9 @@
 #include "TaleEnemyAttributesWidget.h"
 
 #include "AbilitySystemBlueprintLibrary.h"
+#include "AIController.h"
 #include "Components/SphereComponent.h"
+#include "GenericTeamAgentInterface.h"
 #include "Perception/AIPerceptionComponent.h"
 #include "Perception/AISenseConfig_Sight.h"
 
@@ -36,23 +38,23 @@ ATaleEnemyCharacter::ATaleEnemyCharacter()
 	MeleeHitbox->CanCharacterStepUpOn = ECanBeCharacterBase::ECB_No;
 	MeleeHitbox->OnComponentBeginOverlap.AddDynamic(this, &ATaleEnemyCharacter::OnMeleeHitboxOverlap);
 
-	AIPerceptionComponent = CreateDefaultSubobject<UAIPerceptionComponent>(TEXT("AIPerceptionComponent"));
 	SightConfig = CreateDefaultSubobject<UAISenseConfig_Sight>(TEXT("SightConfig"));
-
-	SightConfig->SightRadius = 400.0f;
-	SightConfig->LoseSightRadius = 500.0f;
-	SightConfig->PeripheralVisionAngleDegrees = 90.0f;
-	SightConfig->SetMaxAge(5.0f);
+	SightConfig->SightRadius = SightRadius;
+	SightConfig->LoseSightRadius = LossSightRadius;
+	SightConfig->PeripheralVisionAngleDegrees = PeripheralVisionAngleDegrees;
+	SightConfig->SetMaxAge(MaxStimuliAge);
 	SightConfig->DetectionByAffiliation.bDetectEnemies = true;
 	SightConfig->DetectionByAffiliation.bDetectFriendlies = true;
-	SightConfig->DetectionByAffiliation.bDetectNeutrals = true;
+	SightConfig->DetectionByAffiliation.bDetectNeutrals = true; // TODO: Remove once team affilition is working
 
+	AIPerceptionComponent = CreateDefaultSubobject<UAIPerceptionComponent>(TEXT("AIPerceptionComponent"));
 	AIPerceptionComponent->ConfigureSense(*SightConfig);
 	AIPerceptionComponent->SetDominantSense(SightConfig->GetSenseImplementation());
-
 	AIPerceptionComponent->OnTargetPerceptionUpdated.AddDynamic(this, &ATaleEnemyCharacter::OnTargetPerceptionUpdated);
 
 	Tags.Add(FName("Enemy"));
+
+	CharacterTeamId = 1;
 }
 
 void ATaleEnemyCharacter::EnableMeleeHitBox()
@@ -76,6 +78,12 @@ void ATaleEnemyCharacter::BeginPlay()
 	if (UTaleEnemyAttributesWidget* EnemyAttributesWidget = Cast<UTaleEnemyAttributesWidget>(EnemyAttributesWidgetComponent->GetWidget()))
 	{
 		EnemyAttributesWidget->BindToAttributes(CharacterASC, CharacterBaseAttributeSet);
+	}
+
+	AAIController* AIController = Cast<AAIController>(GetController());
+	if (AIController)
+	{
+		AIController->SetGenericTeamId(GetGenericTeamId());
 	}
 }
 

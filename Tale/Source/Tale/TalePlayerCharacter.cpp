@@ -52,6 +52,8 @@ ATalePlayerCharacter::ATalePlayerCharacter()
 	ShieldHitbox->OnComponentBeginOverlap.AddDynamic(this, &ATalePlayerCharacter::OnShieldHitboxOverlap);
 
 	Tags.Add(FName("Player"));
+
+	CharacterTeamId = 1;
 }
 
 void ATalePlayerCharacter::BeginPlay()

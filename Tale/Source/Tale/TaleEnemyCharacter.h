@@ -56,6 +56,18 @@ protected:
 	UPROPERTY(EditDefaultsOnly, Category = "Combat")
 	float MeleeHitboxRadius = 100.0f;
 
+	UPROPERTY(EditDefaultsOnly, Category = "AI")
+	float SightRadius = 400.0f;
+
+	UPROPERTY(EditDefaultsOnly, Category = "AI")
+	float LossSightRadius = 500.0f;
+
+	UPROPERTY(EditDefaultsOnly, Category = "AI")
+	float PeripheralVisionAngleDegrees = 90.0f;
+
+	UPROPERTY(EditDefaultsOnly, Category = "AI")
+	float MaxStimuliAge = 5.0f;
+
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "AI")
 	UAIPerceptionComponent* AIPerceptionComponent;
 

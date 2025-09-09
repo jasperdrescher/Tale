@@ -5,6 +5,7 @@
 #include "AbilitySystemInterface.h"
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
+#include "GenericTeamAgentInterface.h"
 
 #include "TaleCharacterBase.generated.h"
 
@@ -15,24 +16,22 @@ class UTaleCharacterBaseAttributeSet;
 class UTalePowerUpAttributeSet;
 
 UCLASS()
-class TALE_API ATaleCharacterBase : public ACharacter, public IAbilitySystemInterface
+class TALE_API ATaleCharacterBase : public ACharacter, public IAbilitySystemInterface, public IGenericTeamAgentInterface
 {
 	GENERATED_BODY()
 
 public:
-	// Sets default values for this character's properties
 	ATaleCharacterBase();
 
 	virtual UTaleCharacterBaseAttributeSet* GetCharacterBaseAttributeSet() const;
 
-public:	
-	// Called every frame
+	virtual void BeginPlay() override;
 	virtual void Tick(float DeltaTime) override;
-
-	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
 	virtual UAbilitySystemComponent* GetAbilitySystemComponent() const override;
+
+	virtual FGenericTeamId GetGenericTeamId() const override;
 
 protected:
 	void GiveDefaultAbilities();
@@ -49,4 +48,11 @@ protected:
 
 	UPROPERTY()
 	TObjectPtr<UTaleCharacterBaseAttributeSet> CharacterBaseAttributeSet;
+
+	UPROPERTY()
+	int32 CharacterTeamId = 0;
+
+private:
+	UPROPERTY()
+	FGenericTeamId GenericTeamId;
 };

@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "GenericTeamAgentInterface.h"
 #include "TaleCharacterBase.h"
 
 #include "TalePlayerCharacter.generated.h"
