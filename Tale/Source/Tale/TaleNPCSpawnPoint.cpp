@@ -3,6 +3,7 @@
 #include "TaleNPCSpawnPoint.h"
 
 #include "TaleNPCDataRow.h"
+#include "TaleEnemyCharacter.h"
 
 ATaleNPCSpawnPoint::ATaleNPCSpawnPoint()
 {
@@ -23,10 +24,10 @@ void ATaleNPCSpawnPoint::FindDataTable()
     }
 }
 
-void ATaleNPCSpawnPoint::SpawnNPC()
+ATaleEnemyCharacter* ATaleNPCSpawnPoint::SpawnNPC()
 {
     if (!NPCBlueprint)
-        return;
+        return nullptr;
 
-    GetWorld()->SpawnActor<AActor>(NPCBlueprint, GetActorLocation(), GetActorRotation());
+    return GetWorld()->SpawnActor<ATaleEnemyCharacter>(NPCBlueprint, GetActorLocation(), GetActorRotation());
 }

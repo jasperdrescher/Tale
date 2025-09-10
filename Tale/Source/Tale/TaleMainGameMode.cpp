@@ -10,5 +10,4 @@ ATaleMainGameMode::ATaleMainGameMode()
 void ATaleMainGameMode::BeginPlay()
 {
 	Super::BeginPlay();
-
 }

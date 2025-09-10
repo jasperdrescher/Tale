@@ -5,6 +5,7 @@
 #include "TalePlayerCharacter.h"
 #include "TalePlayerController.h"
 #include "TalePerformanceWidget.h"
+#include "TaleEnemyCharacter.h"
 
 #include "Blueprint/UserWidget.h"
 #include "GameFramework/SpectatorPawn.h"
@@ -12,7 +13,6 @@
 #include "UObject/Class.h"
 
 ATaleGameModeBase::ATaleGameModeBase()
-	: RespawnDelaySeconds(1.0f)
 {
 	PrimaryActorTick.bCanEverTick = true;
 }
@@ -36,6 +36,25 @@ void ATaleGameModeBase::PlayerDied(AController* Controller)
 	if (PlayerController)
 	{
 		PlayerController->SetRespawnCountdown(RespawnDelaySeconds);
+	}
+
+	for (ATaleEnemyCharacter* SpawnedNPC : SpawnedNPCs)
+	{
+		if (SpawnedNPC)
+		{
+			SpawnedNPC->Destroy();
+		}
+	}
+	SpawnedNPCs.Empty();
+
+	for (ATaleNPCSpawnPoint* NPCSpawnPoint : NPCSpawnPoints)
+	{
+		NPCSpawnPoint->FindDataTable();
+		ATaleEnemyCharacter* SpawnedNPC = NPCSpawnPoint->SpawnNPC();
+		if (SpawnedNPC)
+		{
+			SpawnedNPCs.Emplace(SpawnedNPC);
+		}
 	}
 }
 
@@ -78,8 +97,14 @@ void ATaleGameModeBase::BeginPlay()
 		if (ATaleNPCSpawnPoint* NPCSpawnPoint = Cast<ATaleNPCSpawnPoint>(Actor))
 		{
 			NPCSpawnPoint->FindDataTable();
-			NPCSpawnPoint->SpawnNPC();
-			NPCSpawnPoints.Emplace(NPCSpawnPoint);
+			ATaleEnemyCharacter* SpawnedNPC = NPCSpawnPoint->SpawnNPC();
+			if (SpawnedNPC)
+			{
+				SpawnedNPCs.Emplace(SpawnedNPC);
+				NPCSpawnPoints.Emplace(NPCSpawnPoint);
+
+				SpawnedNPC->OnDestroyed.AddDynamic(this, &ATaleGameModeBase::OnSpawnedNPCDestroyed);
+			}
 		}
 	}
 
@@ -133,4 +158,17 @@ ETeamAttitude::Type ATaleGameModeBase::TeamAttitudeSolver(FGenericTeamId Generic
 		return ETeamAttitude::Neutral;
 
 	return ETeamAttitude::Hostile;
+}
+
+void ATaleGameModeBase::OnSpawnedNPCDestroyed(AActor* DestroyedActor)
+{
+	if (ATaleEnemyCharacter* TaleEnemyCharacter = Cast<ATaleEnemyCharacter>(DestroyedActor))
+	{
+		SpawnedNPCs.Remove(TaleEnemyCharacter);
+	}
+
+	if (SpawnedNPCs.IsEmpty())
+	{
+		LevelCleared();
+	}
 }

@@ -8,6 +8,8 @@
 
 #include "TaleNPCSpawnPoint.generated.h"
 
+class ATaleEnemyCharacter;
+
 UCLASS(Blueprintable, BlueprintType)
 class TALE_API ATaleNPCSpawnPoint : public AActor
 {
@@ -17,7 +19,7 @@ public:
 	ATaleNPCSpawnPoint();
 
 	void FindDataTable();
-	void SpawnNPC();
+	ATaleEnemyCharacter* SpawnNPC();
 
 protected:
 	UPROPERTY(EditDefaultsOnly)

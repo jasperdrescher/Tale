@@ -11,6 +11,7 @@
 #include "TaleGameModeBase.generated.h"
 
 class UTalePerformanceWidget;
+class ATaleEnemyCharacter;
 
 UCLASS()
 class TALE_API ATaleGameModeBase : public AGameModeBase
@@ -33,6 +34,9 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void RemoveFPSLimit();
 
+	UFUNCTION(BlueprintImplementableEvent)
+	void LevelCleared();
+
 protected:
 	virtual void BeginPlay() override;
 
@@ -45,10 +49,16 @@ protected:
 	UPROPERTY(VisibleAnywhere, Category = "Spawning")
 	TArray<ATaleNPCSpawnPoint*> NPCSpawnPoints;
 
+	UPROPERTY(VisibleAnywhere, Category = "Spawning")
+	TArray<ATaleEnemyCharacter*> SpawnedNPCs;
+
 	UPROPERTY(EditDefaultsOnly, Category = "Spawning")
-	float RespawnDelaySeconds;
+	float RespawnDelaySeconds = 1.0f;
 
 private:
+	UFUNCTION()
+	void OnSpawnedNPCDestroyed(AActor* DestroyedActor);
+
 	UPROPERTY()
 	TObjectPtr<UTalePerformanceWidget> PerformanceWidget;
 };
