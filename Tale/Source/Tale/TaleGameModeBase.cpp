@@ -43,6 +43,8 @@ void ATaleGameModeBase::BeginPlay()
 {
 	Super::BeginPlay();
 
+	FGenericTeamId::SetAttitudeSolver(&ATaleGameModeBase::TeamAttitudeSolver);
+
 	if (PerformanceWidgetClass)
 	{
 		PerformanceWidget = CreateWidget<UTalePerformanceWidget>(GetWorld(), PerformanceWidgetClass);
@@ -109,4 +111,15 @@ void ATaleGameModeBase::RespawnPlayer(AController* Controller)
 			PC->SetControlRotation(PlayerStart->GetActorRotation());
 		}
 	}
+}
+
+ETeamAttitude::Type ATaleGameModeBase::TeamAttitudeSolver(FGenericTeamId GenericTeamIdA, FGenericTeamId GenericTeamIdB)
+{
+	if (GenericTeamIdA == GenericTeamIdB)
+		return ETeamAttitude::Friendly;
+
+	if (GenericTeamIdA.GetId() == 0 || GenericTeamIdB.GetId() == 0)
+		return ETeamAttitude::Neutral;
+
+	return ETeamAttitude::Hostile;
 }

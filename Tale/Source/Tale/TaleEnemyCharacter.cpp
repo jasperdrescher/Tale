@@ -44,8 +44,8 @@ ATaleEnemyCharacter::ATaleEnemyCharacter()
 	SightConfig->PeripheralVisionAngleDegrees = PeripheralVisionAngleDegrees;
 	SightConfig->SetMaxAge(MaxStimuliAge);
 	SightConfig->DetectionByAffiliation.bDetectEnemies = true;
-	SightConfig->DetectionByAffiliation.bDetectFriendlies = true;
-	SightConfig->DetectionByAffiliation.bDetectNeutrals = true; // TODO: Remove once team affilition is working
+	SightConfig->DetectionByAffiliation.bDetectFriendlies = false;
+	SightConfig->DetectionByAffiliation.bDetectNeutrals = false;
 
 	AIPerceptionComponent = CreateDefaultSubobject<UAIPerceptionComponent>(TEXT("AIPerceptionComponent"));
 	AIPerceptionComponent->ConfigureSense(*SightConfig);
@@ -54,7 +54,7 @@ ATaleEnemyCharacter::ATaleEnemyCharacter()
 
 	Tags.Add(FName("Enemy"));
 
-	CharacterTeamId = 1;
+	CharacterTeamId = 2;
 }
 
 void ATaleEnemyCharacter::EnableMeleeHitBox()

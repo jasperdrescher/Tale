@@ -6,6 +6,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/GameModeBase.h"
+#include "GenericTeamAgentInterface.h"
 
 #include "TaleGameModeBase.generated.h"
 
@@ -18,6 +19,8 @@ class TALE_API ATaleGameModeBase : public AGameModeBase
 
 public:
 	ATaleGameModeBase();
+
+	static ETeamAttitude::Type TeamAttitudeSolver(FGenericTeamId GenericTeamIdA, FGenericTeamId GenericTeamIdB);
 
 	void RespawnPlayer(AController* Controller);
 
