@@ -62,12 +62,15 @@ void ATaleItemPickup::OnConstruction(const FTransform& Transform)
 	{
 		case ETaleItemType::Sword:
 			MeshComponent->SetStaticMesh(ItemData.Mesh);
+			MeshComponent->SetRelativeScale3D(ItemData.MeshScale);
 			break;
 		case ETaleItemType::Shield:
 			MeshComponent->SetStaticMesh(ItemData.Mesh);
+			MeshComponent->SetRelativeScale3D(ItemData.MeshScale);
 			break;
 		case ETaleItemType::HealthPotion:
 			MeshComponent->SetStaticMesh(ItemData.Mesh);
+			MeshComponent->SetRelativeScale3D(ItemData.MeshScale);
 			break;
 		case ETaleItemType::None:
 			break;

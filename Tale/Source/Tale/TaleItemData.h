@@ -15,8 +15,6 @@ struct FTaleItemData : public FTableRowBase
 {
 	GENERATED_BODY()
 
-	FTaleItemData();
-
 	bool operator==(const FTaleItemData& Other) const
 	{
 		return (Name.ToString() == Other.Name.ToString());
@@ -26,17 +24,20 @@ struct FTaleItemData : public FTableRowBase
 	FText Name;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Item")
-	bool bIsStackable;
+	bool bIsStackable = false;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Item")
-	int Quantity;
+	int Quantity = 1;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Item")
-	UTexture2D* Thumbnail;
+	UTexture2D* Thumbnail = nullptr;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Item")
-	ETaleItemType Type;
+	ETaleItemType Type = ETaleItemType::None;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Item")
-	UStaticMesh* Mesh;
+	UStaticMesh* Mesh = nullptr;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Item")
+	FVector MeshScale = FVector(1.0f, 1.0f, 1.0f);
 };
