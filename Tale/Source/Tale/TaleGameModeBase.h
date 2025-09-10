@@ -27,6 +27,12 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void PlayerDied(AController* Controller);
 
+	UFUNCTION(BlueprintCallable)
+	void LimitFPS();
+
+	UFUNCTION(BlueprintCallable)
+	void RemoveFPSLimit();
+
 protected:
 	virtual void BeginPlay() override;
 

@@ -39,6 +39,17 @@ void ATaleGameModeBase::PlayerDied(AController* Controller)
 	}
 }
 
+void ATaleGameModeBase::LimitFPS()
+{
+	GEngine->FixedFrameRate = 60.0f;
+	GEngine->bUseFixedFrameRate = true;
+}
+
+void ATaleGameModeBase::RemoveFPSLimit()
+{
+	GEngine->bUseFixedFrameRate = false;
+}
+
 void ATaleGameModeBase::BeginPlay()
 {
 	Super::BeginPlay();
