@@ -94,9 +94,6 @@ protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "AI")
 	bool bIsDying = false;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "AI")
-	bool bHasSeenPlayer = false;
-
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Animation")
 	UAnimMontage* GetHitAnimMontage;
 

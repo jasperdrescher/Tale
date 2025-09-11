@@ -70,23 +70,23 @@ void ATaleEnemyCharacter::DisableMeleeHitBox()
 
 void ATaleEnemyCharacter::HandleGetHitResponse()
 {
-	bHasSeenPlayer = true;
+	bHasSensedPlayer = true;
 
 	AAIController* AIController = Cast<AAIController>(GetController());
 	if (AIController && AIController->GetBlackboardComponent())
 	{
-		AIController->GetBlackboardComponent()->SetValueAsBool(FName("HasSeenPlayer"), bHasSeenPlayer);
+		AIController->GetBlackboardComponent()->SetValueAsBool(FName("HasSeenPlayer"), bHasSensedPlayer);
 	}
 }
 
 void ATaleEnemyCharacter::HandleDieResponse()
 {
-	bHasSeenPlayer = false;
+	bHasSensedPlayer = false;
 
 	AAIController* AIController = Cast<AAIController>(GetController());
 	if (AIController && AIController->GetBlackboardComponent())
 	{
-		AIController->GetBlackboardComponent()->SetValueAsBool(FName("HasSeenPlayer"), bHasSeenPlayer);
+		AIController->GetBlackboardComponent()->SetValueAsBool(FName("HasSeenPlayer"), bHasSensedPlayer);
 	}
 
 	bIsDying = true;
@@ -205,6 +205,13 @@ void ATaleEnemyCharacter::OnTargetPerceptionUpdated(AActor* Actor, FAIStimulus S
 		if (Actor->ActorHasTag("Player"))
 		{
 			bHasSensedPlayer = true;
+
+			AAIController* AIController = Cast<AAIController>(GetController());
+			if (AIController && AIController->GetBlackboardComponent())
+			{
+				AIController->GetBlackboardComponent()->SetValueAsBool(FName("HasSeenPlayer"), bHasSensedPlayer);
+			}
+
 			OnStartedSensingPlayer();
 		}
 	}
@@ -213,6 +220,13 @@ void ATaleEnemyCharacter::OnTargetPerceptionUpdated(AActor* Actor, FAIStimulus S
 		if (Actor->ActorHasTag("Player"))
 		{
 			bHasSensedPlayer = false;
+
+			AAIController* AIController = Cast<AAIController>(GetController());
+			if (AIController && AIController->GetBlackboardComponent())
+			{
+				AIController->GetBlackboardComponent()->SetValueAsBool(FName("HasSeenPlayer"), bHasSensedPlayer);
+			}
+
 			OnStoppedSensingPlayer();
 		}
 	}

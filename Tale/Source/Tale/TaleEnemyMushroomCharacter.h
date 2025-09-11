@@ -17,6 +17,9 @@ class TALE_API ATaleEnemyMushroomCharacter : public ATaleEnemyCharacter
 public:
 	ATaleEnemyMushroomCharacter();
 
+	UFUNCTION(BlueprintCallable)
+	void LookAtPlayer();
+
 protected:
 	virtual void BeginPlay() override;
 	virtual void Tick(float DeltaTime) override;

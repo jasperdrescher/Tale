@@ -11,6 +11,21 @@ ATaleEnemyMushroomCharacter::ATaleEnemyMushroomCharacter()
 	PrimaryActorTick.bCanEverTick = true;
 }
 
+void ATaleEnemyMushroomCharacter::LookAtPlayer()
+{
+	const APawn* PlayerPawn = UGameplayStatics::GetPlayerPawn(GetWorld(), 0);
+	if (!PlayerPawn)
+		return;
+
+	const FVector CurrentLocation = GetActorLocation();
+	const FVector TargetLocation = PlayerPawn->GetActorLocation();
+	const FRotator CurrentRotation = GetActorRotation();
+	FRotator TargetRotation = UKismetMathLibrary::FindLookAtRotation(CurrentLocation, TargetLocation);
+	TargetRotation.Roll = 0.0f;
+
+	SetActorRotation(TargetRotation);
+}
+
 void ATaleEnemyMushroomCharacter::BeginPlay()
 {
 	Super::BeginPlay();
@@ -21,23 +36,6 @@ void ATaleEnemyMushroomCharacter::BeginPlay()
 void ATaleEnemyMushroomCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-
-	if (bHasSensedPlayer)
-	{
-		const APawn* PlayerPawn = UGameplayStatics::GetPlayerPawn(GetWorld(), 0);
-		if (!PlayerPawn)
-			return;
-
-		const FVector CurrentLocation = GetActorLocation();
-		const FVector TargetLocation = PlayerPawn->GetActorLocation();
-		const FRotator CurrentRotation = GetActorRotation();
-		FRotator TargetRotation = UKismetMathLibrary::FindLookAtRotation(CurrentLocation, TargetLocation);
-		TargetRotation.Pitch = 0.0f;
-		TargetRotation.Roll = 0.0f;
-		
-		const FRotator NewRotation = FMath::RInterpTo(CurrentRotation, TargetRotation, DeltaTime, TargetRotationSpeed);
-		SetActorRotation(NewRotation);
-	}
 }
 
 void ATaleEnemyMushroomCharacter::OnStartedSensingPlayer()
