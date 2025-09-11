@@ -31,9 +31,23 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void DisableMeleeHitBox();
 
+	UFUNCTION(BlueprintCallable, Category = "AI")
+	void HandleGetHitResponse();
+
+	UFUNCTION(BlueprintCallable, Category = "AI")
+	void HandleDieResponse();
+
+	UFUNCTION(BlueprintCallable, Category = "Animation")
+	void PlayGetHitAnimMontage();
+
+	UFUNCTION(BlueprintCallable, Category = "Animation")
+	void PlayDieAnimMontage();
+
 protected:
 	virtual void BeginPlay() override;
 	virtual void Tick(float DeltaTime) override;
+	virtual void OnStartedSensingPlayer() {}
+	virtual void OnStoppedSensingPlayer() {}
 
 	UPROPERTY(VisibleAnywhere, Category = "Combat")
 	TObjectPtr<USphereComponent> MeleeHitbox;
@@ -77,8 +91,17 @@ protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "AI")
 	bool bHasSensedPlayer = false;
 
-	virtual void OnStartedSensingPlayer() {}
-	virtual void OnStoppedSensingPlayer() {}
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "AI")
+	bool bIsDying = false;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "AI")
+	bool bHasSeenPlayer = false;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Animation")
+	UAnimMontage* GetHitAnimMontage;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Animation")
+	UAnimMontage* DieAnimMontage;
 
 private:
 	UFUNCTION()

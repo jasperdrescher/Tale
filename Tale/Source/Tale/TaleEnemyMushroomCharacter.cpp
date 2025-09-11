@@ -14,6 +14,8 @@ ATaleEnemyMushroomCharacter::ATaleEnemyMushroomCharacter()
 void ATaleEnemyMushroomCharacter::BeginPlay()
 {
 	Super::BeginPlay();
+
+	OnDestroyed.AddDynamic(this, &ATaleEnemyMushroomCharacter::OnActorDestroyed);
 }
 
 void ATaleEnemyMushroomCharacter::Tick(float DeltaTime)
@@ -64,4 +66,21 @@ void ATaleEnemyMushroomCharacter::OnStoppedSensingTimerExpired()
 {
 	bIsAwake = false;
 	Sleep();
+}
+
+void ATaleEnemyMushroomCharacter::OnActorDestroyed(AActor* DestroyedActor)
+{
+	const FVector SpawnLocation = GetActorLocation();
+	const FRotator SpawnRotation = FRotator::ZeroRotator;
+
+	FActorSpawnParameters SpawnParams;
+	SpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AdjustIfPossibleButAlwaysSpawn;
+	SpawnParams.Instigator = GetInstigator();
+
+	GetWorld()->SpawnActor<AActor>(
+		PickupClass,
+		SpawnLocation,
+		SpawnRotation,
+		SpawnParams
+	);
 }

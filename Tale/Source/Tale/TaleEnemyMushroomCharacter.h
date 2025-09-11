@@ -5,6 +5,8 @@
 #include "CoreMinimal.h"
 #include "TaleEnemyCharacter.h"
 
+#include "TaleItemPickup.h"
+
 #include "TaleEnemyMushroomCharacter.generated.h"
 
 UCLASS()
@@ -28,6 +30,9 @@ protected:
 	UFUNCTION(BlueprintImplementableEvent)
 	void Sleep();
 
+	UPROPERTY(EditAnywhere, Category = "Pickup")
+	TSubclassOf<ATaleItemPickup> PickupClass;
+
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "AI")
 	float StoppedSensingTimer = 4.0f;
 
@@ -40,6 +45,9 @@ protected:
 private:
 	UFUNCTION()
 	void OnStoppedSensingTimerExpired();
+
+	UFUNCTION()
+	void OnActorDestroyed(AActor* DestroyedActor);
 
 	UPROPERTY()
 	FTimerHandle StoppedSensingTimerHandle;

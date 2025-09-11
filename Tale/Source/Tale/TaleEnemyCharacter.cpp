@@ -8,6 +8,7 @@
 
 #include "AbilitySystemBlueprintLibrary.h"
 #include "AIController.h"
+#include "BehaviorTree/BlackboardComponent.h"
 #include "Components/SphereComponent.h"
 #include "GenericTeamAgentInterface.h"
 #include "Perception/AIPerceptionComponent.h"
@@ -65,6 +66,83 @@ void ATaleEnemyCharacter::EnableMeleeHitBox()
 void ATaleEnemyCharacter::DisableMeleeHitBox()
 {
 	MeleeHitbox->SetGenerateOverlapEvents(false);
+}
+
+void ATaleEnemyCharacter::HandleGetHitResponse()
+{
+	bHasSeenPlayer = true;
+
+	AAIController* AIController = Cast<AAIController>(GetController());
+	if (AIController && AIController->GetBlackboardComponent())
+	{
+		AIController->GetBlackboardComponent()->SetValueAsBool(FName("HasSeenPlayer"), bHasSeenPlayer);
+	}
+}
+
+void ATaleEnemyCharacter::HandleDieResponse()
+{
+	bHasSeenPlayer = false;
+
+	AAIController* AIController = Cast<AAIController>(GetController());
+	if (AIController && AIController->GetBlackboardComponent())
+	{
+		AIController->GetBlackboardComponent()->SetValueAsBool(FName("HasSeenPlayer"), bHasSeenPlayer);
+	}
+
+	bIsDying = true;
+
+	if (AIController && AIController->GetBlackboardComponent())
+	{
+		AIController->GetBlackboardComponent()->SetValueAsBool(FName("IsDying"), bIsDying);
+	}
+
+	GetController()->UnPossess();
+}
+
+void ATaleEnemyCharacter::PlayGetHitAnimMontage()
+{
+	if (!GetHitAnimMontage)
+	{
+		UE_LOG(LogTemp, Error, TEXT("No Anim Montage found"));
+		return;
+	}
+
+	UAnimInstance* AnimInstance = GetMesh()->GetAnimInstance();
+	if (!AnimInstance)
+	{
+		UE_LOG(LogTemp, Error, TEXT("No Anim Montage found"));
+		return;
+	}
+
+	const float Duration = AnimInstance->Montage_Play(GetHitAnimMontage, 1.0f);
+	if (Duration == 0.0f)
+	{
+		UE_LOG(LogTemp, Error, TEXT("Failed to play Anim Montage"));
+	}
+}
+
+void ATaleEnemyCharacter::PlayDieAnimMontage()
+{
+	if (!DieAnimMontage)
+	{
+		UE_LOG(LogTemp, Error, TEXT("No Anim Montage found"));
+		return;
+	}
+
+	UAnimInstance* AnimInstance = GetMesh()->GetAnimInstance();
+	if (!AnimInstance)
+	{
+		UE_LOG(LogTemp, Error, TEXT("No Anim Montage found"));
+		return;
+	}
+
+	const float Duration = AnimInstance->Montage_Play(DieAnimMontage, 1.0f);
+	if (Duration == 0.0f)
+	{
+		UE_LOG(LogTemp, Error, TEXT("Failed to play Anim Montage"));
+	}
+
+	SetLifeSpan(Duration);
 }
 
 void ATaleEnemyCharacter::BeginPlay()
