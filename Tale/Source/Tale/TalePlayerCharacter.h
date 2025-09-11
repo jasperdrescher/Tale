@@ -10,6 +10,7 @@
 
 class UStaticMeshComponent;
 class USphereComponent;
+class UCapsuleComponent;
 
 UCLASS()
 class TALE_API ATalePlayerCharacter : public ATaleCharacterBase
@@ -47,7 +48,7 @@ protected:
 	TObjectPtr<USphereComponent> MeleeHitbox;
 
 	UPROPERTY(VisibleAnywhere, Category = "Combat")
-	TObjectPtr<USphereComponent> SwordHitbox;
+	TObjectPtr<UCapsuleComponent> SwordHitbox;
 
 	UPROPERTY(VisibleAnywhere, Category = "Combat")
 	TObjectPtr<USphereComponent> ShieldHitbox;
@@ -68,13 +69,22 @@ protected:
 	FRotator SwordMeshRotation = FRotator(0.0f, 0.0f, -90.0f);
 
 	UPROPERTY(EditDefaultsOnly, Category = "Combat")
-	FRotator ShieldMeshRotation = FRotator(00.0f, 90.0f, 0.0f);
+	FRotator ShieldMeshRotation = FRotator(0.0f, 90.0f, 0.0f);
 
 	UPROPERTY(EditDefaultsOnly, Category = "Combat")
 	FVector ShieldMeshLocation = FVector(14.0f, 0.0f, 0.0f);
 
 	UPROPERTY(EditDefaultsOnly, Category = "Combat")
-	float SwordHitboxRadius = 64.0f;
+	FVector SwordHitboxLocation = FVector(0.0f, -60.0f, 0.0f);
+
+	UPROPERTY(EditDefaultsOnly, Category = "Combat")
+	FRotator SwordHitboxRotation = FRotator(0.0f, 0.0f, 90.0f);
+
+	UPROPERTY(EditDefaultsOnly, Category = "Combat")
+	float SwordHitboxRadius = 22.0f;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Combat")
+	float SwordHitboxHalfHeight = 50.0f;
 
 	UPROPERTY(EditDefaultsOnly, Category = "Combat")
 	FName SwordHitGameplayTagName = "Gameplay.Event.Montage.Player.SwordAttack";

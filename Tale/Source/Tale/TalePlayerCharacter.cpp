@@ -8,6 +8,7 @@
 #include "TalePowerUpAttributeSet.h"
 
 #include "AbilitySystemBlueprintLibrary.h"
+#include "Components/CapsuleComponent.h"
 #include "Components/SphereComponent.h"
 
 ATalePlayerCharacter::ATalePlayerCharacter()
@@ -36,11 +37,14 @@ ATalePlayerCharacter::ATalePlayerCharacter()
 	MeleeHitbox->CanCharacterStepUpOn = ECanBeCharacterBase::ECB_No;
 	MeleeHitbox->OnComponentBeginOverlap.AddDynamic(this, &ATalePlayerCharacter::OnMeleeHitboxOverlap);
 
-	SwordHitbox = CreateDefaultSubobject<USphereComponent>(TEXT("SwordHitbox"));
+	SwordHitbox = CreateDefaultSubobject<UCapsuleComponent>(TEXT("SwordHitbox"));
 	SwordHitbox->SetupAttachment(GetMesh(), WeaponRSocketName);
 	SwordHitbox->SetCollisionProfileName("OverlapAllDynamic");
 	SwordHitbox->SetGenerateOverlapEvents(false);
-	SwordHitbox->SetSphereRadius(SwordHitboxRadius);
+	SwordHitbox->SetRelativeLocation(SwordHitboxLocation);
+	SwordHitbox->SetRelativeRotation(SwordHitboxRotation);
+	SwordHitbox->SetCapsuleRadius(SwordHitboxRadius);
+	SwordHitbox->SetCapsuleHalfHeight(SwordHitboxHalfHeight);
 	SwordHitbox->CanCharacterStepUpOn = ECanBeCharacterBase::ECB_No;
 	SwordHitbox->OnComponentBeginOverlap.AddDynamic(this, &ATalePlayerCharacter::OnSwordHitboxOverlap);
 
