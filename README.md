@@ -12,6 +12,7 @@ To keep the goal within reach, there will be 1 level with 4 hostile NPCs and 1 p
 Most of the development is done as training at [Synapse Studio](https://synapse.crdg.jp/).
 
 ## Applied Features
+- [AI Behavior Trees, AI Perception, Navigation System](https://dev.epicgames.com/documentation/en-us/unreal-engine/artificial-intelligence-in-unreal-engine)
 - [Animations and Animation Montages](https://dev.epicgames.com/documentation/en-us/unreal-engine/animation-montage-in-unreal-engine)
 - [Enhanced Input](https://dev.epicgames.com/documentation/en-us/unreal-engine/enhanced-input-in-unreal-engine)
 - [Sound Cues, Sound Waves and Ambient Sound](https://dev.epicgames.com/documentation/en-us/unreal-engine/audio-in-unreal-engine-5)
@@ -28,3 +29,4 @@ C++ code in this repository uses Epic's official [C++ Coding Standard](https://d
 
 ## Credits
 This project uses free art assets from [Fab](https://www.fab.com/channels/unreal-engine) and sound effects from [Pixabay](https://pixabay.com/sound-effects/) for non-commercial use.
+
