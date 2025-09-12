@@ -3,7 +3,6 @@
 #pragma once
 
 #include "CoreMinimal.h"
-
 #include "TaleNPCType.generated.h"
 
 UENUM(BlueprintType)
