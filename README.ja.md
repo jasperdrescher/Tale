@@ -10,6 +10,7 @@
 開発の大部分は、[Synapse Studio](https://synapse.crdg.jp/)でのトレーニングとして行われています。
 
 ## 適用機能
+- [AI ビヘイビアツリー AI コンポーネント ナビゲーションシステム](https://dev.epicgames.com/documentation/ja-jp/unreal-engine/artificial-intelligence-in-unreal-engine)
 - [アニメーション モンタージュ](https://dev.epicgames.com/documentation/ja/unreal-engine/animation-montage-in-unreal-engine)
 - [Enhanced Input](https://dev.epicgames.com/documentation/ja/unreal-engine/enhanced-input-in-unreal-engine)
 - [オーディオ](https://dev.epicgames.com/documentation/ja/unreal-engine/audio-in-unreal-engine-5)
