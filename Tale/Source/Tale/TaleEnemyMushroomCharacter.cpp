@@ -21,6 +21,7 @@ void ATaleEnemyMushroomCharacter::LookAtPlayer()
 	const FVector TargetLocation = PlayerPawn->GetActorLocation();
 	const FRotator CurrentRotation = GetActorRotation();
 	FRotator TargetRotation = UKismetMathLibrary::FindLookAtRotation(CurrentLocation, TargetLocation);
+	TargetRotation.Pitch = FMath::Clamp(TargetRotation.Pitch, 0.0f, MaxPitchAngle);
 	TargetRotation.Roll = 0.0f;
 
 	SetActorRotation(TargetRotation);

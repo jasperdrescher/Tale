@@ -43,6 +43,9 @@ protected:
 	float TargetRotationSpeed = 2.0f;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "AI")
+	float MaxPitchAngle = 26.0f;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "AI")
 	bool bIsAwake = false;
 
 private:
