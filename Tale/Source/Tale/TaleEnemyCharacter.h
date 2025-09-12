@@ -52,6 +52,9 @@ protected:
 	UPROPERTY(VisibleAnywhere, Category = "Combat")
 	TObjectPtr<USphereComponent> MeleeHitbox;
 
+	UPROPERTY(VisibleAnywhere, Category = "Combat")
+	TObjectPtr<USphereComponent> CloseRangeHitbox;
+
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "UI")
 	TObjectPtr<UWidgetComponent> EnemyAttributesWidgetComponent;
 
@@ -69,6 +72,9 @@ protected:
 
 	UPROPERTY(EditDefaultsOnly, Category = "Combat")
 	float MeleeHitboxRadius = 100.0f;
+
+	UPROPERTY(EditDefaultsOnly, Category = "AI")
+	float CloseRangeHitboxRadius = 200.0f;
 
 	UPROPERTY(EditDefaultsOnly, Category = "AI")
 	float SightRadius = 400.0f;
@@ -94,6 +100,9 @@ protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "AI")
 	bool bIsDying = false;
 
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "AI")
+	bool bIsPlayerCloseRange = false;
+
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Animation")
 	UAnimMontage* GetHitAnimMontage;
 
@@ -103,6 +112,12 @@ protected:
 private:
 	UFUNCTION()
 	void OnMeleeHitboxOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
+
+	UFUNCTION()
+	void OnCloseRangeHitboxOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
+
+	UFUNCTION()
+	void OnCloseRangeHitboxEndOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
 
 	UFUNCTION()
 	void OnTargetPerceptionUpdated(AActor* Actor, FAIStimulus Stimulus);

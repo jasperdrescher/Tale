@@ -56,6 +56,7 @@ ATalePlayerCharacter::ATalePlayerCharacter()
 	ShieldHitbox->OnComponentBeginOverlap.AddDynamic(this, &ATalePlayerCharacter::OnShieldHitboxOverlap);
 
 	Tags.Add(FName("Player"));
+	GetCapsuleComponent()->ComponentTags.Add("PlayerCollider");
 
 	CharacterTeamId = 1;
 }
