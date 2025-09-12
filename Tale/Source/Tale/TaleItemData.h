@@ -2,11 +2,10 @@
 
 #pragma once
 
-#include "TaleItemType.h"
-
 #include "Engine/DataTable.h"
 #include "Engine/StaticMesh.h"
 #include "Engine/Texture2D.h"
+#include "TaleItemType.h"
 
 #include "TaleItemData.generated.h"
 

@@ -2,12 +2,11 @@
 
 #include "TalePlayerInventoryComponent.h"
 
-#include "TaleItemPickup.h"
-#include "TalePlayerCharacter.h"
-
 #include "EngineUtils.h"
 #include "Kismet/GameplayStatics.h"
 #include "Sound/SoundBase.h"
+#include "TaleItemPickup.h"
+#include "TalePlayerCharacter.h"
 
 UTalePlayerInventoryComponent::UTalePlayerInventoryComponent()
 {

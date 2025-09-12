@@ -2,8 +2,8 @@
 
 #pragma once
 
-#include "CoreMinimal.h"
 #include "Blueprint/UserWidget.h"
+#include "CoreMinimal.h"
 #include "TaleItemData.h"
 
 #include "TalePlayerInventoryWidget.generated.h"

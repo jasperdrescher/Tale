@@ -2,14 +2,13 @@
 
 #include "TaleItemPickup.h"
 
-#include "TaleItemData.h"
-
 #include "Components/BillboardComponent.h"
 #include "Components/BoxComponent.h"
 #include "Components/MaterialBillboardComponent.h"
 #include "NiagaraComponent.h"
 #include "NiagaraFunctionLibrary.h"
 #include "NiagaraSystemInstance.h"
+#include "TaleItemData.h"
 
 ATaleItemPickup::ATaleItemPickup()
 	: SceneRootComponent(nullptr)

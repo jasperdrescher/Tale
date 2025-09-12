@@ -2,9 +2,8 @@
 
 #include "TaleGymGameMode.h"
 
-#include "TalePlayerCharacter.h"
-
 #include "Kismet/GameplayStatics.h"
+#include "TalePlayerCharacter.h"
 
 ATaleGymGameMode::ATaleGymGameMode()
 	: ATaleGameModeBase()

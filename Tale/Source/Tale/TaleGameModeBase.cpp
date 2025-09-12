@@ -2,14 +2,13 @@
 
 #include "TaleGameModeBase.h"
 
-#include "TalePlayerCharacter.h"
-#include "TalePlayerController.h"
-#include "TalePerformanceWidget.h"
-#include "TaleEnemyCharacter.h"
-
 #include "Blueprint/UserWidget.h"
 #include "GameFramework/SpectatorPawn.h"
 #include "Kismet/GameplayStatics.h"
+#include "TaleEnemyCharacter.h"
+#include "TalePerformanceWidget.h"
+#include "TalePlayerCharacter.h"
+#include "TalePlayerController.h"
 #include "UObject/Class.h"
 
 ATaleGameModeBase::ATaleGameModeBase()

@@ -2,11 +2,10 @@
 
 #pragma once
 
-#include "TaleNPCSpawnPoint.h"
-
 #include "CoreMinimal.h"
 #include "GameFramework/GameModeBase.h"
 #include "GenericTeamAgentInterface.h"
+#include "TaleNPCSpawnPoint.h"
 
 #include "TaleGameModeBase.generated.h"
 

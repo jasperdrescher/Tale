@@ -2,8 +2,8 @@
 
 #pragma once
 
-#include "CoreMinimal.h"
 #include "Abilities/GameplayAbility.h"
+#include "CoreMinimal.h"
 
 #include "TalePlayerSwordAttackAbility.generated.h"
 
