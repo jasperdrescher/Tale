@@ -67,14 +67,14 @@ void UTalePlayerInventoryComponent::TryEquipShield()
 	if (!PlayerCharacter->GetShieldMeshComponent())
 		return;
 
-	for (const FTaleItemData& itemData : Items)
+	for (const FTaleItemData& ItemData : Items)
 	{
-		if (itemData.Type == ETaleItemType::Shield)
+		if (ItemData.Type == ETaleItemType::Shield)
 		{
-			if (!itemData.Mesh)
+			if (!ItemData.Mesh)
 				continue;
 
-			if (PlayerCharacter->GetShieldMeshComponent()->SetStaticMesh(itemData.Mesh))
+			if (PlayerCharacter->GetShieldMeshComponent()->SetStaticMesh(ItemData.Mesh))
 			{
 				break;
 			}

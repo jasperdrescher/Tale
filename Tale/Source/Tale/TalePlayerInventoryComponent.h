@@ -11,6 +11,8 @@
 
 #include "TalePlayerInventoryComponent.generated.h"
 
+class UInputAction;
+
 USTRUCT(BlueprintType)
 struct FItemSearchResult
 {
@@ -29,16 +31,17 @@ class TALE_API UTalePlayerInventoryComponent : public UActorComponent
 	GENERATED_BODY()
 
 public:	
-	// Sets default values for this component's properties
 	UTalePlayerInventoryComponent();
 
-protected:
-	// Called when the game starts
 	virtual void BeginPlay() override;
-
-public:	
-	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
+
+protected:
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Input")
+	UInputAction* EquipSwordInputAction;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Input")
+	UInputAction* EquipShieldInputAction;
 
 	UFUNCTION(BlueprintCallable)
 	void TryEquipSword();

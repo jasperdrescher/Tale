@@ -11,6 +11,8 @@
 class UStaticMeshComponent;
 class USphereComponent;
 class UCapsuleComponent;
+class UInputComponent;
+class UInputMappingContext;
 
 UCLASS()
 class TALE_API ATalePlayerCharacter : public ATaleCharacterBase
@@ -22,6 +24,7 @@ public:
 
 	virtual void BeginPlay() override;
 	virtual void PossessedBy(AController* NewController) override;
+	virtual void SetupPlayerInputComponent(UInputComponent* PlayerInputComponent);
 
 	UTalePowerUpAttributeSet* GetPowerUpAttributeSet() const;
 
@@ -94,6 +97,9 @@ protected:
 
 	UPROPERTY(EditDefaultsOnly, Category = "Combat")
 	FName ShieldHitGameplayTagName = "Gameplay.Event.Montage.Player.ShieldHit";
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Input")
+	UInputMappingContext* InputMappingContext;
 
 private:
 	void InitAbilitySystemComponent();

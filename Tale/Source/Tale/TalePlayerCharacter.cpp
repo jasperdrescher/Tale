@@ -2,13 +2,15 @@
 
 #include "TalePlayerCharacter.h"
 
+#include "AbilitySystemBlueprintLibrary.h"
+#include "Components/CapsuleComponent.h"
+#include "Components/SphereComponent.h"
+#include "EnhancedInputComponent.h"
+#include "EnhancedInputSubsystems.h"
 #include "TaleCharacterASC.h"
 #include "TaleHUD.h"
 #include "TalePlayerState.h"
 #include "TalePowerUpAttributeSet.h"
-#include "AbilitySystemBlueprintLibrary.h"
-#include "Components/CapsuleComponent.h"
-#include "Components/SphereComponent.h"
 
 ATalePlayerCharacter::ATalePlayerCharacter()
 {
@@ -64,6 +66,14 @@ void ATalePlayerCharacter::BeginPlay()
 {
 	Super::BeginPlay();
 
+	if (APlayerController* PlayerController = Cast<APlayerController>(GetController()))
+	{
+		if (UEnhancedInputLocalPlayerSubsystem* EnhancedInputLocalPlayerSubsystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(PlayerController->GetLocalPlayer()))
+		{
+			EnhancedInputLocalPlayerSubsystem->AddMappingContext(InputMappingContext, 0);
+		}
+	}
+
 	FText GameplayTagError;
 	if (!FGameplayTag::IsValidGameplayTagString(SwordHitGameplayTagName.ToString(), &GameplayTagError))
 	{
@@ -88,6 +98,16 @@ void ATalePlayerCharacter::PossessedBy(AController* NewController)
 	InitAbilitySystemComponent();
 	GiveDefaultAbilities();
 	GiveDefaultEffects();
+}
+
+void ATalePlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
+{
+	Super::SetupPlayerInputComponent(PlayerInputComponent);
+
+	if (UEnhancedInputComponent* EnhancedInput = Cast<UEnhancedInputComponent>(PlayerInputComponent))
+	{
+		//EnhancedInput->BindAction(JumpAction, ETriggerEvent::Triggered, this, &ATalePlayerCharacter::HandleJump);
+	}
 }
 
 void ATalePlayerCharacter::InitAbilitySystemComponent()

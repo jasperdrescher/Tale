@@ -18,6 +18,7 @@ public class Tale : ModuleRules
 			"InputCore",
 			"RHI",
 			"AIModule",
+			"EnhancedInput",
 		});
 
         PrivateDependencyModuleNames.AddRange(new string[]
