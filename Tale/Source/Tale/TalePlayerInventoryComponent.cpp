@@ -28,12 +28,32 @@ void UTalePlayerInventoryComponent::BeginPlay()
 	}
 
 	PlayerInventoryWidget = CreateWidget<UTalePlayerInventoryWidget>(GetWorld()->GetFirstPlayerController(), PlayerInventoryWidgetClass);
-	PlayerInventoryWidget->ReloadInventory(Items);
+	if (PlayerInventoryWidget)
+	{
+		PlayerInventoryWidget->AddToViewport();
+		PlayerInventoryWidget->SetVisibility(ESlateVisibility::Hidden);
+		PlayerInventoryWidget->ReloadInventory(Items);
+	}
 }
 
 void UTalePlayerInventoryComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
+}
+
+void UTalePlayerInventoryComponent::OnToggleInventoryAction()
+{
+	if (!PlayerInventoryWidget)
+		return;
+
+	if (PlayerInventoryWidget->GetVisibility() == ESlateVisibility::HitTestInvisible)
+	{
+		PlayerInventoryWidget->SetVisibility(ESlateVisibility::Hidden);
+	}
+	else
+	{
+		PlayerInventoryWidget->SetVisibility(ESlateVisibility::HitTestInvisible);
+	}
 }
 
 void UTalePlayerInventoryComponent::TryEquipSword()

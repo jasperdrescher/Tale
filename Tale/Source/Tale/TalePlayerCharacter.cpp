@@ -11,6 +11,7 @@
 #include "TaleHUD.h"
 #include "TalePlayerState.h"
 #include "TalePowerUpAttributeSet.h"
+#include "TalePlayerInventoryComponent.h"
 
 ATalePlayerCharacter::ATalePlayerCharacter()
 {
@@ -55,6 +56,8 @@ ATalePlayerCharacter::ATalePlayerCharacter()
 	ShieldHitbox->SetGenerateOverlapEvents(false);
 	ShieldHitbox->CanCharacterStepUpOn = ECanBeCharacterBase::ECB_No;
 	ShieldHitbox->OnComponentBeginOverlap.AddDynamic(this, &ATalePlayerCharacter::OnShieldHitboxOverlap);
+
+	PlayerInventoryComponent = CreateDefaultSubobject<UTalePlayerInventoryComponent>(TEXT("PlayerInventoryComponent"));
 
 	Tags.Add(FName("Player"));
 	GetCapsuleComponent()->ComponentTags.Add("PlayerCollider");
@@ -106,7 +109,10 @@ void ATalePlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInpu
 
 	if (UEnhancedInputComponent* EnhancedInput = Cast<UEnhancedInputComponent>(PlayerInputComponent))
 	{
-		//EnhancedInput->BindAction(JumpAction, ETriggerEvent::Triggered, this, &ATalePlayerCharacter::HandleJump);
+		EnhancedInput->BindAction(PlayerInventoryComponent->EquipSwordInputAction, ETriggerEvent::Triggered, PlayerInventoryComponent, &UTalePlayerInventoryComponent::TryEquipSword);
+		EnhancedInput->BindAction(PlayerInventoryComponent->EquipShieldInputAction, ETriggerEvent::Triggered, PlayerInventoryComponent, &UTalePlayerInventoryComponent::TryEquipShield);
+		EnhancedInput->BindAction(PlayerInventoryComponent->PickUpInputAction, ETriggerEvent::Triggered, PlayerInventoryComponent, &UTalePlayerInventoryComponent::TryPickUpItem);
+		EnhancedInput->BindAction(PlayerInventoryComponent->ToggleInventoryInputAction, ETriggerEvent::Triggered, PlayerInventoryComponent, &UTalePlayerInventoryComponent::OnToggleInventoryAction);
 	}
 }
 

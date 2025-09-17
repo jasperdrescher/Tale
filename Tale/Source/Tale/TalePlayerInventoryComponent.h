@@ -12,6 +12,8 @@
 #include "TalePlayerInventoryComponent.generated.h"
 
 class UInputAction;
+class USoundBase;
+class ATalePlayerCharacter;
 
 USTRUCT(BlueprintType)
 struct FItemSearchResult
@@ -36,13 +38,6 @@ public:
 	virtual void BeginPlay() override;
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
-protected:
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Input")
-	UInputAction* EquipSwordInputAction;
-
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Input")
-	UInputAction* EquipShieldInputAction;
-
 	UFUNCTION(BlueprintCallable)
 	void TryEquipSword();
 
@@ -52,6 +47,21 @@ protected:
 	UFUNCTION(BlueprintCallable)
 	void TryPickUpItem();
 
+	void OnToggleInventoryAction();
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Input")
+	UInputAction* EquipSwordInputAction;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Input")
+	UInputAction* EquipShieldInputAction;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Input")
+	UInputAction* PickUpInputAction;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Input")
+	UInputAction* ToggleInventoryInputAction;
+
+protected:
 	UFUNCTION(BlueprintCallable)
 	void RemoveItem(const FTaleItemData& ItemData);
 
@@ -71,10 +81,10 @@ protected:
 	bool bHasSword = false;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Audio")
-	class USoundBase* PickupSoundEffect = nullptr;
+	USoundBase* PickupSoundEffect = nullptr;
 
 private:
-	class ATalePlayerCharacter* PlayerCharacter = nullptr;
+	ATalePlayerCharacter* PlayerCharacter = nullptr;
 
 protected:
 	UPROPERTY(BlueprintReadOnly)

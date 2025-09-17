@@ -13,6 +13,7 @@ class USphereComponent;
 class UCapsuleComponent;
 class UInputComponent;
 class UInputMappingContext;
+class UTalePlayerInventoryComponent;
 
 UCLASS()
 class TALE_API ATalePlayerCharacter : public ATaleCharacterBase
@@ -97,6 +98,9 @@ protected:
 
 	UPROPERTY(EditDefaultsOnly, Category = "Combat")
 	FName ShieldHitGameplayTagName = "Gameplay.Event.Montage.Player.ShieldHit";
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Input")
+	UTalePlayerInventoryComponent* PlayerInventoryComponent;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Input")
 	UInputMappingContext* InputMappingContext;
