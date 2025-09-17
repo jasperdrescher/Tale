@@ -3,8 +3,19 @@
 #include "TalePerformanceWidget.h"
 
 #include "GenericPlatform/GenericPlatformDriver.h"
+#include "GenericPlatform/GenericPlatformMemory.h"
 #include "GenericPlatform/GenericPlatformMisc.h"
 #include "RHIGlobals.h"
+
+void UTalePerformanceWidget::NativeConstruct()
+{
+	Super::NativeConstruct();
+
+	DeltaTimeHistory.Reserve(MaxDeltaTimeSamples + 1);
+
+	const FGPUDriverInfo GPUDriverInfo = FPlatformMisc::GetGPUDriverInfo(GRHIAdapterName);
+	GPUName = GPUDriverInfo.DeviceDescription;
+}
 
 void UTalePerformanceWidget::NativeTick(const FGeometry& MyGeometry, float InDeltaTime)
 {
@@ -22,14 +33,8 @@ void UTalePerformanceWidget::NativeTick(const FGeometry& MyGeometry, float InDel
 	FramesPerSecond = FString::Printf(TEXT("FPS %.0f (%.0f)"), AverageFPS, 1.0f / InDeltaTime);
 
 	const FPlatformMemoryStats MemoryStats = FPlatformMemory::GetStats();
-	PhysicalMB = FString::Printf(TEXT("Physical %.0f / %.0f mb"), BytesToMegabytes(MemoryStats.UsedPhysical), BytesToMegabytes(MemoryStats.AvailablePhysical));
-	VirtualMB = FString::Printf(TEXT("Virtual %.0f / %.0f mb"), BytesToMegabytes(MemoryStats.UsedVirtual), BytesToMegabytes(MemoryStats.AvailableVirtual));
-
-	if (GPUName.IsEmpty())
-	{
-		const FGPUDriverInfo GPUDriverInfo = FPlatformMisc::GetGPUDriverInfo(GRHIAdapterName);
-		GPUName = GPUDriverInfo.DeviceDescription;
-	}
+	PhysicalMB = FString::Printf(TEXT("Physical %s / %s"), *FGenericPlatformMemory::PrettyMemory(MemoryStats.UsedPhysical), *FGenericPlatformMemory::PrettyMemory(MemoryStats.AvailablePhysical));
+	VirtualMB = FString::Printf(TEXT("Virtual %s / %s"), *FGenericPlatformMemory::PrettyMemory(MemoryStats.UsedVirtual), *FGenericPlatformMemory::PrettyMemory(MemoryStats.AvailableVirtual));
 }
 
 void UTalePerformanceWidget::CalculateAverageFPS(float InDeltaTime)
@@ -37,10 +42,7 @@ void UTalePerformanceWidget::CalculateAverageFPS(float InDeltaTime)
 	TotalDeltaTime += InDeltaTime;
 	FrameCount++;
 
-	if (FrameCount > 0)
-	{
-		AverageFPS = FrameCount / TotalDeltaTime;
-	}
+	AverageFPS = FrameCount / TotalDeltaTime;
 
 	AccumulatedTime += InDeltaTime;
 	if (AccumulatedTime >= AccumulatedTimeThreshold)
