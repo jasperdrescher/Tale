@@ -26,7 +26,7 @@ void UTalePerformanceWidget::NativeTick(const FGeometry& MyGeometry, float InDel
 	if (DeltaTimeHistory.Num() > MaxDeltaTimeSamples)
 		DeltaTimeHistory.RemoveAt(0);
 
-	const float SmoothedDeltaTime = GetAverageDeltaTime();
+	CalculateAverageDeltaTime();
 	FrameTime = FString::Printf(TEXT("Frametime %.1f (%.1f) ms"), SmoothedDeltaTime * 1000.f, InDeltaTime * 1000.f);
 
 	CalculateAverageFPS(InDeltaTime);
@@ -53,19 +53,11 @@ void UTalePerformanceWidget::CalculateAverageFPS(float InDeltaTime)
 	}
 }
 
-float UTalePerformanceWidget::BytesToMegabytes(float Bytes) const
+void UTalePerformanceWidget::CalculateAverageDeltaTime()
 {
-	return Bytes / (1024.0f * 1024.0f);
-}
-
-float UTalePerformanceWidget::GetAverageDeltaTime() const
-{
-	if (DeltaTimeHistory.IsEmpty())
-		return 0.0f;
-
 	float Sum = 0.0f;
 	for (const float DeltaTime : DeltaTimeHistory)
 		Sum += DeltaTime;
 
-	return Sum / DeltaTimeHistory.Num();
+	SmoothedDeltaTime = Sum / DeltaTimeHistory.Num();
 }

@@ -34,13 +34,12 @@ protected:
 
 private:
 	void CalculateAverageFPS(float InDeltaTime);
-
-	float BytesToMegabytes(float Bytes) const;
-	float GetAverageDeltaTime() const;
+	void CalculateAverageDeltaTime();
 
 	TArray<float> DeltaTimeHistory;
 	float TotalDeltaTime = 0.0f;
 	float AverageFPS = 0.0f;
+	float SmoothedDeltaTime = 0.0f;
 	float AccumulatedTime = 0.0f;
 	float AccumulatedTimeThreshold = 5.0f;
 	int32 MaxDeltaTimeSamples = 30;
