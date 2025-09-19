@@ -45,16 +45,6 @@ void ATaleGameModeBase::PlayerDied(AController* Controller)
 		}
 	}
 	SpawnedNPCs.Empty();
-
-	for (ATaleNPCSpawnPoint* NPCSpawnPoint : NPCSpawnPoints)
-	{
-		NPCSpawnPoint->FindDataTable();
-		ATaleEnemyCharacter* SpawnedNPC = NPCSpawnPoint->SpawnNPC();
-		if (SpawnedNPC)
-		{
-			SpawnedNPCs.Emplace(SpawnedNPC);
-		}
-	}
 }
 
 void ATaleGameModeBase::LimitFPS()
@@ -117,34 +107,58 @@ void ATaleGameModeBase::RespawnPlayer(AController* Controller)
 {
 	if (!IsValid(Controller))
 	{
+		UE_LOG(LogTemp, Error, TEXT("Invalid Controller"), *FString(__FUNCTION__));
+		return;
+	}
+
+	if (!Controller->IsPlayerController())
+	{
+		UE_LOG(LogTemp, Error, TEXT("Invalid Controller"), *FString(__FUNCTION__));
 		return;
 	}
 
 	if (!PlayerClass)
 	{
-		UE_LOG(LogTemp, Error, TEXT("No player class found."), *FString(__FUNCTION__));
+		UE_LOG(LogTemp, Error, TEXT("No player class found"), *FString(__FUNCTION__));
 		return;
 	}
 
-	if (Controller->IsPlayerController())
+	for (ATaleNPCSpawnPoint* NPCSpawnPoint : NPCSpawnPoints)
 	{
-		AActor* PlayerStart = FindPlayerStart(Controller);
-
-		FActorSpawnParameters SpawnParameters;
-		SpawnParameters.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AdjustIfPossibleButAlwaysSpawn;
-
-		ATalePlayerCharacter* PlayerCharacter = GetWorld()->SpawnActor<ATalePlayerCharacter>(PlayerClass, PlayerStart->GetActorLocation(), PlayerStart->GetActorRotation(), SpawnParameters);
-
-		APawn* OldSpectatorPawn = Controller->GetPawn();
-		Controller->UnPossess();
-		OldSpectatorPawn->Destroy();
-		Controller->Possess(PlayerCharacter);
-
-		ATalePlayerController* PC = Cast<ATalePlayerController>(Controller);
-		if (PC)
+		NPCSpawnPoint->FindDataTable();
+		ATaleEnemyCharacter* SpawnedNPC = NPCSpawnPoint->SpawnNPC();
+		if (SpawnedNPC)
 		{
-			PC->SetControlRotation(PlayerStart->GetActorRotation());
+			SpawnedNPCs.Emplace(SpawnedNPC);
 		}
+	}
+
+	const AActor* PlayerStart = FindPlayerStart(Controller);
+	if (!PlayerStart)
+	{
+		UE_LOG(LogTemp, Error, TEXT("No player start found"), *FString(__FUNCTION__));
+		return;
+	}
+
+	FActorSpawnParameters SpawnParameters;
+	SpawnParameters.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AdjustIfPossibleButAlwaysSpawn;
+
+	ATalePlayerCharacter* PlayerCharacter = GetWorld()->SpawnActor<ATalePlayerCharacter>(PlayerClass, PlayerStart->GetActorLocation(), PlayerStart->GetActorRotation(), SpawnParameters);
+	if (!PlayerCharacter)
+	{
+		UE_LOG(LogTemp, Error, TEXT("Failed to respawn Player Character"), *FString(__FUNCTION__));
+		return;
+	}
+
+	APawn* OldSpectatorPawn = Controller->GetPawn();
+	Controller->UnPossess();
+	OldSpectatorPawn->Destroy();
+	Controller->Possess(PlayerCharacter);
+
+	ATalePlayerController* PlayerController = Cast<ATalePlayerController>(Controller);
+	if (PlayerController)
+	{
+		PlayerController->SetControlRotation(PlayerStart->GetActorRotation());
 	}
 }
 
