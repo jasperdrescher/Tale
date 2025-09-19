@@ -123,6 +123,13 @@ void ATaleGameModeBase::RespawnPlayer(AController* Controller)
 		return;
 	}
 
+	const AActor* PlayerStart = FindPlayerStart(Controller);
+	if (!PlayerStart)
+	{
+		UE_LOG(LogTemp, Error, TEXT("No player start found"), *FString(__FUNCTION__));
+		return;
+	}
+
 	for (ATaleNPCSpawnPoint* NPCSpawnPoint : NPCSpawnPoints)
 	{
 		NPCSpawnPoint->FindDataTable();
@@ -133,12 +140,9 @@ void ATaleGameModeBase::RespawnPlayer(AController* Controller)
 		}
 	}
 
-	const AActor* PlayerStart = FindPlayerStart(Controller);
-	if (!PlayerStart)
-	{
-		UE_LOG(LogTemp, Error, TEXT("No player start found"), *FString(__FUNCTION__));
-		return;
-	}
+	APawn* OldSpectatorPawn = Controller->GetPawn();
+	Controller->UnPossess();
+	OldSpectatorPawn->Destroy();
 
 	FActorSpawnParameters SpawnParameters;
 	SpawnParameters.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AdjustIfPossibleButAlwaysSpawn;
@@ -149,10 +153,7 @@ void ATaleGameModeBase::RespawnPlayer(AController* Controller)
 		UE_LOG(LogTemp, Error, TEXT("Failed to respawn Player Character"), *FString(__FUNCTION__));
 		return;
 	}
-
-	APawn* OldSpectatorPawn = Controller->GetPawn();
-	Controller->UnPossess();
-	OldSpectatorPawn->Destroy();
+	
 	Controller->Possess(PlayerCharacter);
 
 	ATalePlayerController* PlayerController = Cast<ATalePlayerController>(Controller);
