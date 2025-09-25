@@ -60,8 +60,8 @@ ATaleEnemyCharacter::ATaleEnemyCharacter()
 
 void ATaleEnemyCharacter::PerformAttackTrace()
 {
-	FVector StartLocation = GetActorLocation();
-	FVector EndLocation = StartLocation;
+	const FVector StartLocation = GetActorLocation();
+	const FVector EndLocation = StartLocation;
 
 	TArray<AActor*> ActorsToIgnore;
 	ActorsToIgnore.Add(this);
