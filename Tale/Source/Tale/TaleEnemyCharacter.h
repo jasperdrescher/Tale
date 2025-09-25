@@ -26,10 +26,7 @@ public:
 	ATaleEnemyCharacter();
 
 	UFUNCTION(BlueprintCallable)
-	void EnableMeleeHitBox();
-
-	UFUNCTION(BlueprintCallable)
-	void DisableMeleeHitBox();
+	void PerformAttackTrace();
 
 	UFUNCTION(BlueprintCallable, Category = "AI")
 	void HandleGetHitResponse();
@@ -50,9 +47,6 @@ protected:
 	virtual void OnStoppedSensingPlayer() {}
 
 	UPROPERTY(VisibleAnywhere, Category = "Combat")
-	TObjectPtr<USphereComponent> MeleeHitbox;
-
-	UPROPERTY(VisibleAnywhere, Category = "Combat")
 	TObjectPtr<USphereComponent> CloseRangeHitbox;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "UI")
@@ -68,10 +62,7 @@ protected:
 	FName MeleeHitGameplayTagName = "Gameplay.Event.Montage.Enemy.Attack";
 
 	UPROPERTY(EditDefaultsOnly, Category = "Combat")
-	FVector MeleeHitboxOffset = FVector(50.0f, 0.0f, 20.0f);
-
-	UPROPERTY(EditDefaultsOnly, Category = "Combat")
-	float MeleeHitboxRadius = 100.0f;
+	float MeleeHitboxRadius = 150.0f;
 
 	UPROPERTY(EditDefaultsOnly, Category = "AI")
 	float CloseRangeHitboxRadius = 200.0f;
@@ -110,9 +101,6 @@ protected:
 	UAnimMontage* DieAnimMontage;
 
 private:
-	UFUNCTION()
-	void OnMeleeHitboxOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
-
 	UFUNCTION()
 	void OnCloseRangeHitboxOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
 

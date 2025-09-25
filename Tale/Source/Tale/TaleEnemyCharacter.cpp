@@ -7,6 +7,7 @@
 #include "BehaviorTree/BlackboardComponent.h"
 #include "Components/SphereComponent.h"
 #include "GenericTeamAgentInterface.h"
+#include "Kismet/KismetSystemLibrary.h"
 #include "Perception/AIPerceptionComponent.h"
 #include "Perception/AISenseConfig_Sight.h"
 #include "TaleCharacterASC.h"
@@ -28,15 +29,6 @@ ATaleEnemyCharacter::ATaleEnemyCharacter()
 	EnemyAttributesWidgetComponent->SetDrawSize(AttributesWidgetSize);
 	EnemyAttributesWidgetComponent->SetDrawAtDesiredSize(true);
 	EnemyAttributesWidgetComponent->SetPivot(FVector2D(0.5f, 0.5f));
-
-	MeleeHitbox = CreateDefaultSubobject<USphereComponent>(TEXT("MeleeHitbox"));
-	MeleeHitbox->SetupAttachment(RootComponent);
-	MeleeHitbox->SetCollisionProfileName("OverlapAllDynamic");
-	MeleeHitbox->SetGenerateOverlapEvents(false);
-	MeleeHitbox->AddRelativeLocation(MeleeHitboxOffset);
-	MeleeHitbox->SetSphereRadius(MeleeHitboxRadius);
-	MeleeHitbox->CanCharacterStepUpOn = ECanBeCharacterBase::ECB_No;
-	MeleeHitbox->OnComponentBeginOverlap.AddDynamic(this, &ATaleEnemyCharacter::OnMeleeHitboxOverlap);
 
 	CloseRangeHitbox = CreateDefaultSubobject<USphereComponent>(TEXT("CloseRangeHitbox"));
 	CloseRangeHitbox->SetupAttachment(RootComponent);
@@ -66,14 +58,46 @@ ATaleEnemyCharacter::ATaleEnemyCharacter()
 	CharacterTeamId = 2;
 }
 
-void ATaleEnemyCharacter::EnableMeleeHitBox()
+void ATaleEnemyCharacter::PerformAttackTrace()
 {
-	MeleeHitbox->SetGenerateOverlapEvents(true);
-}
+	FVector StartLocation = GetActorLocation();
+	FVector EndLocation = StartLocation;
 
-void ATaleEnemyCharacter::DisableMeleeHitBox()
-{
-	MeleeHitbox->SetGenerateOverlapEvents(false);
+	TArray<AActor*> ActorsToIgnore;
+	ActorsToIgnore.Add(this);
+
+	FHitResult HitResult;
+	const bool bHit = UKismetSystemLibrary::SphereTraceSingle(
+		this,
+		StartLocation,
+		EndLocation,
+		MeleeHitboxRadius,
+		UEngineTypes::ConvertToTraceType(ECC_Pawn),
+		false,
+		ActorsToIgnore,
+		EDrawDebugTrace::None,
+		HitResult,
+		false
+	);
+
+	if (!bHit)
+		return;
+
+	AActor* HitActor = HitResult.GetActor();
+	if (!HitActor->ActorHasTag(FName("Player")))
+		return;
+
+	FGameplayAbilityTargetData_ActorArray* TargetDataActorArray = new FGameplayAbilityTargetData_ActorArray();
+	TargetDataActorArray->TargetActorArray.Add(HitActor);
+	FGameplayAbilityTargetDataHandle TargetDataHandle(TargetDataActorArray);
+
+	FGameplayEventData EventData;
+	EventData.Instigator = this;
+	EventData.Target = HitActor;
+	EventData.TargetData = TargetDataHandle;
+
+	const FGameplayTag GameplayTag = FGameplayTag::RequestGameplayTag(MeleeHitGameplayTagName, true);
+	UAbilitySystemBlueprintLibrary::SendGameplayEventToActor(this, GameplayTag, EventData);
 }
 
 void ATaleEnemyCharacter::HandleGetHitResponse()
@@ -171,34 +195,6 @@ void ATaleEnemyCharacter::BeginPlay()
 void ATaleEnemyCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-}
-
-void ATaleEnemyCharacter::OnMeleeHitboxOverlap(
-	UPrimitiveComponent* OverlappedComp,
-	AActor* OtherActor,
-	UPrimitiveComponent* OtherComp,
-	int32 OtherBodyIndex,
-	bool bFromSweep,
-	const FHitResult& SweepResult)
-{
-	if (OtherActor == this)
-		return;
-
-	if (!OtherActor->ActorHasTag(FName("Player")))
-		return;
-
-	FGameplayAbilityTargetData_ActorArray* TargetDataActorArray = new FGameplayAbilityTargetData_ActorArray();
-	TargetDataActorArray->TargetActorArray.Add(OtherActor);
-	FGameplayAbilityTargetDataHandle TargetDataHandle(TargetDataActorArray);
-
-	FGameplayEventData EventData;
-	EventData.Instigator = this;
-	EventData.Target = OtherActor;
-	EventData.TargetData = TargetDataHandle;
-
-	const FGameplayTag GameplayTag = FGameplayTag::RequestGameplayTag(MeleeHitGameplayTagName, true);
-
-	UAbilitySystemBlueprintLibrary::SendGameplayEventToActor(this, GameplayTag, EventData);
 }
 
 void ATaleEnemyCharacter::OnCloseRangeHitboxOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
