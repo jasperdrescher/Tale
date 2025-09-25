@@ -60,4 +60,7 @@ private:
 
 	UPROPERTY()
 	TObjectPtr<UTalePerformanceWidget> PerformanceWidget;
+
+	UPROPERTY()
+	bool bIsPlayerDead = false;
 };

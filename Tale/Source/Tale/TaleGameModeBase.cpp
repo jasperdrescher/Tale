@@ -18,6 +18,8 @@ ATaleGameModeBase::ATaleGameModeBase()
 
 void ATaleGameModeBase::PlayerDied(AController* Controller)
 {
+	bIsPlayerDead = true;
+
 	FActorSpawnParameters SpawnParameters;
 	SpawnParameters.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AdjustIfPossibleButAlwaysSpawn;
 	ASpectatorPawn* SpectatorPawn = GetWorld()->SpawnActor<ASpectatorPawn>(SpectatorClass, Controller->GetPawn()->GetActorTransform(), SpawnParameters);
@@ -37,14 +39,15 @@ void ATaleGameModeBase::PlayerDied(AController* Controller)
 		PlayerController->SetRespawnCountdown(RespawnDelaySeconds);
 	}
 
-	for (ATaleEnemyCharacter* SpawnedNPC : SpawnedNPCs)
+	const int32 SpawnedNPCsNum = SpawnedNPCs.Num();
+	for (int32 i = SpawnedNPCsNum - 1; i >= 0; --i)
 	{
+		ATaleEnemyCharacter* SpawnedNPC = SpawnedNPCs[i];
 		if (SpawnedNPC)
 		{
 			SpawnedNPC->Destroy();
 		}
 	}
-	SpawnedNPCs.Empty();
 }
 
 void ATaleGameModeBase::LimitFPS()
@@ -89,8 +92,8 @@ void ATaleGameModeBase::BeginPlay()
 			ATaleEnemyCharacter* SpawnedNPC = NPCSpawnPoint->SpawnNPC();
 			if (SpawnedNPC)
 			{
-				SpawnedNPCs.Emplace(SpawnedNPC);
-				NPCSpawnPoints.Emplace(NPCSpawnPoint);
+				SpawnedNPCs.Add(SpawnedNPC);
+				NPCSpawnPoints.Add(NPCSpawnPoint);
 
 				SpawnedNPC->OnDestroyed.AddDynamic(this, &ATaleGameModeBase::OnSpawnedNPCDestroyed);
 			}
@@ -136,7 +139,7 @@ void ATaleGameModeBase::RespawnPlayer(AController* Controller)
 		ATaleEnemyCharacter* SpawnedNPC = NPCSpawnPoint->SpawnNPC();
 		if (SpawnedNPC)
 		{
-			SpawnedNPCs.Emplace(SpawnedNPC);
+			SpawnedNPCs.Add(SpawnedNPC);
 		}
 	}
 
@@ -161,6 +164,8 @@ void ATaleGameModeBase::RespawnPlayer(AController* Controller)
 	{
 		PlayerController->SetControlRotation(PlayerStart->GetActorRotation());
 	}
+
+	bIsPlayerDead = false;
 }
 
 ETeamAttitude::Type ATaleGameModeBase::TeamAttitudeSolver(FGenericTeamId GenericTeamIdA, FGenericTeamId GenericTeamIdB)
@@ -180,6 +185,9 @@ void ATaleGameModeBase::OnSpawnedNPCDestroyed(AActor* DestroyedActor)
 	{
 		SpawnedNPCs.Remove(TaleEnemyCharacter);
 	}
+
+	if (bIsPlayerDead)
+		return;
 
 	if (SpawnedNPCs.IsEmpty())
 	{
