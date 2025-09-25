@@ -65,7 +65,7 @@ protected:
 	float MeleeHitboxRadius = 150.0f;
 
 	UPROPERTY(EditDefaultsOnly, Category = "AI")
-	float CloseRangeHitboxRadius = 200.0f;
+	float CloseRangeHitboxRadius = 150.0f;
 
 	UPROPERTY(EditDefaultsOnly, Category = "AI")
 	float SightRadius = 400.0f;
