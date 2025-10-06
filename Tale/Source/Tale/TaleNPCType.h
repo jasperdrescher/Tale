@@ -11,4 +11,5 @@ enum class ETaleNPCType : uint8
 	Slime UMETA(DisplayName = "Slime"),
 	Mushroom UMETA(DisplayName = "Mushroom"),
 	Cactus UMETA(DisplayName = "Cactus"),
+	Beholder UMETA(DisplayName = "Beholder"),
 };
