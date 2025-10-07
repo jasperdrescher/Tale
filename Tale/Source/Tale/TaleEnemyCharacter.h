@@ -5,6 +5,7 @@
 #include "Components/WidgetComponent.h"
 #include "CoreMinimal.h"
 #include "TaleCharacterBase.h"
+#include "TaleNPCType.h"
 
 #include "Perception/AIPerceptionTypes.h"
 
@@ -39,6 +40,10 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = "Animation")
 	void PlayDieAnimMontage();
+
+	void SetNPCType(ETaleNPCType Type) { NPCType = Type; }
+
+	ETaleNPCType GetNPCType() const { return NPCType; }
 
 protected:
 	virtual void BeginPlay() override;
@@ -99,6 +104,9 @@ protected:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Animation")
 	UAnimMontage* DieAnimMontage;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+	ETaleNPCType NPCType;
 
 private:
 	UFUNCTION()

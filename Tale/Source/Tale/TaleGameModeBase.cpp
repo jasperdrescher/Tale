@@ -183,14 +183,11 @@ void ATaleGameModeBase::OnSpawnedNPCDestroyed(AActor* DestroyedActor)
 {
 	if (ATaleEnemyCharacter* TaleEnemyCharacter = Cast<ATaleEnemyCharacter>(DestroyedActor))
 	{
+		if (TaleEnemyCharacter->GetNPCType() == ETaleNPCType::Beholder && !bIsPlayerDead)
+		{
+			LevelCleared();
+		}
+
 		SpawnedNPCs.Remove(TaleEnemyCharacter);
-	}
-
-	if (bIsPlayerDead)
-		return;
-
-	if (SpawnedNPCs.IsEmpty())
-	{
-		LevelCleared();
 	}
 }

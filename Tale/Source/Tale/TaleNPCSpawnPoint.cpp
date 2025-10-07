@@ -29,5 +29,11 @@ ATaleEnemyCharacter* ATaleNPCSpawnPoint::SpawnNPC()
     if (!NPCBlueprint)
         return nullptr;
 
-    return GetWorld()->SpawnActor<ATaleEnemyCharacter>(NPCBlueprint, GetActorLocation(), GetActorRotation());
+	ATaleEnemyCharacter* TaleEnemyCharacter = GetWorld()->SpawnActor<ATaleEnemyCharacter>(NPCBlueprint, GetActorLocation(), GetActorRotation());
+	if (!TaleEnemyCharacter)
+		return nullptr;
+
+	TaleEnemyCharacter->SetNPCType(NPCType);
+
+	return TaleEnemyCharacter;
 }
