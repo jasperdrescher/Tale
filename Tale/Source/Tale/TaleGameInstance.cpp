@@ -2,6 +2,9 @@
 
 #include "TaleGameInstance.h"
 
+#include "MoviePlayer.h"
+#include "TaleLoadingScreenWidget.h"
+
 void UTaleGameInstance::Init()
 {
 	Super::Init();
@@ -12,10 +15,15 @@ void UTaleGameInstance::Init()
 
 void UTaleGameInstance::BeginLoadingScreen(const FString& MapName)
 {
-	UE_LOG(LogTemp, Warning, TEXT("PreLoadMap delegate triggered for map: %s"), *MapName);
+	FLoadingScreenAttributes LoadingScreenAttributes;
+	LoadingScreenAttributes.bAutoCompleteWhenLoadingCompletes = false;
+	LoadingScreenAttributes.MinimumLoadingScreenDisplayTime = 2.0f;
+	LoadingScreenAttributes.WidgetLoadingScreen = SNew(STaleLoadingScreenWidget).BackgroundTexture(LoadingScreenBackgroundTexture);
+
+	GetMoviePlayer()->SetupLoadingScreen(LoadingScreenAttributes);
 }
 
 void UTaleGameInstance::EndLoadingScreen(UWorld* InLoadedWorld)
 {
-	UE_LOG(LogTemp, Warning, TEXT("EndLoadingScreen delegate triggered"));
+	UE_LOG(LogTemp, Verbose, TEXT("EndLoadingScreen delegate triggered"));
 }

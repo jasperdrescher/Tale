@@ -19,6 +19,9 @@ public class Tale : ModuleRules
 			"RHI",
 			"AIModule",
 			"EnhancedInput",
+			"MoviePlayer",
+			"Slate",
+			"SlateCore",
 		});
 
         PrivateDependencyModuleNames.AddRange(new string[]

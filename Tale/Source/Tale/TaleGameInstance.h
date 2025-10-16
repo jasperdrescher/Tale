@@ -19,4 +19,8 @@ public:
 
 	UFUNCTION()
 	void EndLoadingScreen(UWorld* InLoadedWorld);
+
+protected:
+	UPROPERTY(EditDefaultsOnly)
+	UTexture2D* LoadingScreenBackgroundTexture;
 };

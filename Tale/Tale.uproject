@@ -12,7 +12,9 @@
 				"Engine",
 				"GameplayAbilities",
 				"UMG",
-				"AIModule"
+				"AIModule",
+				"Slate",
+				"SlateCore"
 			]
 		}
 	],
