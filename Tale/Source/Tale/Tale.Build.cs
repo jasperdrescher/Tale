@@ -8,28 +8,25 @@ public class Tale : ModuleRules
 	{
 		PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
 		IWYUSupport = IWYUSupport.Full;
-        OptimizeCode = CodeOptimization.InShippingBuildsOnly;
-        bUseUnity = true;
+		OptimizeCode = CodeOptimization.InShippingBuildsOnly;
+		bUseUnity = true;
 
-        PublicDependencyModuleNames.AddRange(new string[] {
+		PublicDependencyModuleNames.AddRange(new string[] {
 			"Core",
 			"CoreUObject",
 			"Engine",
-			"InputCore",
-			"RHI",
 			"AIModule",
-			"EnhancedInput",
-			"MoviePlayer",
-			"Slate",
-			"SlateCore",
+			"CommonLoadingScreen",
 		});
 
-        PrivateDependencyModuleNames.AddRange(new string[]
-        {
-            "GameplayTasks",
-            "GameplayTags",
-            "GameplayAbilities",
-            "Niagara",
-        });
-    }
+		PrivateDependencyModuleNames.AddRange(new string[]
+		{
+			"GameplayTasks",
+			"GameplayTags",
+			"GameplayAbilities",
+			"Niagara",
+			"RHI",
+			"EnhancedInput",
+		});
+	}
 }

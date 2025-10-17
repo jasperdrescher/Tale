@@ -13,14 +13,4 @@ class TALE_API UTaleGameInstance : public UGameInstance
 
 public:
 	virtual void Init() override;
-
-	UFUNCTION()
-	void BeginLoadingScreen(const FString& MapName);
-
-	UFUNCTION()
-	void EndLoadingScreen(UWorld* InLoadedWorld);
-
-protected:
-	UPROPERTY(EditDefaultsOnly)
-	UTexture2D* LoadingScreenBackgroundTexture;
 };
