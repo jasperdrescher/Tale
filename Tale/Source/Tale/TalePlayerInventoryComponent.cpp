@@ -111,7 +111,7 @@ void UTalePlayerInventoryComponent::TryPickUpItem()
 		return;
 	
 	AActor* NearestActor = nullptr;
-	float MinDistSquared = FLT_MAX;
+	float MinDistSquared = TNumericLimits<float>::Max();
 
 	const FVector PlayerLocation = PlayerCharacter->GetActorLocation();
 	for (TActorIterator<AActor> ActorIterator(GetWorld(), ATaleItemPickup::StaticClass()); ActorIterator; ++ActorIterator)
