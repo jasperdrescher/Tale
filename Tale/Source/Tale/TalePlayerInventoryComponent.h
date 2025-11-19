@@ -23,7 +23,7 @@ struct FItemSearchResult
 	UPROPERTY(BlueprintReadOnly)
 	bool bFound = false;
 
-	UPROPERTY(BlueprintReadOnly)
+	UPROPERTY(BlueprintReadWrite)
 	FTaleItemData Item;
 };
 
@@ -64,6 +64,9 @@ public:
 protected:
 	UFUNCTION(BlueprintCallable)
 	void RemoveItem(const FTaleItemData& ItemData);
+
+	UFUNCTION(BlueprintCallable)
+	void ConsumeItem(UPARAM(ref) FTaleItemData& ItemData);
 
 	UFUNCTION(BlueprintCallable)
 	FItemSearchResult GetHealthPotion() const;

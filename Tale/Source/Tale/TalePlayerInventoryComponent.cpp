@@ -173,6 +173,20 @@ void UTalePlayerInventoryComponent::RemoveItem(const FTaleItemData& ItemData)
 	PlayerInventoryWidget->ReloadInventory(Items);
 }
 
+void UTalePlayerInventoryComponent::ConsumeItem(FTaleItemData& ItemData)
+{
+	if (ItemData.Quantity > 1)
+	{
+		--ItemData.Quantity;
+
+		PlayerInventoryWidget->ReloadInventory(Items);
+	}
+	else
+	{
+		RemoveItem(ItemData);
+	}
+}
+
 FItemSearchResult UTalePlayerInventoryComponent::GetHealthPotion() const
 {
 	FItemSearchResult SearchResult;
