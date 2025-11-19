@@ -113,11 +113,11 @@ void UTalePlayerInventoryComponent::TryPickUpItem()
 	AActor* NearestActor = nullptr;
 	float MinDistSquared = FLT_MAX;
 
-	FVector PlayerLocation = PlayerCharacter->GetActorLocation();
-	for (TActorIterator<AActor> It(GetWorld(), ATaleItemPickup::StaticClass()); It; ++It)
+	const FVector PlayerLocation = PlayerCharacter->GetActorLocation();
+	for (TActorIterator<AActor> ActorIterator(GetWorld(), ATaleItemPickup::StaticClass()); ActorIterator; ++ActorIterator)
 	{
-		AActor* Actor = *It;
-		const float DistSquared = FVector::DistSquared(Actor->GetActorLocation(), PlayerLocation);
+		AActor* Actor = *ActorIterator;
+		const float DistSquared = static_cast<float>(FVector::DistSquared(Actor->GetActorLocation(), PlayerLocation));
 
 		if (DistSquared < MinDistSquared)
 		{
@@ -138,13 +138,13 @@ void UTalePlayerInventoryComponent::TryPickUpItem()
 	}
 
 	bool bWasFound = false;
-	for (FTaleItemData& itemData : Items)
+	for (FTaleItemData& ItemData : Items)
 	{
-		if (itemData.Name.ToString() == ItemPickup->ItemData.Name.ToString())
+		if (ItemData.Name.ToString() == ItemPickup->ItemData.Name.ToString())
 		{
-			if (itemData.bIsStackable)
+			if (ItemData.bIsStackable)
 			{
-				itemData.Quantity++;
+				ItemData.Quantity++;
 				bWasFound = true;
 
 				UGameplayStatics::PlaySound2D(GetWorld(), PickupSoundEffect, 1.0f);
